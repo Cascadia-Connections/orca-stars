@@ -1,2 +1,9 @@
-# orca-stars
-Web Application for Orca Stars project
+# Project Charter - OrcaStars Web Application
+### Goal:  
+The Orca Conservancy works to protect the Southern Resident Orcas, and make people aware of the industry-made dangers that they face: Overfishing, toxins, and vessel noise pollution. The OrcaStars program, a non-profit subgroup of the Orca Conservancy, challenges local businesses to adhere to newer, more sustainable work practices. OrcaStars is creating [an android app](https://github.com/MobileApps-Cascadia/orca-stars-android/wiki) and web application that will help them achieve their goals, including ...
+### Product Description:  
+The scope of this project is ...  
+### Deliverables:  
+By the end of the Spring quarter 2020 quarter,the team is expected to hand off ...
+### Evaluation:  
+Evaluation and assessment of progress and completion will be done by professor Brian Bansenauer and the project sponsor, David Bain. Assessments will be done at the end of every two-week sprint. The team will create the code and document its progress for off to future developers. 
