@@ -1,0 +1,8 @@
+This will function as the initial draft of coding conventions for the Orca Stars Web Team
+Naming conventions:
+	Pascal naming for classes and methods, i.e. capitalizing each word including the first with no spaces in between.  Example: AdminController instead of adminController or Admin Controller
+	Camel casing for variable names, i.e. capitalizing all but the first word of a variable with no spaces in between.  Example: firstName instead of FirstName
+	If using abbreviations for classes, methods, variables then include a comment giving the full name of the abbreviated term.
+Structure:
+	There will be a separate folder for Models, Views, ViewModels, Controllers, and Migrations
+	I have created a starter application with the basic framework for Sprint 1
