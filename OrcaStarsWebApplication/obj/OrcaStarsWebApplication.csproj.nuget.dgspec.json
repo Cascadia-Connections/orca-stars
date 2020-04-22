@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Will\\Desktop\\Spring_Quarter_2020\\BIT286\\Orca_Stars\\Sprint 1\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj": {}
+    "C:\\Users\\Dawn\\source\\repos\\orca-stars\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Will\\Desktop\\Spring_Quarter_2020\\BIT286\\Orca_Stars\\Sprint 1\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj": {
+    "C:\\Users\\Dawn\\source\\repos\\orca-stars\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Will\\Desktop\\Spring_Quarter_2020\\BIT286\\Orca_Stars\\Sprint 1\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj",
+        "projectUniqueName": "C:\\Users\\Dawn\\source\\repos\\orca-stars\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj",
         "projectName": "OrcaStarsWebApplication",
-        "projectPath": "C:\\Users\\Will\\Desktop\\Spring_Quarter_2020\\BIT286\\Orca_Stars\\Sprint 1\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj",
-        "packagesPath": "C:\\Users\\Will\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Will\\Desktop\\Spring_Quarter_2020\\BIT286\\Orca_Stars\\Sprint 1\\OrcaStarsWebApplication\\obj\\",
+        "projectPath": "C:\\Users\\Dawn\\source\\repos\\orca-stars\\OrcaStarsWebApplication\\OrcaStarsWebApplication.csproj",
+        "packagesPath": "C:\\Users\\Dawn\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dawn\\source\\repos\\orca-stars\\OrcaStarsWebApplication\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Will\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dawn\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
