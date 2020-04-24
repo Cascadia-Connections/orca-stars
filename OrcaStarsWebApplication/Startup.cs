@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,12 +19,17 @@ namespace OrcaStarsWebApplication
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc();
+            services.AddDbContext<Models.BitDataContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("OrcaStarsWebApplication-Win-SqlServer"));
+                //options.UseSqlite(Configuration.GetConnectionString("OrcaStarsWebApplication-Mac-Sqlite"));
+            });
             services.AddControllersWithViews();
         }
 
