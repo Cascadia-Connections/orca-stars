@@ -12,8 +12,7 @@ namespace OrcaStarsWebApplication.Models
         public string Description { get; set; }
         public double LongCoordinates { get; set; }
         public double LatCoordinates { get; set; }
-        public byte[] Logo { get; set; } //Unsure how to store images to DB
         public string Hours { get; set; }
-
+        public int Logo { get; set; } //Unsure how to store images to DB 
     }
 }
