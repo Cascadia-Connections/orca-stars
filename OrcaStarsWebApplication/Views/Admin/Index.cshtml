@@ -1,8 +1,15 @@
-﻿@{
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="text-center">
+        <label asp-for="UserName">Username</label>
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+
+        <input type="Submit"value="Submit" />
+        <div><a asp-controller="Admin" asp-action="Confirm">Confirm</a></div>
+
+    </div>
