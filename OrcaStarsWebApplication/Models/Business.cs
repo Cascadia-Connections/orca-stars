@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace OrcaStarsWebApplication.Models
 {
@@ -10,9 +11,8 @@ namespace OrcaStarsWebApplication.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public double LongCoordinates { get; set; }
-        public double LatCoordinates { get; set; }
+        public Point Coordinates { get; set; }
         public string Hours { get; set; }
-        public int Logo { get; set; } //Unsure how to store images to DB 
+        public string Logo { get; set; } //File path reference
     }
 }
