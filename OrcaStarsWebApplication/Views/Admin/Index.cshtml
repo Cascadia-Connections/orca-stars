@@ -1,8 +1,49 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿
+
+@{
+    ViewData["Title"] = "Business Form";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+    <h1>Orca Stars Business Application</h1>
+    <form action="" method="post">
+        <h3>Owner Information</h3>
+
+        <label>First Name:</label>
+        <input type="text" name="FirstName" placeholder="First Name" />
+        <br />
+        <label>Last Name:</label>
+        <input type="text" name="LastName" placeholder="Last Name" />
+        <br />
+        <label>Phone Number:</label>
+        <input type="text" name="PhoneNumber" placeholder="Phone Number" />
+        <br />
+        <h3>Business Information</h3>
+
+        <label>Name:</label>
+        <input type="text" name="BusinessName" placeholder="Business Name">
+        <br />
+        <label>Description:</label>
+        <textarea placeholder="Business Description"></textarea>
+        <br />
+        <label>Website:</label>
+        <input type="text" name="BusinessWebsite" placeholder="Business Website">
+        <br />
+        <label>Coordinates:</label>
+        <input type="text" name="Coordinates" placeholder="Coordinates">
+        <br />
+        <label>Social Media:</label>
+        <input type="text" name="SocialMedia" placeholder="Social Media">
+        <br />
+        <label>Hours:</label>
+        <input type="text" name="BusinessHours" placeholder="Business Hours">
+        <br />
+        <label>Logo:</label>
+        <input type="text" name="BusinessLogo" placeholder="Business Logo">
+        <br />
+        <input type="submit" class="submit-form-btn" value="Submit">
+
+    </form>
+
+</body>
