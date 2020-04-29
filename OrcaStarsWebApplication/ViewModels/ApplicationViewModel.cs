@@ -8,10 +8,20 @@ namespace OrcaStarsWebApplication.ViewModels
 {
     public class ApplicationViewModel
     {
-        [Display(Name = "Username (Email)")]
-        [EmailAddress(ErrorMessage = "Invalid Email")]
-        [Required(ErrorMessage = "*")]
-        public string UserName { get; set; }
-
+        [Required]
+        public string FirstName { get; set; }
+        [Required]
+        public string LastName { get; set; }
+        [Required]
+        public string PhoneNumber { get; set; }
+        [Required]
+        public string BusinessName { get; set; }
+        [Required]
+        public string Description { get; set; }
+        public string Website { get; set; }
+        public string Coordinates { get; set; }
+        public string SocialMedia { get; set; }
+        public string Hours { get; set; }
+        public string Logo { get; set; }
     }
 }

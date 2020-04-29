@@ -1,15 +1,49 @@
-﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
-@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+﻿
+
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Business Form";
+    Layout = null;
 }
 
-    <div class="text-center">
-        <label asp-for="UserName">Username</label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+<body>
+    <h1>Orca Stars Business Application</h1>
+    <form action="" method="post">
+        <h3>Owner Information</h3>
 
-        <input type="Submit"value="Submit" />
-        <div><a asp-controller="Admin" asp-action="Confirm">Confirm</a></div>
+        <label>First Name:</label>
+        <input type="text" name="FirstName" placeholder="First Name" />
+        <br />
+        <label>Last Name:</label>
+        <input type="text" name="LastName" placeholder="Last Name" />
+        <br />
+        <label>Phone Number:</label>
+        <input type="text" name="PhoneNumber" placeholder="Phone Number" />
+        <br />
+        <h3>Business Information</h3>
 
-    </div>
+        <label>Name:</label>
+        <input type="text" name="BusinessName" placeholder="Business Name">
+        <br />
+        <label>Description:</label>
+        <textarea placeholder="Business Description"></textarea>
+        <br />
+        <label>Website:</label>
+        <input type="text" name="BusinessWebsite" placeholder="Business Website">
+        <br />
+        <label>Coordinates:</label>
+        <input type="text" name="Coordinates" placeholder="Coordinates">
+        <br />
+        <label>Social Media:</label>
+        <input type="text" name="SocialMedia" placeholder="Social Media">
+        <br />
+        <label>Hours:</label>
+        <input type="text" name="BusinessHours" placeholder="Business Hours">
+        <br />
+        <label>Logo:</label>
+        <input type="text" name="BusinessLogo" placeholder="Business Logo">
+        <br />
+        <input type="submit" class="submit-form-btn" value="Submit">
+
+    </form>
+
+</body>

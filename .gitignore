@@ -348,3 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# obj and Debug\netcoreapp3.1 folders
+**/obj/project.assets.json
+**/obj/OrcaStarsWebApplication.csproj.nuget.cache
+**/obj/OrcaStarsWebApplication.csproj.nuget.dgspec
+**/obj/OrcaStarsWebApplication.csproj.nuget.g.props
+**/obj/OrcaStarsWebApplication.csproj.nuget.g.targets
