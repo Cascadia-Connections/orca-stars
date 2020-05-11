@@ -1,5 +1,5 @@
-﻿
-
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
 @{
     ViewData["Title"] = "Business Form";
     Layout = null;
@@ -11,36 +11,36 @@
         <h3>Owner Information</h3>
 
         <label>First Name:</label>
-        <input type="text" name="FirstName" placeholder="First Name" />
+        <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
         <br />
         <label>Last Name:</label>
-        <input type="text" name="LastName" placeholder="Last Name" />
+        <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
         <br />
         <label>Phone Number:</label>
-        <input type="text" name="PhoneNumber" placeholder="Phone Number" />
+        <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
         <br />
         <h3>Business Information</h3>
 
         <label>Name:</label>
-        <input type="text" name="BusinessName" placeholder="Business Name">
+        <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
         <br />
         <label>Description:</label>
-        <textarea placeholder="Business Description"></textarea>
+        <textarea asp-for="Description" placeholder="Business Description"></textarea>
         <br />
         <label>Website:</label>
-        <input type="text" name="BusinessWebsite" placeholder="Business Website">
+        <input asp-for="Website" type="text" name="BusinessWebsite" placeholder="Business Website">
         <br />
         <label>Coordinates:</label>
-        <input type="text" name="Coordinates" placeholder="Coordinates">
+        <input asp-for="Coordinates" type="text" name="Coordinates" placeholder="Coordinates">
         <br />
         <label>Social Media:</label>
-        <input type="text" name="SocialMedia" placeholder="Social Media">
+        <input asp-for="SocialMedia" type="text" name="SocialMedia" placeholder="Social Media">
         <br />
         <label>Hours:</label>
-        <input type="text" name="BusinessHours" placeholder="Business Hours">
+        <input asp-for="Hours" type="text" name="BusinessHours" placeholder="Business Hours">
         <br />
         <label>Logo:</label>
-        <input type="text" name="BusinessLogo" placeholder="Business Logo">
+        <input asp-for="Logo" type="text" name="BusinessLogo" placeholder="Business Logo">
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
 
