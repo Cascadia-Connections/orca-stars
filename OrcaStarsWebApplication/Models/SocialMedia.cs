@@ -13,5 +13,6 @@ namespace OrcaStarsWebApplication.Models
         public string Instagram { get; set; }
         public string Other { get; set; }
 
+        //public List<Other> AddSoc { get; set; } 
     }
 }

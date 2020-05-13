@@ -12,23 +12,16 @@ namespace OrcaStarsWebApplication.Models
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int PhoneNumber { get; set; }
         public Point Coordinates { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public int ZipCode { get; set; }
-        
-        public SocialMedia Social { get; set; } //add class, reference here
-        //public Hours Hours { get; set; }
-        public string Hours { get; set; }
+        public SocialMedia Social { get; set; } //collection or class
+        public List<Hours> Hours { get; set; } //unsure of data collection type to use
         public Bitmap Logo { get; set; } 
-        public Bitmap Store { get; set; }
-
-        //social media object - s.m data type as collection of s.m objects --TO DO
-        //research standard s.m data type --TO DO
-        //string address (add1, add2, city, state, zip) -- research standard --DONE
-        //storefront image of business (extra bitmap DT) --DONE
-        //business phone number?
+        public Bitmap StoreFront { get; set; }
     }
 }
