@@ -19,7 +19,7 @@ namespace OrcaStarsWebApplication.Models
         public string State { get; set; }
         public int ZipCode { get; set; }
         
-        //public SocialMedia SocMed { get; set; } add class, reference here
+        public SocialMedia Social { get; set; } //add class, reference here
         //public Hours Hours { get; set; }
         public string Hours { get; set; }
         public Bitmap Logo { get; set; } 
