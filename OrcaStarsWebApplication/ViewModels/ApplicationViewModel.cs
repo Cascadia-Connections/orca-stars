@@ -26,7 +26,6 @@ namespace OrcaStarsWebApplication.ViewModels
         public string Coordinates { get; set; }
         public string SocialMedia { get; set; }
         public string Hours { get; set; }
-        [BindProperty]
         public IFormFile Logo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
     }
 }

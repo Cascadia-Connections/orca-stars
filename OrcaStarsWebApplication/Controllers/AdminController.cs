@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Models;
 using OrcaStarsWebApplication.ViewModels;
 
@@ -14,14 +16,13 @@ namespace OrcaStarsWebApplication.Controllers
 {
     public class AdminController : Controller
     {
-        [Obsolete]
-        public IHostingEnvironment HostingEnvironment { get; }
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        [Obsolete]
-        public AdminController(IHostingEnvironment hostingEnvironment)
+        public AdminController(IWebHostEnvironment HostEnv)
         {
-            HostingEnvironment = hostingEnvironment;
+            webHostEnvironment = HostEnv;
         }
+        public int MyProperty { get; set; }
 
         [HttpGet]
         public IActionResult Index()
@@ -31,27 +32,23 @@ namespace OrcaStarsWebApplication.Controllers
         [HttpPost]
         public IActionResult Index(ApplicationViewModel avm)
         {
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (avm.Logo != null)
+                {
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images"); //images location as string format
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + avm.Logo.FileName; //make sure uploaded file is unique
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName); //combining uploads folde rand unique file name to create it files path
+                    avm.Logo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                }
+            }
             return RedirectToAction("Confirm", avm );
         }
 
         [HttpGet]
         public IActionResult Confirm(ApplicationViewModel avm)
         {
-            if (ModelState.IsValid)
-            {
-                string uniqueFileName = null;
-                if (avm.Logo != null)
-                {
-                    string uploadsFolder = Path.Combine(HostingEnvironment.WebRootPath, "images");
-                    uniqueFileName = Guid.NewGuid().ToString() + "_" + avm.Logo.FileName;
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-                    avm.Logo.CopyTo(new FileStream(filePath, FileMode.Create));
-                }
-                return View(avm);
-            }
-
-
-
             return View(avm);
         }
 
