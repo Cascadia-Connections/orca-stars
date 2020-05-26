@@ -1,0 +1,79 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@{
+    ViewData["Title"] = "Business Form";
+    Layout = null;
+}
+
+    <body>
+        <form action="" method="post">
+            <h3>Business Information</h3>
+
+            <label>Name:</label>
+            <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
+            <br />
+            <label>Description:</label>
+            <textarea asp-for="Description" placeholder="Business Description"></textarea>
+            <br />
+            <label>Website:</label>
+            <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
+            <br />
+            <label>Address 1:</label>
+            <input asp-for="Address" type="text" name="Address" placeholder="Business Address">
+            <br />
+            <label>Address 2:</label>
+            <input asp-for="Address" type="text" name="Address" placeholder="Business Address">
+            <br />
+            <label>City:</label>
+            <input asp-for="City" type="text" name="City" placeholder="City">
+
+            <label>State:</label>
+            <input asp-for="State" type="text" name="State" placeholder="State">
+
+            <label>Zip:</label>
+
+            <input asp-for="Zip" type="text" name="Zip" placeholder="Zip Code">
+            <br />
+            <br />
+
+
+            <label>Social Media Platform:</label>
+            <br />
+            <select asp-for="SocialMedia" id="socialmedia">
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Twitter</option>
+            </select>
+            <label>Handle:</label>
+            <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+            <input type="submit" class="add-btn" value="+ Add">
+            <input type="submit" class="remove-btn" value="- Remove">
+            <br />
+            <br />
+
+
+            <select asp-for="SocialMedia" id="socialmedia">
+                <option>Facebook</option>
+                <option>Instagram</option>
+                <option>Twitter</option>
+            </select>
+            <label>Handle:</label>
+            <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+            <input type="submit" class="add-form-btn" value="+ Add">
+            <input type="submit" class="remove-btn" value="- Remove">
+            <br />
+            <br />
+
+
+            <label>Hours:</label>
+            <input type="submit" class="upload-btn" value="Choose File">
+
+            <label>Logo:</label>
+            <input type="submit" class="upload-btn" value="Choose File">
+            <br />
+            <br />
+            <input type="submit" class="submit-form-btn" value="Submit">
+
+        </form>
+
+    </body>

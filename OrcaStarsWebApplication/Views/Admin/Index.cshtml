@@ -5,48 +5,24 @@
     Layout = null;
 }
 
-<body>
-    <h1>Orca Stars Business Application</h1>
-    <form action="" method="post">
-        <h3>Owner Information</h3>
+    <body>
+        <form action="" method="post">
+            <h3>Owner Information</h3>
 
-        <label>First Name:</label>
-        <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
-        <br />
-        <label>Last Name:</label>
-        <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
-        <br />
-        <label>Phone Number:</label>
-        <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
-        <br />
-        <label>Email:</label>
-        <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
-        <br />
-        <h3>Business Information</h3>
+            <label>First Name:</label>
+            <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
+            <br />
+            <label>Last Name:</label>
+            <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
+            <br />
+            <label>Phone Number:</label>
+            <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
+            <br />
+            <label>Email:</label>
+            <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
+            <br />
+            <input type="submit" class="submit-form-btn" value="Next Step >>">
 
-        <label>Name:</label>
-        <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
-        <br />
-        <label>Description:</label>
-        <textarea asp-for="Description" placeholder="Business Description"></textarea>
-        <br />
-        <label>Website:</label>
-        <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
-        <br />
-        <label>Coordinates:</label>
-        <input asp-for="Coordinates" type="text" name="Coordinates" placeholder="Coordinates">
-        <br />
-        <label>Social Media:</label>
-        <input asp-for="SocialMedia" type="text" name="SocialMedia" placeholder="Social Media">
-        <br />
-        <label>Hours:</label>
-        <input asp-for="Hours" type="text" name="Hours" placeholder="Business Hours">
-        <br />
-        <label>Logo:</label>
-        <input asp-for="Logo" type="text" name="Logo" placeholder="Business Logo">
-        <br />
-        <input type="submit" class="submit-form-btn" value="Submit">
+        </form>
 
-    </form>
-
-</body>
+    </body>
