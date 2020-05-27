@@ -9,7 +9,7 @@
     <h1>Orca Stars Business Application</h1>
     <form enctype="multipart/form-data" asp-controller="admin" asp-action="index" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
-        <h3>Owner Information</h3>
+        <h3>Contact Information</h3>
 
         <label>First Name:</label>
         <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
@@ -27,74 +27,70 @@
         <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
         <span asp-validation-for="Email"></span>
         <br />
-
         <h3>Business Information</h3>
+
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
-        <span asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
         <textarea asp-for="Description" placeholder="Business Description"></textarea>
-        <span asp-validation-for="Description"></span>
         <br />
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
-        <span asp-validation-for="Website"></span>
         <br />
-        <label>Address Line 1:</label>
-        <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="55555 Street Way NW">
-        <span asp-validation-for="AddressLine1"></span>
+        <label>Address 1:</label>
+        <input asp-for="AddressLine1" type="text" name="Address" placeholder="Business Address">
         <br />
-        <label>Address Line 2:</label>
-        <input asp-for="AddressLine2" type="text" name="AddressLine1" placeholder="">
-        <span asp-validation-for="AddressLine2"></span>
+        <label>Address 2:</label>
+        <input asp-for="AddressLine2" type="text" name="Address" placeholder="Business Address">
         <br />
         <label>City:</label>
-        <input asp-for="City" type="text" name="City" placeholder="Bothell">
-        <span asp-validation-for="City"></span>
+        <input asp-for="City" type="text" name="City" placeholder="City">
+
+        <label>State:</label>
+        <input asp-for="State" type="text" name="State" placeholder="State">
+
+        <label>Zip:</label>
+
+        <input asp-for="Zip" type="text" name="Zip" placeholder="Zip Code">
         <br />
-        <label>State/Province:</label>
-        <input asp-for="State" type="text" name="State" placeholder="WA">
-        <span asp-validation-for="State"></span>
         <br />
-        <label>Country:</label>
-        <input asp-for="Country" type="text" name="Country" placeholder="United States">
-        <span asp-validation-for="Country"></span>
+
+
+        <label>Social Media Platform:</label>
         <br />
-        <label>Postal Code:</label>
-        <input asp-for="Zip" type="text" name="Zip" placeholder="90123">
-        <span asp-validation-for="Zip"></span>
+        <select asp-for="SocialMedia" id="socialmedia">
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>Twitter</option>
+        </select>
+        <label>Handle:</label>
+        <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+        <input type="submit" class="add-btn" value="+ Add">
+        <input type="submit" class="remove-btn" value="- Remove">
         <br />
-        <label>Social Media:</label>
-        <input asp-for="SocialMedia" type="text" name="SocialMedia" placeholder="Social Media">
-        <span asp-validation-for="SocialMedia"></span>
         <br />
+
+
+        <select asp-for="SocialMedia" id="socialmedia">
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>Twitter</option>
+        </select>
+        <label>Handle:</label>
+        <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+        <input type="submit" class="add-form-btn" value="+ Add">
+        <input type="submit" class="remove-btn" value="- Remove">
+        <br />
+        <br />
+
+
         <label>Hours:</label>
-        <input asp-for="Hours" type="text" name="Hours" placeholder="Business Hours">
-        <span asp-validation-for="Hours"></span>
+        <input type="submit" class="upload-btn" value="Choose File">
+
+        <label>Logo:</label>
+        <input type="submit" class="upload-btn" value="Choose File">
         <br />
-        <div class="form-group row">
-            <label asp-for="Logo" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <div class="custom-file">
-                    @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
-                    <input asp-for="Logo" class="custom-file-input form-control">
-                    <label class="custom-file-label">Click here to change photo</label>
-                </div>
-            </div>
-        </div>
-        @section Scripts {
-            <script>
-                $(document).ready(function () {
-                    $('.custom-file-input').on("change", function () {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).next('.custom-file-label').html(fileName);
-                    });
-                });
-            </script>
-        }
-        <span asp-validation-for="Logo"></span>
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
 
