@@ -42,8 +42,12 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.Logo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.BusinessLogo = uniqueFileName;
                 }
+                return RedirectToAction("Confirm", avm);
+
             }
-            return RedirectToAction("Confirm", avm);
+            //If the model didn't work, don't leave
+            return View();
+
         }
 
         [HttpGet]
