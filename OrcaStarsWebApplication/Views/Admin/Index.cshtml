@@ -31,9 +31,11 @@
 
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
+        <span asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
         <textarea asp-for="Description" placeholder="Business Description"></textarea>
+        <span asp-validation-for="Description"></span>
         <br />
         <label>Category:</label>
         <select asp-for="Category" id="socialmedia">
@@ -51,26 +53,33 @@
             <option>Mass Media</option>
             <option>Education</option>
         </select>
-       
+        <span asp-validation-for="Category"></span>
+
         <br />
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
+        <span asp-validation-for="Website"></span>
         <br />
         <label>Address 1:</label>
         <input asp-for="AddressLine1" type="text" name="Address" placeholder="Business Address">
+        <span asp-validation-for="AddressLine1"></span>
         <br />
         <label>Address 2:</label>
         <input asp-for="AddressLine2" type="text" name="Address" placeholder="Business Address">
+        <span asp-validation-for="AddressLine2"></span>
         <br />
         <label>City:</label>
         <input asp-for="City" type="text" name="City" placeholder="City">
+        <span asp-validation-for="City"></span>
 
         <label>State:</label>
         <input asp-for="State" type="text" name="State" placeholder="State">
+        <span asp-validation-for="State"></span>
 
         <label>Zip:</label>
 
         <input asp-for="Zip" type="text" name="Zip" placeholder="Zip Code">
+        <span asp-validation-for="Zip"></span>
         <br />
         <br />
 
@@ -82,6 +91,8 @@
             <option>Instagram</option>
             <option>Twitter</option>
         </select>
+        <span asp-validation-for="SocialMedia"></span>
+
         <label>Handle:</label>
         <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
         <input type="submit" class="add-btn" value="+ Add">
@@ -95,6 +106,8 @@
             <option>Instagram</option>
             <option>Twitter</option>
         </select>
+        <span asp-validation-for="SocialMedia"></span>
+
         <label>Handle:</label>
         <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
         <input type="submit" class="add-form-btn" value="+ Add">
@@ -105,9 +118,11 @@
 
         <label>Hours:</label>
         <input type="submit" class="upload-btn" value="Choose File">
+        <span asp-validation-for="Hours"></span>
 
         <label>Logo:</label>
         <input type="submit" class="upload-btn" value="Choose File">
+        <span asp-validation-for="Logo"></span>
         <br />
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
