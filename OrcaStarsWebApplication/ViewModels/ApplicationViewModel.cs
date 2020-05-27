@@ -21,7 +21,12 @@ namespace OrcaStarsWebApplication.ViewModels
         [Required]
         public string Description { get; set; }
         public string Website { get; set; }
-        public string Coordinates { get; set; }
+        public string AddressLine1 { get; set; }
+        public string AddressLine2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
+        public string Zip { get; set; }
         public string SocialMedia { get; set; }
         public string Hours { get; set; }
         public string Logo { get; set; }

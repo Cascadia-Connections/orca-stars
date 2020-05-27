@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OrcaStarsWebApplication.ViewModels;
 
 namespace OrcaStarsWebApplication.Models
 {
     public class AddressService
     {
-        public string fieldsToAddress(string AddrL1, string AddrL2, string City, string State, string Country)
+        public string fieldsToAddress(ApplicationViewModel avm)
         {
             var address = "";
-            if (AddrL1 != null)
-                address += AddrL1;
-            if (AddrL2 != null)
-                address += AddrL2;
-            if (City != null)
-                address += City;
-            if (State != null)
-                address += State;
-            if (Country != null)
-                address += Country;
+            if (avm.AddressLine1 != null)
+                address += avm.AddressLine1 + ", ";
+            if (avm.AddressLine2 != null)
+                address += avm.AddressLine2 + " ";
+            if (avm.City != null)
+                address += avm.City + " ";
+            if (avm.State != null)
+                address += avm.State;
+            if (avm.Zip != null)
+                address += " " + avm.Zip;
             return address;
         }
     }
