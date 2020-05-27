@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
 
+
 namespace OrcaStarsWebApplication.Models
 {
     public class Business
@@ -13,6 +14,6 @@ namespace OrcaStarsWebApplication.Models
         public string Description { get; set; }
         public Point Coordinates { get; set; }
         public string Hours { get; set; }
-        public string Logo { get; set; } //File path reference
+        public Bitmap Logo { get; set; } 
     }
 }
