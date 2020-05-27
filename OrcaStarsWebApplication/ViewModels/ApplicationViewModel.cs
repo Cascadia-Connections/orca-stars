@@ -31,6 +31,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string City { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string State { get; set; }
+        [Required(ErrorMessage = "*Required")]
         public string Country { get; set; }
         public string Zip { get; set; }
         public string SocialMedia { get; set; }
