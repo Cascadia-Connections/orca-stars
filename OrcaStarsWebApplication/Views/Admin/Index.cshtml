@@ -12,38 +12,69 @@
 
         <label>First Name:</label>
         <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
+        <span asp-validation-for="FirstName"></span>
         <br />
         <label>Last Name:</label>
         <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
+        <span asp-validation-for="LastName"></span>
         <br />
         <label>Phone Number:</label>
         <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
+        <span asp-validation-for="PhoneNumber"></span>
         <br />
         <label>Email:</label>
         <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
+        <span asp-validation-for="Email"></span>
         <br />
-        <h3>Business Information</h3>
 
+        <h3>Business Information</h3>
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
+        <span asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
         <textarea asp-for="Description" placeholder="Business Description"></textarea>
+        <span asp-validation-for="Description"></span>
         <br />
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
+        <span asp-validation-for="Website"></span>
         <br />
-        <label>Coordinates:</label>
-        <input asp-for="Coordinates" type="text" name="Coordinates" placeholder="Coordinates">
+        <label>Address Line 1:</label>
+        <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="55555 Street Way NW">
+        <span asp-validation-for="AddressLine1"></span>
+        <br />
+        <label>Address Line 2:</label>
+        <input asp-for="AddressLine2" type="text" name="AddressLine1" placeholder="">
+        <span asp-validation-for="AddressLine2"></span>
+        <br />
+        <label>City:</label>
+        <input asp-for="City" type="text" name="City" placeholder="Bothell">
+        <span asp-validation-for="City"></span>
+        <br />
+        <label>State:</label>
+        <input asp-for="State" type="text" name="State" placeholder="WA">
+        <span asp-validation-for="State"></span>
+        <br />
+        <label>Country:</label>
+        <input asp-for="Country" type="text" name="Country" placeholder="USA">
+        <span asp-validation-for="Country"></span>
+        <br />
+        <label>Zip Code:</label>
+        <input asp-for="Zip" type="text" name="Zip" placeholder="90123">
+        <span asp-validation-for="Zip"></span>
         <br />
         <label>Social Media:</label>
         <input asp-for="SocialMedia" type="text" name="SocialMedia" placeholder="Social Media">
+        <span asp-validation-for="SocialMedia"></span>
         <br />
         <label>Hours:</label>
         <input asp-for="Hours" type="text" name="Hours" placeholder="Business Hours">
+        <span asp-validation-for="Hours"></span>
         <br />
         <label>Logo:</label>
         <input asp-for="Logo" type="text" name="Logo" placeholder="Business Logo">
+        <span asp-validation-for="Logo"></span>
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
 

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Repositories;
 using OrcaStarsWebApplication.Services;
+using OrcaStarsWebApplication.Models;
 
 namespace OrcaStarsWebApplication
 {
@@ -28,6 +29,7 @@ namespace OrcaStarsWebApplication
         {
             services.AddTransient<IBusinessRepository, BusinessRepository>();
             services.AddTransient<IBusinessServices, BusinessServices>();
+            services.AddTransient<AddressService>();
             services.AddMvc();
             services.AddDbContext<Models.BitDataContext>(options =>
             {

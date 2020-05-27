@@ -20,6 +20,9 @@ namespace OrcaStarsWebApplication.Controllers
         [HttpPost]
         public IActionResult Index(ApplicationViewModel avm)
         {
+            //Validate the form
+            if (!ModelState.IsValid) { return View(); }
+
             return RedirectToAction("Confirm", avm );
         }
 
