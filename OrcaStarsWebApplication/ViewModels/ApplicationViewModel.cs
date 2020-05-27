@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace OrcaStarsWebApplication.ViewModels
 {
@@ -27,5 +28,6 @@ namespace OrcaStarsWebApplication.ViewModels
         public string SocialMedia { get; set; }
         public string Hours { get; set; }
         public IFormFile Logo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
+        public string BusinessLogo { get;  set; }
     }
 }

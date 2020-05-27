@@ -22,7 +22,6 @@ namespace OrcaStarsWebApplication.Controllers
         {
             webHostEnvironment = HostEnv;
         }
-        public int MyProperty { get; set; }
 
         [HttpGet]
         public IActionResult Index()
@@ -39,11 +38,12 @@ namespace OrcaStarsWebApplication.Controllers
                 {
                     string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images"); //images location as string format
                     uniqueFileName = Guid.NewGuid().ToString() + "_" + avm.Logo.FileName; //make sure uploaded file is unique
-                    string filePath = Path.Combine(uploadsFolder, uniqueFileName); //combining uploads folde rand unique file name to create it files path
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName); //combining uploads folder and unique file name to create it files path
                     avm.Logo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                    avm.BusinessLogo = uniqueFileName;
                 }
             }
-            return RedirectToAction("Confirm", avm );
+            return RedirectToAction("Confirm", avm);
         }
 
         [HttpGet]
