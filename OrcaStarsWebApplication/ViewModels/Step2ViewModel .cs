@@ -14,6 +14,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string Description { get; set; }
         public string Website { get; set; }
         public string SocialMedia { get; set; }
+        public string Handle { get; set; }
         [Required]
         public string Address { get; set; }
         [Required]
