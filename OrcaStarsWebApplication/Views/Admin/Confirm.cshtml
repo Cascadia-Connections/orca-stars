@@ -17,11 +17,11 @@
         <p><b>Name:</b> @Model.BusinessName</p>
         <p><b>Description:</b> @Model.Description</p>
         <p><b>Hours:</b> @Model.Hours</p>
-        <p><b>Website:</b> <a href="http://@Model.Website">@Model.Website</a></p>
+        <p><b>Website:</b> <a target="_blank" href="http://@Model.Website">@Model.Website</a></p>
         <p><b>Social Media:</b> @Model.SocialMedia</p>
         <p>
             <b>Business Logo:</b>
-            <img src="~/images/@Model.BusinessLogo" style="width:300px; height: 300px;" />
+            <img src="~/images/@Model.BusinessLogo" style="width:300px; height: auto;" />
         </p>
         <p><b>Location:</b> @Address.fieldsToAddress(@Model)</p>
         <div>
@@ -91,7 +91,7 @@
                     },
                     errorCallback: function (e) {
                         //If there is an error, alert the user about it.
-                        alert("No results found.");
+                        alert("Couldn't find the Address at @Address.fieldsToAddress(@Model)");
                     }
                 };
 
