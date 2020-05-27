@@ -6,8 +6,16 @@
     <title>@ViewData["Title"] - OrcaStarsWebApplication</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
-<body>    
-	 @RenderBody()   
+<body>
+    <div>   
+        @RenderBody()
+    </div>
+    <!-- Enables use to call and use Scripts as needed in our views -->
+    @if (IsSectionDefined("Scripts"))
+    {
+        @RenderSection("Scripts", required: true)
+    }
 </body>
 </html>

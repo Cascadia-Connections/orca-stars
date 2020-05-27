@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Models;
 using OrcaStarsWebApplication.ViewModels;
 
@@ -12,6 +16,13 @@ namespace OrcaStarsWebApplication.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly IWebHostEnvironment webHostEnvironment;
+
+        public AdminController(IWebHostEnvironment HostEnv)
+        {
+            webHostEnvironment = HostEnv;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -20,7 +31,23 @@ namespace OrcaStarsWebApplication.Controllers
         [HttpPost]
         public IActionResult Index(ApplicationViewModel avm)
         {
-            return RedirectToAction("Confirm", avm );
+            if (ModelState.IsValid)
+            {
+                string uniqueFileName = null;
+                if (avm.Logo != null)
+                {
+                    string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images"); //images location as string format
+                    uniqueFileName = Guid.NewGuid().ToString() + "_" + avm.Logo.FileName; //make sure uploaded file is unique
+                    string filePath = Path.Combine(uploadsFolder, uniqueFileName); //combining uploads folder and unique file name to create it files path
+                    avm.Logo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                    avm.BusinessLogo = uniqueFileName;
+                }
+                return RedirectToAction("Confirm", avm);
+
+            }
+            //If the model didn't work, don't leave
+            return View();
+
         }
 
         [HttpGet]
