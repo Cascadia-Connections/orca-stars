@@ -16,14 +16,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string PhoneNumber { get; set; }
         [Required]
         public string Email { get; set; }
-        [Required]
-        public string BusinessName { get; set; }
-        [Required]
-        public string Description { get; set; }
-        public string Website { get; set; }
-        public string Coordinates { get; set; }
-        public string SocialMedia { get; set; }
-        public string Hours { get; set; }
-        public string Logo { get; set; }
+        
+    
     }
 }
