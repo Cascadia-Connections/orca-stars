@@ -23,6 +23,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string BusinessName { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string Description { get; set; }
+        public string Category { get; set; }
         public string Website { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string AddressLine1 { get; set; }
