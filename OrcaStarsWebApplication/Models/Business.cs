@@ -13,14 +13,13 @@ namespace OrcaStarsWebApplication.Models
         public string Description { get; set; }
         public int PhoneNumber { get; set; }
         public string Category { get; set; }
-        public Point Coordinates { get; set; } //change to geolocation not system.draw  
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
         public string State { get; set; } 
         public int ZipCode { get; set; }
-        public SocialMedia Social { get; set; } //collection or class
-        public List<Hours> Hours { get; set; } 
+        public SocialMedia Social { get; set; } 
+        public Hours Hours { get; set; } 
         public Bitmap Logo { get; set; } 
         public Bitmap StoreFront { get; set; }
     }
