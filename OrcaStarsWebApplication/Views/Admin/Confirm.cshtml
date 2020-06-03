@@ -21,7 +21,11 @@
         <p><b>Social Media:</b> @Model.SocialMedia</p>
         <p>
             <b>Business Logo:</b>
-            <img src="~/images/@Model.BusinessLogo" style="width:300px; height: auto;" />
+            <img src="~/@Model.BusinessLogoHolder" style="width:300px; height: auto;" />
+        </p>
+        <p>
+            <b>Store Logo:</b>
+            <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" />
         </p>
         <p><b>Location:</b> @Address.fieldsToAddress(@Model)</p>
         <div>

@@ -37,8 +37,10 @@ namespace OrcaStarsWebApplication.ViewModels
         public string Zip { get; set; }
         public string SocialMedia { get; set; }
         public string Hours { get; set; }
-        public IFormFile Logo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
-        public string BusinessLogo { get;  set; }
         public string Handle { get; set; }
+        public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
+        public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
+        public string BusinessLogoHolder { get;  set; }
+        public string StoreLogoHolder { get;  set; }
     }
 }
