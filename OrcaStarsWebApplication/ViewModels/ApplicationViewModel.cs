@@ -23,6 +23,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string BusinessName { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string Description { get; set; }
+        public string Category { get; set; }
         public string Website { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string AddressLine1 { get; set; }
@@ -36,6 +37,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string Zip { get; set; }
         public string SocialMedia { get; set; }
         public string Hours { get; set; }
+        public string Handle { get; set; }
         public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public string BusinessLogoHolder { get;  set; }

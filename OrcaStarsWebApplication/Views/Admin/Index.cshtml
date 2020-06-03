@@ -9,7 +9,7 @@
     <h1>Orca Stars Business Application</h1>
     <form enctype="multipart/form-data" asp-controller="admin" asp-action="index" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
-        <h3>Owner Information</h3>
+        <h3>Contact Information</h3>
 
         <label>First Name:</label>
         <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
@@ -27,8 +27,8 @@
         <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
         <span asp-validation-for="Email"></span>
         <br />
-
         <h3>Business Information</h3>
+
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
         <span asp-validation-for="BusinessName"></span>
@@ -37,41 +37,89 @@
         <textarea asp-for="Description" placeholder="Business Description"></textarea>
         <span asp-validation-for="Description"></span>
         <br />
+        <label>Category:</label>
+        <select asp-for="Category" id="socialmedia">
+            <option>Restaurant</option>
+            <option>Bars & Nightlife</option>
+            <option>Health & Medicine</option>
+            <option>Shopping</option>
+            <option>Auto</option>
+            <option>Home Maintenance</option>
+            <option>Professional Services</option>
+            <option>Auto</option>
+            <option>Hotels & Travel</option>
+            <option>Pets</option>
+            <option>Financial Service</option>
+            <option>Mass Media</option>
+            <option>Education</option>
+        </select>
+        <span asp-validation-for="Category"></span>
+
+        <br />
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
         <span asp-validation-for="Website"></span>
         <br />
-        <label>Address Line 1:</label>
-        <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="55555 Street Way NW">
+        <label>Address 1:</label>
+        <input asp-for="AddressLine1" type="text" name="Address" placeholder="Business Address">
         <span asp-validation-for="AddressLine1"></span>
         <br />
-        <label>Address Line 2:</label>
-        <input asp-for="AddressLine2" type="text" name="AddressLine1" placeholder="">
+        <label>Address 2:</label>
+        <input asp-for="AddressLine2" type="text" name="Address" placeholder="Business Address">
         <span asp-validation-for="AddressLine2"></span>
         <br />
         <label>City:</label>
-        <input asp-for="City" type="text" name="City" placeholder="Bothell">
+        <input asp-for="City" type="text" name="City" placeholder="City">
         <span asp-validation-for="City"></span>
-        <br />
-        <label>State/Province:</label>
-        <input asp-for="State" type="text" name="State" placeholder="WA">
+
+        <label>State:</label>
+        <input asp-for="State" type="text" name="State" placeholder="State">
         <span asp-validation-for="State"></span>
-        <br />
-        <label>Country:</label>
-        <input asp-for="Country" type="text" name="Country" placeholder="United States">
-        <span asp-validation-for="Country"></span>
-        <br />
-        <label>Postal Code:</label>
-        <input asp-for="Zip" type="text" name="Zip" placeholder="90123">
+
+        <label>Zip:</label>
+
+        <input asp-for="Zip" type="text" name="Zip" placeholder="Zip Code">
         <span asp-validation-for="Zip"></span>
         <br />
-        <label>Social Media:</label>
-        <input asp-for="SocialMedia" type="text" name="SocialMedia" placeholder="Social Media">
-        <span asp-validation-for="SocialMedia"></span>
         <br />
+
+
+        <label>Social Media Platform:</label>
+        <br />
+        <select asp-for="SocialMedia" id="socialmedia">
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>Twitter</option>
+        </select>
+        <span asp-validation-for="SocialMedia"></span>
+
+        <label>Handle:</label>
+        <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+        <input type="submit" class="add-btn" value="+ Add">
+        <input type="submit" class="remove-btn" value="- Remove">
+        <br />
+        <br />
+
+
+        <select asp-for="SocialMedia" id="socialmedia">
+            <option>Facebook</option>
+            <option>Instagram</option>
+            <option>Twitter</option>
+        </select>
+        <span asp-validation-for="SocialMedia"></span>
+
+        <label>Handle:</label>
+        <input asp-for="Handle" type="text" name="Handle" placeholder="Handle">
+        <input type="submit" class="add-form-btn" value="+ Add">
+        <input type="submit" class="remove-btn" value="- Remove">
+        <br />
+        <br />
+
+
         <label>Hours:</label>
-        <input asp-for="Hours" type="text" name="Hours" placeholder="Business Hours">
+        <input type="submit" class="upload-btn" value="Choose File">
         <span asp-validation-for="Hours"></span>
+
         <br />
         <div class="form-group row">
             <label asp-for="BusinessLogo" class="col-sm-2 col-form-label"></label>
@@ -105,6 +153,7 @@
                 });
             </script>
         }
+        <br />
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
 
