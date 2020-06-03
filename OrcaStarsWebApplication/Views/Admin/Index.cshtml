@@ -32,6 +32,7 @@
 
         <h3>Business Information</h3>
         <h4>General</h4>
+
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
         <span asp-validation-for="BusinessName"></span>
@@ -86,9 +87,6 @@
         <input asp-for="Zip" type="text" name="Zip" placeholder="98012">
         <span asp-validation-for="Zip"></span>
         <br />
-        <label>Country:</label>
-        <input asp-for="Country" type="text" name="Country" placeholder="United States">
-        <span asp-validation-for="Country"></span>
         <br />
         <br />
 
@@ -156,6 +154,7 @@
             </script>
         }
 
+        <br />
         <br />
         <input type="submit" class="submit-form-btn" value="Submit">
 
