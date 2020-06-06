@@ -22,7 +22,7 @@ namespace OrcaStarsWebApplication.Models
         public string Country { get; set; }
         public int ZipCode { get; set; }
         public SocialMedia Social { get; set; } 
-        public Hours Hours { get; set; } 
+        public ICollection<Hours> Hours { get; set; } 
         public IFormFile Logo { get; set; } //changed from bitmap to iformfile
         public IFormFile StoreFront { get; set; } //changed from bitmap to iformfile
     }
