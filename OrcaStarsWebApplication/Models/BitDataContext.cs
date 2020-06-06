@@ -11,6 +11,6 @@ namespace OrcaStarsWebApplication.Models
         public BitDataContext(DbContextOptions<BitDataContext> options) : base(options)
         { }
         public DbSet<Business> Businesses { get; set; }
-        public DbSet<BusinessContact> Owners { get; set; }
+        public DbSet<BusinessContact> Contacts { get; set; }
     }
 }

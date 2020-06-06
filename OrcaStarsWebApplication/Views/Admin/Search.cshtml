@@ -1,0 +1,24 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@{
+    ViewData["Title"] = "Search";
+    Layout = "_Layout";
+}
+
+<h1>Search</h1>
+
+<h3>Find Businesses</h3>
+<form asp-action="Search" asp-controller="Admin">
+    <div>
+        Name: <input asp-for="BusinessName" />
+    </div>
+    <div>
+        Category: <input asp-for="Category" />
+    </div>
+    <div>
+        City: <input asp-for="City" />
+    </div>
+    <div>
+        <input type="submit" value="Search" />
+    </div>
+</form>
