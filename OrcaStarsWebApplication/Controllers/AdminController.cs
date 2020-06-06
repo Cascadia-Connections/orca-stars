@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,26 +12,31 @@ using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Models;
 using OrcaStarsWebApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OrcaStarsWebApplication.Controllers
 {
 
     public class AdminController : Controller
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
-
+        // DATABASE INJECTION //
         private BitDataContext _db;
-        public AdminController(BitDataContext db) { _db = db; }
+        
+        // CONSTRUCTOR //
+        public AdminController(BitDataContext db) 
+        { 
+            _db = db; 
+        }
 
+        private readonly IWebHostEnvironment webHostEnvironment;
         public AdminController(IWebHostEnvironment HostEnv)
         {
             webHostEnvironment = HostEnv;
         }
 
-
-        //CREATE //
+        // GET //
 
         [HttpGet] //THIS IS THE FORM
         public IActionResult Index()
@@ -38,7 +44,7 @@ namespace OrcaStarsWebApplication.Controllers
             return View();
         }
 
-        //CREATE //
+        // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Index(ApplicationViewModel avm)
@@ -50,10 +56,10 @@ namespace OrcaStarsWebApplication.Controllers
 
                 avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
                 avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
-                
+
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
 
-                if (avm.BusinessLogo != null) 
+                if (avm.BusinessLogo != null)
                 {
                     uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName; //make sure uploaded file is unique
                     string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
@@ -61,7 +67,7 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
                 }
 
-                if (avm.StoreLogo != null) 
+                if (avm.StoreLogo != null)
                 {
                     uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName; //make sure uploaded file is unique
                     string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
@@ -93,7 +99,7 @@ namespace OrcaStarsWebApplication.Controllers
                 {
                     FirstName = avm.FirstName,
                     LastName = avm.LastName,
-                    PhoneNumber = avm.PhoneNumber, //contact view model phone number?
+                    PhoneNumber = avm.PhoneNumber,
                     Email = avm.Email
                 };
 
@@ -103,8 +109,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
             }
-            //If the model didn't work, return View
-            return View();
+            return View(); //This returns view if fail
         }
 
         [HttpGet] //DISPLAYS BUSINESS INFO
@@ -112,7 +117,6 @@ namespace OrcaStarsWebApplication.Controllers
         {
             return View(avm);
         }
-
 
         // READ AND SEARCH //
 
@@ -128,7 +132,6 @@ namespace OrcaStarsWebApplication.Controllers
             //Full Collection Search - start with entire collection
             IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
 
-            //Partial Title Search
             if (avm.BusinessName != null)
             {
                 foundBusinesses = foundBusinesses
@@ -141,7 +144,7 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 foundBusinesses = foundBusinesses
                             .Where(b => b.Category.Contains(avm.Category))
-                            .OrderBy(b => b.Category)
+                            .OrderBy(b => b.Name)
                             ;
             }
 
@@ -154,17 +157,16 @@ namespace OrcaStarsWebApplication.Controllers
             }
 
             //Composite Search Results
-            return View("SearchResults", foundBusinesses.Include(b => b.Name));
+            return RedirectToAction("SearchResults", foundBusinesses.Include(b => b.Name));
         }
 
         [HttpGet]
         public IActionResult SearchResults()
         {
-
             return View();
         }
 
-        //  UPDATE  //
+        // UPDATE //
 
         [HttpGet]
         public IActionResult UpdateBusiness(long id)
@@ -173,25 +175,34 @@ namespace OrcaStarsWebApplication.Controllers
             _db.Businesses.Update(business);
             _db.SaveChanges();
 
-            return RedirectToAction("Search");
+            return View("Search");
         }
 
-        //DELETE //
+        // DELETE //
 
-        [HttpGet]
+        [HttpDelete]
         public IActionResult DeleteBusiness(long id)
         {
             Business business = new Business { Id = id };
             _db.Businesses.Remove(business);
             _db.SaveChanges();
 
-            return RedirectToAction("Search"); 
+            return View("Search"); 
         }
+
+        //LOGIN//
 
         [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel lvm)
+        {
+            //Login Logic Here
+            return RedirectToAction("search");
         }
     }
 }
