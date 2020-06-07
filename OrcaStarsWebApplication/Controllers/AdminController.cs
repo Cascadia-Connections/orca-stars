@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Models;
 using OrcaStarsWebApplication.ViewModels;
@@ -71,6 +72,12 @@ namespace OrcaStarsWebApplication.Controllers
 
         [HttpGet]
         public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult BusinessList() 
         {
             return View();
         }
