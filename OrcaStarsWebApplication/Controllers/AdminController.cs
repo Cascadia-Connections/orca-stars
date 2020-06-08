@@ -31,8 +31,8 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         private readonly IWebHostEnvironment webHostEnvironment;
-        public AdminController(IWebHostEnvironment HostEnv)
-        {
+        public AdminController(IWebHostEnvironment HostEnv) //CANT HAVE MULTIPLE CONSTRUCTORS IN CONTROLLER??
+        {                                                   //Interfering with Db Constructor, Throws exception (Runtime error)
             webHostEnvironment = HostEnv;
         }
 
@@ -90,9 +90,9 @@ namespace OrcaStarsWebApplication.Controllers
                     Website = avm.Website,
                     Category = avm.Category,
                     Hours = avm.Hours,
-                    Social = avm.SocialMedia,
-                    Logo = avm.BusinessLogo,
-                    StoreFront = avm.StoreLogo
+                    Social = avm.SocialMedia
+                    //Logo = avm.BusinessLogo, or else convert FormFile to string error shows up
+                    //StoreFront = avm.StoreLogo
                 };
 
                 BusinessContact businessContact = new BusinessContact

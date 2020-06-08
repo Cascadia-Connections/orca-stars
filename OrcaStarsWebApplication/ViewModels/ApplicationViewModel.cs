@@ -42,7 +42,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public int Zip { get; set; } //changed to int to match business model
         public SocialMedia SocialMedia { get; set; }
         [Required(ErrorMessage = "*Required")]
-        public ICollection<Hours> Hours { get; set; }
+        public Hours Hours { get; set; }
         public string Handle { get; set; } //unecessary
         public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type

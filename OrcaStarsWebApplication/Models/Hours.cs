@@ -7,19 +7,12 @@ namespace OrcaStarsWebApplication.Models
 {
     public class Hours
     {
+        public Guid ID { get; set; }
         public string Day { get; set; }
         public string OpenHour { get; set; }
         public string OpenMinute { get; set; }
         public string CloseHour { get; set; }
         public string CloseMinute { get; set; }
         public List<Hours> ListHours { get; set; }
-
-        //CONSTRUCTOR//
-
-        //STRING FORMAT METHOD//
-        public string HoursOfOperation()
-        {
-            return String.Format($"{Day} : {OpenHour}:{OpenMinute} AM - {CloseHour}:{CloseMinute} PM");
-        }
     }
 }
