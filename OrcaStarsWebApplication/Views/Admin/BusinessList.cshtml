@@ -1,11 +1,43 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
 @{
     ViewData["Title"] = "BusinessList";
+    Layout = "_Layout";
 }
 
 <h1>List of Orca Star Approved Businesses</h1>
+<form>
+    <table>
+        <tr>
+            <th>Company Name</th>
+            <th>Edit Company</th>
+            <th>Remove Company</th>
+        </tr>
+        <tr>
+            <td>Fish Food X</td>
+            <td><input type="Submit" class="add-btn" value="Edit"></td>
+            <td><input type="Submit" class="add-btn" value="Remove"></td>
+        </tr>
+        <tr>
+            <td>Tech World</td>
+            <td><input type="Submit" class="add-btn" value="Edit"></td>
+            <td><input type="Submit" class="add-btn" value="Remove"></td>
+        </tr>
+        <tr>
+            <td>Pacific Coffee</td>
+            <td><input type="Submit" class="add-btn" value="Edit"></td>
+            <td><input type="Submit" class="add-btn" value="Remove"></td>
+        </tr>
+        <tr>
+            <td>Mary's Breakfast Hut</td>
+            <td><input type="Submit" class="add-btn" value="Edit"></td>
+            <td><input type="Submit" class="add-btn" value="Remove"></td>
+        </tr>
+        <tr>
+             <td>Bob's Bakers</td>
+            <td><input type="Submit" class="add-btn" value="Edit"></td>
+            <td><input type="Submit" class="add-btn" value="Remove"></td>
+        </tr>
+    </table>
+    
+</form>
 
-<p>Tech World <input type="Submit" class="add-btn" value="Edit"> <input type="Submit" class="add-btn" value="Remove"></p>
-<p>Pacific Coffee <input type="Submit" class="add-btn" value="Edit"> <input type="Submit" class="add-btn" value="Remove"></p>
-<p>Mary's Breakfast Hut <input type="Submit" class="add-btn" value="Edit"> <input type="Submit" class="add-btn" value="Remove"></p>
-<p>Bob's Bakers <input type="Submit" class="add-btn" value="Edit"> <input type="Submit" class="add-btn" value="Remove"></p>
