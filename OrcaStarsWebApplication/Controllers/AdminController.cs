@@ -71,6 +71,21 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
                 }
 
+                SocialMedia socialM = new SocialMedia
+                {
+                    Twitter = avm.Twitter,
+                    Facebook = avm.Facebook,
+                    Instagram = avm.Instagram
+                };
+
+                BusinessContact businessContact = new BusinessContact
+                {
+                    FirstName = avm.FirstName,
+                    LastName = avm.LastName,
+                    PhoneNumber = avm.PhoneNumber,
+                    Email = avm.Email
+                };
+
                 Business business = new Business
                 {
                  
@@ -86,21 +101,15 @@ namespace OrcaStarsWebApplication.Controllers
                     Website = avm.Website,
                     Category = avm.Category,
                     Hours = avm.Hours,
-                    Social = avm.Social
-                    //Logo = avm.BusinessLogo, or else convert FormFile to string error shows up
-                    //StoreFront = avm.StoreLogo
+                    Social = socialM.ID,
+                    Logo = avm.BusinessLogoHolder, 
+                    StoreFront = avm.StoreLogoHolder,
+                    ContactId = businessContact.Id,
+                    
                 };
 
-                BusinessContact businessContact = new BusinessContact
-                {
-                    FirstName = avm.FirstName,
-                    LastName = avm.LastName,
-                    PhoneNumber = avm.PhoneNumber,
-                    Email = avm.Email
-                };
-
-                _db.Businesses.Add(business);
                 _db.Contacts.Add(businessContact);
+                _db.Businesses.Add(business);
                 _db.SaveChanges();
 
                 return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE

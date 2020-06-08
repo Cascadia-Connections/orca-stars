@@ -41,6 +41,7 @@ namespace OrcaStarsWebApplication.Migrations
                     Logo = table.Column<string>(nullable: true),
                     StoreFront = table.Column<string>(nullable: true),
                     ContactId = table.Column<Guid>(nullable: false),
+                    Social = table.Column<Guid>(nullable: false),
                     BusinessContactId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -77,26 +78,6 @@ namespace OrcaStarsWebApplication.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "SocialMedia",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Handle = table.Column<string>(nullable: true),
-                    BusinessId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SocialMedia", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_SocialMedia_Businesses_BusinessId",
-                        column: x => x.BusinessId,
-                        principalTable: "Businesses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Businesses_BusinessContactId",
                 table: "Businesses",
@@ -106,20 +87,12 @@ namespace OrcaStarsWebApplication.Migrations
                 name: "IX_Hours_BusinessId",
                 table: "Hours",
                 column: "BusinessId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SocialMedia_BusinessId",
-                table: "SocialMedia",
-                column: "BusinessId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Hours");
-
-            migrationBuilder.DropTable(
-                name: "SocialMedia");
 
             migrationBuilder.DropTable(
                 name: "Businesses");

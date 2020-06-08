@@ -10,7 +10,7 @@ using OrcaStarsWebApplication.Models;
 namespace OrcaStarsWebApplication.Migrations
 {
     [DbContext(typeof(BitDataContext))]
-    [Migration("20200608202243_Initial")]
+    [Migration("20200608215034_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,9 @@ namespace OrcaStarsWebApplication.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("Social")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
@@ -133,28 +136,6 @@ namespace OrcaStarsWebApplication.Migrations
                     b.ToTable("Hours");
                 });
 
-            modelBuilder.Entity("OrcaStarsWebApplication.Models.SocialMedia", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BusinessId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Handle")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BusinessId");
-
-                    b.ToTable("SocialMedia");
-                });
-
             modelBuilder.Entity("OrcaStarsWebApplication.Models.Business", b =>
                 {
                     b.HasOne("OrcaStarsWebApplication.Models.BusinessContact", null)
@@ -166,13 +147,6 @@ namespace OrcaStarsWebApplication.Migrations
                 {
                     b.HasOne("OrcaStarsWebApplication.Models.Business", null)
                         .WithMany("Hours")
-                        .HasForeignKey("BusinessId");
-                });
-
-            modelBuilder.Entity("OrcaStarsWebApplication.Models.SocialMedia", b =>
-                {
-                    b.HasOne("OrcaStarsWebApplication.Models.Business", null)
-                        .WithMany("Social")
                         .HasForeignKey("BusinessId");
                 });
 #pragma warning restore 612, 618

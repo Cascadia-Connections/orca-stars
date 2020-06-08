@@ -60,12 +60,12 @@
         </select>
         <span asp-validation-for="Category"></span>
         <br />
-        
+
         <label>Hours:</label>
         <input type="submit" class="upload-btn" value="Choose File">
         <span asp-validation-for="Hours"></span>
         <br />
-        
+
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
         <span asp-validation-for="Website"></span>
@@ -96,19 +96,16 @@
         <br />
 
         <h4>Social Media</h4>
-        <label>Social Media Platform:</label>
-        <br />
-        <select asp-for="Social" id="socialmedia" asp-items="@(new SelectList(Model.Social,"Id","Name"))">
-            <option>Facebook</option>
-            <option>Instagram</option>
-            <option>Twitter</option>
-        </select>
-        <span asp-validation-for="Social"></span>
 
-        <label>Handle: @@</label>
-        <input asp-for="Social" type="text" name="Handle" placeholder="Facebook">
-        <input type="submit" class="add-btn" value="+ Add">
-        <input type="submit" class="remove-btn" value="- Remove">
+        <label>Facebook: @@</label>
+        <input asp-for="Facebook" type="text" name="Handle" placeholder="Facebook">
+
+        <label>Twitter: @@</label>
+        <input asp-for="Twitter" type="text" name="Handle" placeholder="Twitter">
+
+        <label>Instagram: @@</label>
+        <input asp-for="Instagram" type="text" name="Handle" placeholder="Instagram">
+
         <br />
         <br />
 

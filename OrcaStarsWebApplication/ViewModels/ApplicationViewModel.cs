@@ -38,7 +38,10 @@ namespace OrcaStarsWebApplication.ViewModels
         [Required(ErrorMessage = "*Required")]
         public string Country { get; set; }
         public string Zip { get; set; }
-        public ICollection<SocialMedia> Social { get; set; }
+        public SocialMedia Social { get; set; }
+        public string Facebook { get; set; }
+        public string Twitter { get; set; }
+        public string Instagram { get; set; }
         public ICollection<Hours> Hours { get; set; }
         public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type

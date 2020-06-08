@@ -24,7 +24,7 @@ namespace OrcaStarsWebApplication.Models
         public string Logo { get; set; }
         public string StoreFront { get; set; } 
         public Guid ContactId { get; set; }
-        public ICollection<SocialMedia> Social { get; set; }
+        public Guid Social { get; set; }
         public ICollection<Hours> Hours { get; set; }
     }
 }
