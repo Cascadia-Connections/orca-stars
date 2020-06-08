@@ -23,16 +23,12 @@ namespace OrcaStarsWebApplication.Controllers
     {
         // DATABASE INJECTION //
         private BitDataContext _db;
-        
-        // CONSTRUCTOR //
-        public AdminController(BitDataContext db) 
-        { 
-            _db = db; 
-        }
 
+        // CONSTRUCTOR //
         private readonly IWebHostEnvironment webHostEnvironment;
-        public AdminController(IWebHostEnvironment HostEnv) //CANT HAVE MULTIPLE CONSTRUCTORS IN CONTROLLER??
-        {                                                   //Interfering with Db Constructor, Throws exception (Runtime error)
+        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv) 
+        { 
+            _db = db;
             webHostEnvironment = HostEnv;
         }
 
