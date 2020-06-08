@@ -9,7 +9,7 @@ namespace OrcaStarsWebApplication.Models
 {
     public class Business
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int PhoneNumber { get; set; }
@@ -25,5 +25,6 @@ namespace OrcaStarsWebApplication.Models
         public Hours Hours { get; set; } 
         public string Logo { get; set; }
         public string StoreFront { get; set; } 
+        public Guid ContactId { get; set; }
     }
 }

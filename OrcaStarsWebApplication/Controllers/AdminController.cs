@@ -169,7 +169,7 @@ namespace OrcaStarsWebApplication.Controllers
         // UPDATE //
 
         [HttpGet]
-        public IActionResult UpdateBusiness(long id)
+        public IActionResult UpdateBusiness(Guid id)
         {
             Business business = new Business { Id = id };
             _db.Businesses.Update(business);
@@ -181,7 +181,7 @@ namespace OrcaStarsWebApplication.Controllers
         // DELETE //
 
         [HttpDelete]
-        public IActionResult DeleteBusiness(long id)
+        public IActionResult DeleteBusiness(Guid id)
         {
             Business business = new Business { Id = id };
             _db.Businesses.Remove(business);

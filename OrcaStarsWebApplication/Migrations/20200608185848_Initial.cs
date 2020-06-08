@@ -11,8 +11,7 @@ namespace OrcaStarsWebApplication.Migrations
                 name: "Contacts",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<int>(nullable: false),
@@ -66,8 +65,7 @@ namespace OrcaStarsWebApplication.Migrations
                 name: "Businesses",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<int>(nullable: false),
@@ -83,7 +81,8 @@ namespace OrcaStarsWebApplication.Migrations
                     HoursID = table.Column<Guid>(nullable: true),
                     Logo = table.Column<string>(nullable: true),
                     StoreFront = table.Column<string>(nullable: true),
-                    BusinessContactId = table.Column<long>(nullable: true)
+                    ContactId = table.Column<Guid>(nullable: false),
+                    BusinessContactId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
