@@ -49,6 +49,9 @@ namespace OrcaStarsWebApplication.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("Hours")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
@@ -109,27 +112,49 @@ namespace OrcaStarsWebApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BusinessId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CloseHour")
+                    b.Property<string>("FriC")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CloseMinute")
+                    b.Property<string>("FriO")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Day")
+                    b.Property<string>("MonC")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpenHour")
+                    b.Property<string>("MonO")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OpenMinute")
+                    b.Property<string>("SatC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SatO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SunC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SunO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThursC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ThursO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TuesC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TuesO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WedC")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WedO")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("BusinessId");
 
                     b.ToTable("Hours");
                 });
@@ -159,13 +184,6 @@ namespace OrcaStarsWebApplication.Migrations
                     b.HasOne("OrcaStarsWebApplication.Models.BusinessContact", null)
                         .WithMany("Businesses")
                         .HasForeignKey("BusinessContactId");
-                });
-
-            modelBuilder.Entity("OrcaStarsWebApplication.Models.Hours", b =>
-                {
-                    b.HasOne("OrcaStarsWebApplication.Models.Business", null)
-                        .WithMany("Hours")
-                        .HasForeignKey("BusinessId");
                 });
 #pragma warning restore 612, 618
         }

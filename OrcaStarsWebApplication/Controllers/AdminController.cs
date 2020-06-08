@@ -71,6 +71,25 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
                 }
 
+                Hours hours = new Hours
+                {
+                    SunO = avm.SunO,
+                    SunC = avm.SunC,
+                    MonO = avm.MonO,
+                    MonC = avm.MonC,
+                    TuesO = avm.TuesO,
+                    TuesC = avm.TuesC,
+                    WedO = avm.WedO,
+                    WedC = avm.WedC,
+                    ThursO = avm.ThursO,
+                    ThursC = avm.ThursC,
+                    FriO = avm.FriO,
+                    FriC = avm.FriC,
+                    SatO = avm.SatO,
+                    SatC = avm.SatC
+                };
+                _db.Hours.Add(hours);
+
                 SocialMedia socialM = new SocialMedia
                 {
                     Twitter = avm.Twitter,
@@ -103,7 +122,7 @@ namespace OrcaStarsWebApplication.Controllers
                     ZipCode = avm.Zip,
                     Website = avm.Website,
                     Category = avm.Category,
-                    Hours = avm.Hours,
+                    Hours = hours.ID,
                     Social = socialM.ID,
                     Logo = avm.BusinessLogoHolder, 
                     StoreFront = avm.StoreLogoHolder,

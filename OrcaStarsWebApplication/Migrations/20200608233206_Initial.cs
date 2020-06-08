@@ -23,6 +23,31 @@ namespace OrcaStarsWebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Hours",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    SunO = table.Column<string>(nullable: true),
+                    SunC = table.Column<string>(nullable: true),
+                    MonO = table.Column<string>(nullable: true),
+                    MonC = table.Column<string>(nullable: true),
+                    TuesO = table.Column<string>(nullable: true),
+                    TuesC = table.Column<string>(nullable: true),
+                    WedO = table.Column<string>(nullable: true),
+                    WedC = table.Column<string>(nullable: true),
+                    ThursO = table.Column<string>(nullable: true),
+                    ThursC = table.Column<string>(nullable: true),
+                    FriO = table.Column<string>(nullable: true),
+                    FriC = table.Column<string>(nullable: true),
+                    SatO = table.Column<string>(nullable: true),
+                    SatC = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hours", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SocialMedias",
                 columns: table => new
                 {
@@ -56,6 +81,7 @@ namespace OrcaStarsWebApplication.Migrations
                     StoreFront = table.Column<string>(nullable: true),
                     ContactId = table.Column<Guid>(nullable: false),
                     Social = table.Column<Guid>(nullable: false),
+                    Hours = table.Column<Guid>(nullable: false),
                     BusinessContactId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -69,50 +95,22 @@ namespace OrcaStarsWebApplication.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Hours",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Day = table.Column<string>(nullable: true),
-                    OpenHour = table.Column<string>(nullable: true),
-                    OpenMinute = table.Column<string>(nullable: true),
-                    CloseHour = table.Column<string>(nullable: true),
-                    CloseMinute = table.Column<string>(nullable: true),
-                    BusinessId = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Hours", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Hours_Businesses_BusinessId",
-                        column: x => x.BusinessId,
-                        principalTable: "Businesses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Businesses_BusinessContactId",
                 table: "Businesses",
                 column: "BusinessContactId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Hours_BusinessId",
-                table: "Hours",
-                column: "BusinessId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Businesses");
+
+            migrationBuilder.DropTable(
                 name: "Hours");
 
             migrationBuilder.DropTable(
                 name: "SocialMedias");
-
-            migrationBuilder.DropTable(
-                name: "Businesses");
 
             migrationBuilder.DropTable(
                 name: "Contacts");
