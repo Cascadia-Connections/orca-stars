@@ -18,8 +18,10 @@ namespace OrcaStarsWebApplication.Controllers
     {
         // GET: api/<controller>
         private List<Business> btcTest;
-        public BusinessController()
+        private BitDataContext btc;
+        public BusinessController(BitDataContext btc)
         {
+            this.btc = btc;
             btcTest = new List<Business>//for the purpose of testing only 
             {
                 new Business
@@ -65,6 +67,28 @@ namespace OrcaStarsWebApplication.Controllers
             }
             if(category == "null")
             {
+                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Name.Contains(name)) //to be implemented when the database has information
+                              Select(b => new 
+                              { id = b.Id,
+                                name = b.Name,
+                                description = b.Description,
+                                phonenumber = b.PhoneNumber,
+                                category = b.Category,
+                                coordinates = b.Coordinates,
+                                address1 = b.Address1,
+                                address2 = b.Address2,
+                                city = b.City,
+                                state = b.State,
+                                zipcode = b.ZipCode,
+                                socialTwitter = b.Social.Twitter,
+                                socialFacebook = b.Social.Facebook,
+                                socialInstagram = b.Social.Instagram,
+                                socialOther = b.Social.Other,
+                                hours = b.Hours.HoursOfOperation,
+                                logo = b.Logo,
+                                storefront = b.Storefront
+                               }                                                  
+                */
                 var query = from business in btcTest
                             where business.Name.Contains(name)
                             select business;
@@ -73,6 +97,28 @@ namespace OrcaStarsWebApplication.Controllers
             }
             else if(name == "null")
             {
+                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Category == category) //to be implemented when the database has information
+                              Select(b => new 
+                              { id = b.Id,
+                                name = b.Name,
+                                description = b.Description,
+                                phonenumber = b.PhoneNumber,
+                                category = b.Category,
+                                coordinates = b.Coordinates,
+                                address1 = b.Address1,
+                                address2 = b.Address2,
+                                city = b.City,
+                                state = b.State,
+                                zipcode = b.ZipCode,
+                                socialTwitter = b.Social.Twitter,
+                                socialFacebook = b.Social.Facebook,
+                                socialInstagram = b.Social.Instagram,
+                                socialOther = b.Social.Other,
+                                hours = b.Hours.HoursOfOperation,
+                                logo = b.Logo,
+                                storefront = b.Storefront
+                               }                                                    
+                */
                 var query = from business in btcTest
                             where business.Category.Contains(category)
                             select business;
@@ -81,6 +127,28 @@ namespace OrcaStarsWebApplication.Controllers
 
             else
             {
+                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Name.Contains(name)).Where(b => b.Category == category) //to be implemented when the database has information
+                              Select(b => new 
+                              { id = b.Id,
+                                name = b.Name,
+                                description = b.Description,
+                                phonenumber = b.PhoneNumber,
+                                category = b.Category,
+                                coordinates = b.Coordinates,
+                                address1 = b.Address1,
+                                address2 = b.Address2,
+                                city = b.City,
+                                state = b.State,
+                                zipcode = b.ZipCode,
+                                socialTwitter = b.Social.Twitter,
+                                socialFacebook = b.Social.Facebook,
+                                socialInstagram = b.Social.Instagram,
+                                socialOther = b.Social.Other,
+                                hours = b.Hours.HoursOfOperation,
+                                logo = b.Logo,
+                                storefront = b.Storefront
+                               }                                                  
+                */
                 var query = from business in btcTest
                             where business.Name.Contains(name)
                             where business.Category.Contains(category)
