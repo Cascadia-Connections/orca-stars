@@ -14,51 +14,12 @@ namespace OrcaStarsWebApplication.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(nullable: true),
                     LastName = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<int>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contacts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Hours",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Day = table.Column<string>(nullable: true),
-                    OpenHour = table.Column<string>(nullable: true),
-                    OpenMinute = table.Column<string>(nullable: true),
-                    CloseHour = table.Column<string>(nullable: true),
-                    CloseMinute = table.Column<string>(nullable: true),
-                    HoursID = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Hours", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Hours_Hours_HoursID",
-                        column: x => x.HoursID,
-                        principalTable: "Hours",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SocialMedia",
-                columns: table => new
-                {
-                    ID = table.Column<Guid>(nullable: false),
-                    Twitter = table.Column<string>(nullable: true),
-                    Facebook = table.Column<string>(nullable: true),
-                    Youtube = table.Column<string>(nullable: true),
-                    Instagram = table.Column<string>(nullable: true),
-                    Other = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SocialMedia", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,7 +29,7 @@ namespace OrcaStarsWebApplication.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<int>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     Category = table.Column<string>(nullable: true),
                     Website = table.Column<string>(nullable: true),
                     Address1 = table.Column<string>(nullable: true),
@@ -76,9 +37,7 @@ namespace OrcaStarsWebApplication.Migrations
                     City = table.Column<string>(nullable: true),
                     State = table.Column<string>(nullable: true),
                     Country = table.Column<string>(nullable: true),
-                    ZipCode = table.Column<int>(nullable: false),
-                    SocialID = table.Column<Guid>(nullable: true),
-                    HoursID = table.Column<Guid>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: true),
                     Logo = table.Column<string>(nullable: true),
                     StoreFront = table.Column<string>(nullable: true),
                     ContactId = table.Column<Guid>(nullable: false),
@@ -93,17 +52,48 @@ namespace OrcaStarsWebApplication.Migrations
                         principalTable: "Contacts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Hours",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    Day = table.Column<string>(nullable: true),
+                    OpenHour = table.Column<string>(nullable: true),
+                    OpenMinute = table.Column<string>(nullable: true),
+                    CloseHour = table.Column<string>(nullable: true),
+                    CloseMinute = table.Column<string>(nullable: true),
+                    BusinessId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hours", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Businesses_Hours_HoursID",
-                        column: x => x.HoursID,
-                        principalTable: "Hours",
-                        principalColumn: "ID",
+                        name: "FK_Hours_Businesses_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "Businesses",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SocialMedia",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Handle = table.Column<string>(nullable: true),
+                    BusinessId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialMedia", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Businesses_SocialMedia_SocialID",
-                        column: x => x.SocialID,
-                        principalTable: "SocialMedia",
-                        principalColumn: "ID",
+                        name: "FK_SocialMedia_Businesses_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "Businesses",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -113,34 +103,29 @@ namespace OrcaStarsWebApplication.Migrations
                 column: "BusinessContactId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Businesses_HoursID",
-                table: "Businesses",
-                column: "HoursID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Businesses_SocialID",
-                table: "Businesses",
-                column: "SocialID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Hours_HoursID",
+                name: "IX_Hours_BusinessId",
                 table: "Hours",
-                column: "HoursID");
+                column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SocialMedia_BusinessId",
+                table: "SocialMedia",
+                column: "BusinessId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Businesses");
-
-            migrationBuilder.DropTable(
-                name: "Contacts");
-
-            migrationBuilder.DropTable(
                 name: "Hours");
 
             migrationBuilder.DropTable(
                 name: "SocialMedia");
+
+            migrationBuilder.DropTable(
+                name: "Businesses");
+
+            migrationBuilder.DropTable(
+                name: "Contacts");
         }
     }
 }

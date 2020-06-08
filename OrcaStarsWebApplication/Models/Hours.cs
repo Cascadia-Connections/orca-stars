@@ -13,6 +13,5 @@ namespace OrcaStarsWebApplication.Models
         public string OpenMinute { get; set; }
         public string CloseHour { get; set; }
         public string CloseMinute { get; set; }
-        public List<Hours> ListHours { get; set; }
     }
 }

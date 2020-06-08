@@ -86,7 +86,7 @@ namespace OrcaStarsWebApplication.Controllers
                     Website = avm.Website,
                     Category = avm.Category,
                     Hours = avm.Hours,
-                    Social = avm.SocialMedia
+                    Social = avm.Social
                     //Logo = avm.BusinessLogo, or else convert FormFile to string error shows up
                     //StoreFront = avm.StoreLogo
                 };

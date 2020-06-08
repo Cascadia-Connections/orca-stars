@@ -10,7 +10,7 @@ using OrcaStarsWebApplication.Models;
 namespace OrcaStarsWebApplication.Migrations
 {
     [DbContext(typeof(BitDataContext))]
-    [Migration("20200608185848_Initial")]
+    [Migration("20200608202243_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,20 +51,14 @@ namespace OrcaStarsWebApplication.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("HoursID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Logo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("SocialID")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
                         .HasColumnType("nvarchar(max)");
@@ -75,16 +69,12 @@ namespace OrcaStarsWebApplication.Migrations
                     b.Property<string>("Website")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ZipCode")
-                        .HasColumnType("int");
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BusinessContactId");
-
-                    b.HasIndex("HoursID");
-
-                    b.HasIndex("SocialID");
 
                     b.ToTable("Businesses");
                 });
@@ -104,8 +94,8 @@ namespace OrcaStarsWebApplication.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PhoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -118,6 +108,9 @@ namespace OrcaStarsWebApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CloseHour")
                         .HasColumnType("nvarchar(max)");
 
@@ -127,9 +120,6 @@ namespace OrcaStarsWebApplication.Migrations
                     b.Property<string>("Day")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("HoursID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("OpenHour")
                         .HasColumnType("nvarchar(max)");
 
@@ -138,7 +128,7 @@ namespace OrcaStarsWebApplication.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("HoursID");
+                    b.HasIndex("BusinessId");
 
                     b.ToTable("Hours");
                 });
@@ -149,22 +139,18 @@ namespace OrcaStarsWebApplication.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Facebook")
+                    b.Property<Guid?>("BusinessId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Handle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Instagram")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Other")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Twitter")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Youtube")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("BusinessId");
 
                     b.ToTable("SocialMedia");
                 });
@@ -174,21 +160,20 @@ namespace OrcaStarsWebApplication.Migrations
                     b.HasOne("OrcaStarsWebApplication.Models.BusinessContact", null)
                         .WithMany("Businesses")
                         .HasForeignKey("BusinessContactId");
-
-                    b.HasOne("OrcaStarsWebApplication.Models.Hours", "Hours")
-                        .WithMany()
-                        .HasForeignKey("HoursID");
-
-                    b.HasOne("OrcaStarsWebApplication.Models.SocialMedia", "Social")
-                        .WithMany()
-                        .HasForeignKey("SocialID");
                 });
 
             modelBuilder.Entity("OrcaStarsWebApplication.Models.Hours", b =>
                 {
-                    b.HasOne("OrcaStarsWebApplication.Models.Hours", null)
-                        .WithMany("ListHours")
-                        .HasForeignKey("HoursID");
+                    b.HasOne("OrcaStarsWebApplication.Models.Business", null)
+                        .WithMany("Hours")
+                        .HasForeignKey("BusinessId");
+                });
+
+            modelBuilder.Entity("OrcaStarsWebApplication.Models.SocialMedia", b =>
+                {
+                    b.HasOne("OrcaStarsWebApplication.Models.Business", null)
+                        .WithMany("Social")
+                        .HasForeignKey("BusinessId");
                 });
 #pragma warning restore 612, 618
         }

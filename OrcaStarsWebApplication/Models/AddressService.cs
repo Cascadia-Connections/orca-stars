@@ -19,7 +19,7 @@ namespace OrcaStarsWebApplication.Models
                 address += avm.City + " ";
             if (avm.State != null)
                 address += avm.State;
-            if (avm.Zip != 0) //changed from Null to 0 for int data type
+            if (avm.Zip != null) //changed from Null to 0 for int data type
                 address += " " + avm.Zip;
             return address;
         }

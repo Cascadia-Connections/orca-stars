@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
+using OrcaStarsWebApplication.Models;
 
 namespace OrcaStarsWebApplication.ViewModels
 {
@@ -21,6 +22,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public string Email { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string BusinessName { get; set; }
+        public string BusinessPhone { get; set; }
         [Required(ErrorMessage = "*Required")]
         public string Description { get; set; }
         [Required(ErrorMessage = "*Required")]
@@ -36,11 +38,8 @@ namespace OrcaStarsWebApplication.ViewModels
         [Required(ErrorMessage = "*Required")]
         public string Country { get; set; }
         public string Zip { get; set; }
-        public string SocialMedia { get; set; }
-        public string SocialMedia2 { get; set; }
-        public string Handle { get; set; }
-        public string Handle2 { get; set; }
-        public string Hours { get; set; }
+        public ICollection<SocialMedia> Social { get; set; }
+        public ICollection<Hours> Hours { get; set; }
         public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public string BusinessLogoHolder { get;  set; }
