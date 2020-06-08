@@ -134,6 +134,26 @@ namespace OrcaStarsWebApplication.Migrations
                     b.ToTable("Hours");
                 });
 
+            modelBuilder.Entity("OrcaStarsWebApplication.Models.SocialMedia", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("SocialMedias");
+                });
+
             modelBuilder.Entity("OrcaStarsWebApplication.Models.Business", b =>
                 {
                     b.HasOne("OrcaStarsWebApplication.Models.BusinessContact", null)

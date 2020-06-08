@@ -10,7 +10,7 @@ using OrcaStarsWebApplication.Models;
 namespace OrcaStarsWebApplication.Migrations
 {
     [DbContext(typeof(BitDataContext))]
-    [Migration("20200608215034_Initial")]
+    [Migration("20200608222031_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,6 +134,26 @@ namespace OrcaStarsWebApplication.Migrations
                     b.HasIndex("BusinessId");
 
                     b.ToTable("Hours");
+                });
+
+            modelBuilder.Entity("OrcaStarsWebApplication.Models.SocialMedia", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Twitter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("SocialMedias");
                 });
 
             modelBuilder.Entity("OrcaStarsWebApplication.Models.Business", b =>

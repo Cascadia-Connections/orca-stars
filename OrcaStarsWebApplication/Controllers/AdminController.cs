@@ -77,6 +77,7 @@ namespace OrcaStarsWebApplication.Controllers
                     Facebook = avm.Facebook,
                     Instagram = avm.Instagram
                 };
+                _db.SocialMedias.Add(socialM);
 
                 BusinessContact businessContact = new BusinessContact
                 {
@@ -85,6 +86,8 @@ namespace OrcaStarsWebApplication.Controllers
                     PhoneNumber = avm.PhoneNumber,
                     Email = avm.Email
                 };
+
+                _db.Contacts.Add(businessContact);
 
                 Business business = new Business
                 {
@@ -108,7 +111,6 @@ namespace OrcaStarsWebApplication.Controllers
                     
                 };
 
-                _db.Contacts.Add(businessContact);
                 _db.Businesses.Add(business);
                 _db.SaveChanges();
 

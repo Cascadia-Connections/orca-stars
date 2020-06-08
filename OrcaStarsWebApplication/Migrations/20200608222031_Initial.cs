@@ -23,6 +23,20 @@ namespace OrcaStarsWebApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialMedias",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(nullable: false),
+                    Facebook = table.Column<string>(nullable: true),
+                    Twitter = table.Column<string>(nullable: true),
+                    Instagram = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialMedias", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Businesses",
                 columns: table => new
                 {
@@ -93,6 +107,9 @@ namespace OrcaStarsWebApplication.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Hours");
+
+            migrationBuilder.DropTable(
+                name: "SocialMedias");
 
             migrationBuilder.DropTable(
                 name: "Businesses");
