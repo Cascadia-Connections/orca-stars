@@ -18,10 +18,10 @@ namespace OrcaStarsWebApplication.Controllers
     {
         // GET: api/<controller>
         private List<Business> btcTest;
-        private BitDataContext btc;
-        public BusinessController(BitDataContext btc)
+        //private BitDataContext btc;
+        public BusinessController(/*BitDataContext btc*/)
         {
-            this.btc = btc;
+            //this.btc = btc;
             btcTest = new List<Business>//for the purpose of testing only 
             {
                 new Business
@@ -120,7 +120,7 @@ namespace OrcaStarsWebApplication.Controllers
                                }                                                    
                 */
                 var query = from business in btcTest
-                            where business.Category.Contains(category)
+                            where business.Category.Equals(category)
                             select business;
                 return Json(query);
             }
@@ -151,7 +151,7 @@ namespace OrcaStarsWebApplication.Controllers
                 */
                 var query = from business in btcTest
                             where business.Name.Contains(name)
-                            where business.Category.Contains(category)
+                            where business.Category.Equals(category)
                             select business;
                 if(query != null)
                 {
