@@ -7,10 +7,10 @@ namespace OrcaStarsWebApplication.Models
 {
     public class SocialMedia
     {
-        public string Twitter { get; set; }
+        public Guid ID { get; set; }
         public string Facebook { get; set; }
-        public string Youtube { get; set; }
+        public string Twitter { get; set; }
         public string Instagram { get; set; }
-        public string Other { get; set; } 
+
     }
 }

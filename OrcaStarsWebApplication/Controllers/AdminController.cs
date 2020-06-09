@@ -23,16 +23,12 @@ namespace OrcaStarsWebApplication.Controllers
     {
         // DATABASE INJECTION //
         private BitDataContext _db;
-        
-        // CONSTRUCTOR //
-        public AdminController(BitDataContext db) 
-        { 
-            _db = db; 
-        }
 
+        // CONSTRUCTOR //
         private readonly IWebHostEnvironment webHostEnvironment;
-        public AdminController(IWebHostEnvironment HostEnv)
-        {
+        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv) 
+        { 
+            _db = db;
             webHostEnvironment = HostEnv;
         }
 
@@ -75,6 +71,43 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
                 }
 
+                Hours hours = new Hours
+                {
+                    SunO = avm.SunO,
+                    SunC = avm.SunC,
+                    MonO = avm.MonO,
+                    MonC = avm.MonC,
+                    TuesO = avm.TuesO,
+                    TuesC = avm.TuesC,
+                    WedO = avm.WedO,
+                    WedC = avm.WedC,
+                    ThursO = avm.ThursO,
+                    ThursC = avm.ThursC,
+                    FriO = avm.FriO,
+                    FriC = avm.FriC,
+                    SatO = avm.SatO,
+                    SatC = avm.SatC
+                };
+                _db.Hours.Add(hours);
+
+                SocialMedia socialM = new SocialMedia
+                {
+                    Twitter = avm.Twitter,
+                    Facebook = avm.Facebook,
+                    Instagram = avm.Instagram
+                };
+                _db.SocialMedias.Add(socialM);
+
+                BusinessContact businessContact = new BusinessContact
+                {
+                    FirstName = avm.FirstName,
+                    LastName = avm.LastName,
+                    PhoneNumber = avm.PhoneNumber,
+                    Email = avm.Email
+                };
+
+                _db.Contacts.Add(businessContact);
+
                 Business business = new Business
                 {
                  
@@ -89,22 +122,15 @@ namespace OrcaStarsWebApplication.Controllers
                     ZipCode = avm.Zip,
                     Website = avm.Website,
                     Category = avm.Category,
-                    Hours = avm.Hours,
-                    Social = avm.SocialMedia,
-                    Logo = avm.BusinessLogo,
-                    StoreFront = avm.StoreLogo
-                };
-
-                BusinessContact businessContact = new BusinessContact
-                {
-                    FirstName = avm.FirstName,
-                    LastName = avm.LastName,
-                    PhoneNumber = avm.PhoneNumber,
-                    Email = avm.Email
+                    Hours = hours.ID,
+                    Social = socialM.ID,
+                    Logo = avm.BusinessLogoHolder, 
+                    StoreFront = avm.StoreLogoHolder,
+                    ContactId = businessContact.Id,
+                    
                 };
 
                 _db.Businesses.Add(business);
-                _db.Contacts.Add(businessContact);
                 _db.SaveChanges();
 
                 return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
@@ -169,7 +195,7 @@ namespace OrcaStarsWebApplication.Controllers
         // UPDATE //
 
         [HttpGet]
-        public IActionResult UpdateBusiness(long id)
+        public IActionResult UpdateBusiness(Guid id)
         {
             Business business = new Business { Id = id };
             _db.Businesses.Update(business);
@@ -181,7 +207,7 @@ namespace OrcaStarsWebApplication.Controllers
         // DELETE //
 
         [HttpDelete]
-        public IActionResult DeleteBusiness(long id)
+        public IActionResult DeleteBusiness(Guid id)
         {
             Business business = new Business { Id = id };
             _db.Businesses.Remove(business);
