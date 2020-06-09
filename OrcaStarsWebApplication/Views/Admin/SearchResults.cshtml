@@ -1,0 +1,76 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model IEnumerable<OrcaStarsWebApplication.Models.Business>
+
+@{
+    ViewData["Title"] = "Search Results";
+    Layout = "_Layout";
+}
+
+<h3>Search Results</h3>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Category
+        </th>
+        <th>
+            Website
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+
+    @foreach (var business in Model)
+    {
+        <tr>
+            <td>
+                @business.Name
+            </td>
+            <td>
+                <!-- Use jQuery AJAX to call our API and get the book count-->
+                @business.Category
+            </td>
+            <td class="rightedge">
+                @business.Website
+            </td>
+            <td class="rightedge">
+                $@business.City
+            </td>
+            <td>
+                <a asp-action="UpdateBusiness" asp-controller="Admin"
+                   asp-route-id="@business.Id">Update</a>
+                <a asp-action="DeleteBusiness" asp-controller="Admin"
+                   asp-route-id="@business.Id">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<!--<script>
+    /*
+        jQuery tooltip provides the hover effect,
+        AJAX call to '/api/writer/{id}' gets the JSON data
+        for the book count for the given author id
+     */
+    $(function () {
+        $(document).tooltip({
+            items: "[data-id]",
+            content: function () {
+                if (this.attributes.length <= 2) {
+                    var id = this.attributes["data-id"].nodeValue;
+                    /* Call the API */
+                    $.getJSON('/api/contact/' + id + '/businesscount/', function (data) {
+                        $("[data-id =" + id + "]")
+                            .attr('name', 'number of businesses: ' + data.count);
+                    });
+                }
+            }
+        });
+    });</script>-->

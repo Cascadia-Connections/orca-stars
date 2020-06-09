@@ -11,8 +11,6 @@ namespace OrcaStarsWebApplication.Models
         public string Facebook { get; set; }
         public string Youtube { get; set; }
         public string Instagram { get; set; }
-        public string Other { get; set; }
-
-        //public List<Other> AddSoc { get; set; } 
+        public string Other { get; set; } 
     }
 }
