@@ -1,0 +1,43 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@inject OrcaStarsWebApplication.Models.AddressService Address
+
+@{
+    ViewData["Title"] = "Confirm Display";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
+    <link rel="stylesheet" href="~/css/confirmation.css" />
+}
+<h1>Orca Stars</h1>
+<section class="intro" style="background:url(~/@Model.StoreLogoHolder);">
+    <img src="~/@Model.StoreLogoHolder" />
+    <div class="inner">
+        <div class="content">
+            <a href="#" class="btn">See All Photos</a>
+        </div>
+    </div>
+</section>
+<section class="footer">
+    <div class="footer-content">
+        <h1>@Model.BusinessName</h1>
+        <p>
+            @Model.Description
+        </p>
+
+        <div class="icons">
+            <p>
+                <i class="fa fa-map-marker-alt"></i>
+                @Address.fieldsToAddress(@Model)
+            </p>
+            <p>
+                <i class="far fa-clock"></i>
+                9am-9pm, Mon-Fri
+            </p>
+        </div>
+        <a href="#" class="btn">Directions</a>
+    </div>
+</section>
+

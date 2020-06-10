@@ -23,4 +23,5 @@ namespace OrcaStarsWebApplication.Models
         public string SatO { get; set; }
         public string SatC { get; set; }
     }
+
 }

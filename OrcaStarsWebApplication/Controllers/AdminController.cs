@@ -40,11 +40,17 @@ namespace OrcaStarsWebApplication.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ConfirmDisplay(ApplicationViewModel avm)
+        {
+            return View(avm);
+        }
         // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Index(ApplicationViewModel avm)
         {
+
             if (ModelState.IsValid)
             {
                 string uniqueBusinessFileName = null;
@@ -126,14 +132,15 @@ namespace OrcaStarsWebApplication.Controllers
                     Social = socialM.ID,
                     Logo = avm.BusinessLogoHolder, 
                     StoreFront = avm.StoreLogoHolder,
-                    ContactId = businessContact.Id,
+                    ContactId = businessContact.Id
                     
                 };
 
                 _db.Businesses.Add(business);
                 _db.SaveChanges();
+                return RedirectToAction("ConfirmDisplay", avm);
 
-                return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
+                //return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
             }
             return View(); //This returns view if fail
         }

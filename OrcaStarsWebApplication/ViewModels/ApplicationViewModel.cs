@@ -12,6 +12,8 @@ namespace OrcaStarsWebApplication.ViewModels
 {
     public class ApplicationViewModel
     {
+        public Guid Id { get; set; }
+
         [Required(ErrorMessage = "*Required")]
         public string FirstName { get; set; }
         [Required(ErrorMessage = "*Required")]
