@@ -45,7 +45,9 @@
             </td>
             <td>
                 <a asp-action="UpdateBusiness" asp-controller="Admin"
-                   asp-route-id="@business.Id">Update</a>
+                   asp-route-id="@business.Id">View |</a>
+                <a asp-action="UpdateBusiness" asp-controller="Admin"
+                   asp-route-id="@business.Id">Update |</a>
                 <a asp-action="DeleteBusiness" asp-controller="Admin"
                    asp-route-id="@business.Id">Delete</a>
             </td>
