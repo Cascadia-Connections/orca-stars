@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OrcaStarsWebApplication.Models;
@@ -16,144 +18,145 @@ namespace OrcaStarsWebApplication.Controllers
     [Route("api/[controller]")]
     public class BusinessController : Controller
     {
-        // GET: api/<controller>
-        private List<Business> btcTest;
-        //private BitDataContext btc;
-        public BusinessController(/*BitDataContext btc*/)
+        // GET: api/<controller>       
+        private BitDataContext btc;
+        public BusinessController(BitDataContext btc)
         {
-            //this.btc = btc;
-            btcTest = new List<Business>//for the purpose of testing only 
-            {
-                new Business
-                {
-                    Name = "whole foods",
-                    Description = "Organic foods grocery store",
-                    PhoneNumber = 1234567890,
-                    Category = "grocery",
-                    City = "Bothell",
-                    State = "WA"
-                },
-                new Business
-                {
-                    Name = "amazon fresh",
-                    Description = "Online retailer for food stuffs",
-                    PhoneNumber = 1231231231,
-                    Category = "grocery"
-                },
-                new Business
-                {
-                    Name = "amazon prime",
-                    Description = "Online video streaming",
-                    PhoneNumber = 1231231231,
-                    Category = "online"
-                },
-                new Business
-                {
-                    Name = "ebay",
-                    Description = "Online retailer",
-                    PhoneNumber = 1231231231,
-                    Category = "online"
-                }
-            };
-        }
-
+            this.btc = btc;          
+        }        
+        
         // GET api/<controller>/5
         [Route("search/{category?}/{name?}")]
         public ActionResult Get(string category, string name)
         {
-            if(category == "null" && name == "null")
+            IQueryable<Business> businesses = btc.Businesses.Include(b => b.Hours).Include(b =>b.Social);
+            if (category == "null" && name == "null")
             {
                 throw new Exception("No valid search data");
             }
             if(category == "null")
             {
-                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Name.Contains(name)) //to be implemented when the database has information
-                              Select(b => new 
-                              { id = b.Id,
-                                name = b.Name,
-                                description = b.Description,
-                                phonenumber = b.PhoneNumber,
-                                category = b.Category,
-                                coordinates = b.Coordinates,
-                                address1 = b.Address1,
-                                address2 = b.Address2,
-                                city = b.City,
-                                state = b.State,
-                                zipcode = b.ZipCode,
-                                socialTwitter = b.Social.Twitter,
-                                socialFacebook = b.Social.Facebook,
-                                socialInstagram = b.Social.Instagram,
-                                socialOther = b.Social.Other,
-                                hours = b.Hours.HoursOfOperation,
-                                logo = b.Logo,
-                                storefront = b.Storefront
-                               }                                                  
-                */
-                var query = from business in btcTest
-                            where business.Name.Contains(name)
-                            select business;
+                var query = from a in btc.Businesses 
+                            join b in btc.Hours on a.Hours equals b.ID
+                            join c in btc.SocialMedias on a.Social equals c.ID
+                            where a.Name.Contains(name)
+                            select new
+                { name = a.Name, 
+                  description = a.Description,
+                  phonenumber = a.PhoneNumber,
+                  category = a.Category,
+                  website = a.Website,
+                  address1 = a.Address1,
+                  address2 = a.Address2,
+                  city = a.City,
+                  state = a.State,
+                  country = a.Country,
+                  zipcode = a.ZipCode,
+                  logo = a.Logo,
+                  storefront = a.StoreFront,
+                  suno = b.SunO,
+                  sunc = b.SunC,
+                  mono = b.MonO,
+                  monc = b.MonC,
+                  tueso = b.TuesO,
+                  tuesc = b.TuesC,
+                  wedo = b.WedO,
+                  wedc = b.WedC,
+                  thurso = b.ThursO,
+                  thursc = b.ThursC,
+                  frio = b.FriO,
+                  fric = b.FriC,
+                  sato = b.SatO,
+                  satc = b.SatC,
+                  facebook = c.Facebook,
+                  twitter = c.Twitter,
+                  instagram = c.Instagram
+                };                                    
                 return Json(query);
                 
             }
             else if(name == "null")
             {
-                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Category == category) //to be implemented when the database has information
-                              Select(b => new 
-                              { id = b.Id,
-                                name = b.Name,
-                                description = b.Description,
-                                phonenumber = b.PhoneNumber,
-                                category = b.Category,
-                                coordinates = b.Coordinates,
-                                address1 = b.Address1,
-                                address2 = b.Address2,
-                                city = b.City,
-                                state = b.State,
-                                zipcode = b.ZipCode,
-                                socialTwitter = b.Social.Twitter,
-                                socialFacebook = b.Social.Facebook,
-                                socialInstagram = b.Social.Instagram,
-                                socialOther = b.Social.Other,
-                                hours = b.Hours.HoursOfOperation,
-                                logo = b.Logo,
-                                storefront = b.Storefront
-                               }                                                    
-                */
-                var query = from business in btcTest
-                            where business.Category.Equals(category)
-                            select business;
-                return Json(query);
+                var query = from a in btc.Businesses
+                            join b in btc.Hours on a.Hours equals b.ID
+                            join c in btc.SocialMedias on a.Social equals c.ID
+                            where a.Category.Equals(category)
+                            select new
+                  {
+                  name = a.Name, 
+                  description = a.Description,
+                  phonenumber = a.PhoneNumber,
+                  category = a.Category,
+                  website = a.Website,
+                  address1 = a.Address1,
+                  address2 = a.Address2,
+                  city = a.City,
+                  state = a.State,
+                  country = a.Country,
+                  zipcode = a.ZipCode,
+                  logo = a.Logo,
+                  storefront = a.StoreFront,
+                  suno = b.SunO,
+                  sunc = b.SunC,
+                  mono = b.MonO,
+                  monc = b.MonC,
+                  tueso = b.TuesO,
+                  tuesc = b.TuesC,
+                  wedo = b.WedO,
+                  wedc = b.WedC,
+                  thurso = b.ThursO,
+                  thursc = b.ThursC,
+                  frio = b.FriO,
+                  fric = b.FriC,
+                  sato = b.SatO,
+                  satc = b.SatC,
+                  facebook = c.Facebook,
+                  twitter = c.Twitter,
+                  instagram = c.Instagram
+                };
+                return Json(query);                
             }
 
             else
             {
-                /*var query = btc.Businesses.Include(b => b.Hours).Include(b => b.Social)Where(b => b.Name.Contains(name)).Where(b => b.Category == category) //to be implemented when the database has information
-                              Select(b => new 
-                              { id = b.Id,
-                                name = b.Name,
-                                description = b.Description,
-                                phonenumber = b.PhoneNumber,
-                                category = b.Category,
-                                coordinates = b.Coordinates,
-                                address1 = b.Address1,
-                                address2 = b.Address2,
-                                city = b.City,
-                                state = b.State,
-                                zipcode = b.ZipCode,
-                                socialTwitter = b.Social.Twitter,
-                                socialFacebook = b.Social.Facebook,
-                                socialInstagram = b.Social.Instagram,
-                                socialOther = b.Social.Other,
-                                hours = b.Hours.HoursOfOperation,
-                                logo = b.Logo,
-                                storefront = b.Storefront
-                               }                                                  
-                */
-                var query = from business in btcTest
-                            where business.Name.Contains(name)
-                            where business.Category.Equals(category)
-                            select business;
-                if(query != null)
+                var query = from a in btc.Businesses
+                            join b in btc.Hours on a.Hours equals b.ID
+                            join c in btc.SocialMedias on a.Social equals c.ID
+                            where a.Name.Contains(name) && a.Category.Equals(category)
+                            select new
+                 {
+                  name = a.Name, 
+                  description = a.Description,
+                  phonenumber = a.PhoneNumber,
+                  category = a.Category,
+                  website = a.Website,
+                  address1 = a.Address1,
+                  address2 = a.Address2,
+                  city = a.City,
+                  state = a.State,
+                  country = a.Country,
+                  zipcode = a.ZipCode,
+                  logo = a.Logo,
+                  storefront = a.StoreFront,
+                  suno = b.SunO,
+                  sunc = b.SunC,
+                  mono = b.MonO,
+                  monc = b.MonC,
+                  tueso = b.TuesO,
+                  tuesc = b.TuesC,
+                  wedo = b.WedO,
+                  wedc = b.WedC,
+                  thurso = b.ThursO,
+                  thursc = b.ThursC,
+                  frio = b.FriO,
+                  fric = b.FriC,
+                  sato = b.SatO,
+                  satc = b.SatC,
+                  facebook = c.Facebook,
+                  twitter = c.Twitter,
+                  instagram = c.Instagram
+                };
+                if (query != null)
                 {
                     return Json(query);
                 }
