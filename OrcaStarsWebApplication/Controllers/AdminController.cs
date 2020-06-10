@@ -4,32 +4,45 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Models;
 using OrcaStarsWebApplication.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace OrcaStarsWebApplication.Controllers
 {
+
     public class AdminController : Controller
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
+        // DATABASE INJECTION //
+        private BitDataContext _db;
 
-        public AdminController(IWebHostEnvironment HostEnv)
-        {
+        // CONSTRUCTOR //
+        private readonly IWebHostEnvironment webHostEnvironment;
+        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv) 
+        { 
+            _db = db;
             webHostEnvironment = HostEnv;
         }
 
-        [HttpGet]
+        // GET //
+
+        [HttpGet] //THIS IS THE FORM
         public IActionResult Index()
         {
             return View();
         }
-        [HttpPost]
+
+        // CREATE //
+
+        [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Index(ApplicationViewModel avm)
         {
             if (ModelState.IsValid)
@@ -39,10 +52,10 @@ namespace OrcaStarsWebApplication.Controllers
 
                 avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
                 avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
-                
+
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
 
-                if (avm.BusinessLogo != null) 
+                if (avm.BusinessLogo != null)
                 {
                     uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName; //make sure uploaded file is unique
                     string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
@@ -50,29 +63,172 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
                 }
 
-                if (avm.StoreLogo != null) 
+                if (avm.StoreLogo != null)
                 {
                     uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName; //make sure uploaded file is unique
                     string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
                     avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
                 }
-                return RedirectToAction("Confirm", avm);
+
+                Hours hours = new Hours
+                {
+                    SunO = avm.SunO,
+                    SunC = avm.SunC,
+                    MonO = avm.MonO,
+                    MonC = avm.MonC,
+                    TuesO = avm.TuesO,
+                    TuesC = avm.TuesC,
+                    WedO = avm.WedO,
+                    WedC = avm.WedC,
+                    ThursO = avm.ThursO,
+                    ThursC = avm.ThursC,
+                    FriO = avm.FriO,
+                    FriC = avm.FriC,
+                    SatO = avm.SatO,
+                    SatC = avm.SatC
+                };
+                _db.Hours.Add(hours);
+
+                SocialMedia socialM = new SocialMedia
+                {
+                    Twitter = avm.Twitter,
+                    Facebook = avm.Facebook,
+                    Instagram = avm.Instagram
+                };
+                _db.SocialMedias.Add(socialM);
+
+                BusinessContact businessContact = new BusinessContact
+                {
+                    FirstName = avm.FirstName,
+                    LastName = avm.LastName,
+                    PhoneNumber = avm.PhoneNumber,
+                    Email = avm.Email
+                };
+
+                _db.Contacts.Add(businessContact);
+
+                Business business = new Business
+                {
+                 
+                    Name = avm.BusinessName,
+                    Description = avm.Description,
+                    PhoneNumber = avm.BusinessPhone,
+                    Address1 = avm.AddressLine1,
+                    Address2 = avm.AddressLine2,
+                    City = avm.City,
+                    State = avm.State,
+                    Country = avm.Country,
+                    ZipCode = avm.Zip,
+                    Website = avm.Website,
+                    Category = avm.Category,
+                    Hours = hours.ID,
+                    Social = socialM.ID,
+                    Logo = avm.BusinessLogoHolder, 
+                    StoreFront = avm.StoreLogoHolder,
+                    ContactId = businessContact.Id,
+                    
+                };
+
+                _db.Businesses.Add(business);
+                _db.SaveChanges();
+
+                return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
             }
-            //If the model didn't work, don't leave
-            return View();
+            return View(); //This returns view if fail
         }
 
-        [HttpGet]
+        [HttpGet] //DISPLAYS BUSINESS INFO
         public IActionResult Confirm(ApplicationViewModel avm)
         {
             return View(avm);
         }
 
+        // READ AND SEARCH //
+
+        [HttpGet]
+        public IActionResult Search()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Search(ApplicationViewModel avm)
+        {
+            //Full Collection Search - start with entire collection
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+
+            if (avm.BusinessName != null)
+            {
+                foundBusinesses = foundBusinesses
+                            .Where(b => b.Name.Contains(avm.BusinessName))
+                            .OrderBy(b => b.Name)
+                            ;
+            }
+
+            if (avm.Category != null)
+            {
+                foundBusinesses = foundBusinesses
+                            .Where(b => b.Category.Contains(avm.Category))
+                            .OrderBy(b => b.Name)
+                            ;
+            }
+
+            if (avm.City != null)
+            {
+                foundBusinesses = foundBusinesses
+                            .Where(b => b.City.Contains(avm.City))
+                            .OrderBy(b => b.Name)
+                            ;
+            }
+
+            //Composite Search Results
+            return RedirectToAction("SearchResults", foundBusinesses.Include(b => b.Name));
+        }
+
+        [HttpGet]
+        public IActionResult SearchResults()
+        {
+            return View();
+        }
+
+        // UPDATE //
+
+        [HttpGet]
+        public IActionResult UpdateBusiness(Guid id)
+        {
+            Business business = new Business { Id = id };
+            _db.Businesses.Update(business);
+            _db.SaveChanges();
+
+            return View("Search");
+        }
+
+        // DELETE //
+
+        [HttpDelete]
+        public IActionResult DeleteBusiness(Guid id)
+        {
+            Business business = new Business { Id = id };
+            _db.Businesses.Remove(business);
+            _db.SaveChanges();
+
+            return View("Search"); 
+        }
+
+        //LOGIN//
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login(LoginViewModel lvm)
+        {
+            //Login Logic Here
+            return RedirectToAction("search");
         }
     }
 }
