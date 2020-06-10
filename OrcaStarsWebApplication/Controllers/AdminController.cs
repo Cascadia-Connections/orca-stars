@@ -183,13 +183,7 @@ namespace OrcaStarsWebApplication.Controllers
             }
 
             //Composite Search Results
-            return RedirectToAction("SearchResults", foundBusinesses.Include(b => b.Name));
-        }
-
-        [HttpGet]
-        public IActionResult SearchResults()
-        {
-            return View();
+            return View("SearchResults", foundBusinesses);
         }
 
         // UPDATE //
