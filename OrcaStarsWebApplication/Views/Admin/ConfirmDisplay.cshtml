@@ -1,6 +1,7 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
 @model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
 @inject OrcaStarsWebApplication.Models.AddressService Address
+@inject OrcaStarsWebApplication.Models.HoursService HourSet
 
 @{
     ViewData["Title"] = "Confirm Display";
@@ -16,10 +17,12 @@
             background-color: white;
             color: black;
         }
-        #designs a, #designs h1, #designs h2, #designs h3, #designs p,
-        #text-center a, #text-center h1, #text-center h2, #text-center h3, #text-center p {
-            color: black;
-        }
+
+            #designs a, #designs h1, #designs h2, #designs h3, #designs p,
+            #text-center a, #text-center h1, #text-center h2, #text-center h3, #text-center p {
+                color: black;
+            }
+
         .phone {
             overflow: hidden;
             width: 350px;
@@ -41,16 +44,16 @@
                 height: 200px;
             }
 
-        .phone .content {
-            width: 100%;
-            background-image: linear-gradient(#0E85C7, #BED1E0);
-        }
+            .phone .content {
+                width: 100%;
+                background-image: linear-gradient(#0E85C7, #BED1E0);
+            }
 
-        .phone h2 {
-            background-color: #005792;
-            color: white;
-            padding-left: 5px;
-        }
+            .phone h2 {
+                background-color: #005792;
+                color: white;
+                padding-left: 5px;
+            }
 
         .content h3 {
             color: black;
@@ -74,9 +77,10 @@
     <h3>Confirm Business Information</h3>
     <p><b>Name:</b> @Model.BusinessName</p>
     <p><b>Description:</b> @Model.Description</p>
-    <p><b>Hours:</b> @Model.Hours</p>
+    <p><b>Hours:</b> @HourSet.hoursToString(@Model)</p>
     <p><b>Website:</b> <a target="_blank" href="http://@Model.Website">@Model.Website</a></p>
-    <p><b>Social Media:</b>
+    <p>
+        <b>Social Media:</b>
         <br />Facebook: @@@Model.Facebook
         <br />Twitter: @@@Model.Twitter
         <br />Instagram: @@@Model.Instagram
