@@ -11,11 +11,15 @@ namespace OrcaStarsWebApplication.Models
         public string hoursToString(ApplicationViewModel hrs)
         {
             var hours = "";
+            /* combine the hours */
             string mon = hrs.MonO + "-" + hrs.MonC;
             string tues = hrs.TuesO + "-" + hrs.TuesC;
             string wed = hrs.WedO + "-" + hrs.WedC;
             string thurs = hrs.ThursO + "-" + hrs.ThursC;
             string fri = hrs.FriO + "-" + hrs.FriC;
+            string sat = hrs.SatO + "-" + hrs.SatC;
+            string sun = hrs.SunO + "-" + hrs.SunC;
+            /* Overwrite Closed days with "Closed" */
             if (hrs.MonO == "Closed" || hrs.MonC == "Closed")
                 mon = "Closed";
             if (hrs.TuesO == "Closed" || hrs.TuesC == "Closed")
@@ -26,56 +30,42 @@ namespace OrcaStarsWebApplication.Models
                 thurs = "Closed";
             if (hrs.FriO == "Closed" || hrs.FriC == "Closed")
                 fri = "Closed";
+            if (hrs.SatO == "Closed" || hrs.SatC == "Closed")
+                sat = "Closed";
+            if (hrs.SunO == "Closed" || hrs.SunC == "Closed")
+                sun = "Closed";
+
             /* See if all the weekday times are the same */
-            if (hrs.MonO == hrs.TuesO && hrs.MonO == hrs.WedO && hrs.MonO == hrs.ThursO && hrs.MonO == hrs.FriO &&
-                hrs.MonC == hrs.TuesC && hrs.MonC == hrs.WedC && hrs.MonC == hrs.ThursC && hrs.MonC == hrs.FriC)
+            if (mon == tues && mon == wed && mon == thurs && mon == fri)
             {
                 /* See if Saturday Matches */
-                if (hrs.MonO == hrs.SatO && hrs.MonC == hrs.SatC)
+                if (mon == sat)
                 {
                     /* See if Sunday Matches */
-                    if (hrs.MonO == hrs.SunO && hrs.MonC == hrs.SunC)
+                    if (mon == sun)
                     {
-                        /* ENDING: Same Hours Daily */
-                        if (hrs.MonO == "Closed" || hrs.SunC == "Closed")
-                        {
-                            return "Closed";
-                        }
-                        return hrs.MonO + "-" + hrs.SunC + " Daily";
+                        /* ENDING: Same Hours Every Day */
+                        return mon + " Every Day";
                     }
                     /* ENDING: Monday-Saturday: Open-Close, Sunday: Open-Close */
-                    if (hrs.MonO == "Closed" || hrs.SatC == "Closed")
-                    {
-                        return "Closed Monday-Saturday, Sunday: " + hrs.SunO + "-" + hrs.SunC;
-                    }
-                    return "Monday-Saturday: " + hrs.MonO + "-" + hrs.SatC + ", Sunday: " + hrs.SunO + "-" + hrs.SunC;
+                    return "Monday-Saturday: " + mon + ", Sunday: " + sun;
                 }
                 /* ENDING: Monday-Friday: Open-Close, Saturday: Open-Close, Sunday: Open-Close */
-                if (hrs.MonO == "Closed" || hrs.FriC == "Closed")
-                {
-                    string sat = hrs.SatO + "-" + hrs.SatC;
-                    string sun = hrs.SunO + "-" + hrs.SunC;
-                    if (hrs.SatO == "Closed" || hrs.SatC == "Closed")
-                        sat = "Closed";
-                    if (hrs.SunO == "Closed" || hrs.SunC == "Closed")
-                        sun = "Closed";
-                    return "Monday-Friday: Closed, Saturday: " + sat + ", Sunday: " + sun;
-                }
-                hours += "Monday-Friday: " + hrs.MonO + "-" + hrs.FriC;
+                hours += "Monday-Friday: " + mon;
             }
             else
             {
                 /* Monday: Open-Close, Tuesday: Open-Close, Wednesday: Open-Close, Thursday: Open-Close, Friday: Open-Close, */
-                hours += "Monday: " + hrs.MonO + "-" + hrs.MonC + ", Tuesday: " + hrs.TuesO + "-" + hrs.TuesC + ", Wednesday: " + hrs.WedO + "-" + hrs.WedC + ", Thursday: " + hrs.ThursO + "-" + hrs.ThursC + ", Friday: " + hrs.FriO + "-" + hrs.FriC;
+                hours += "Monday: " + mon + ", Tuesday: " + tues + ", Wednesday: " + wed + ", Thursday: " + thurs + ", Friday: " + fri;
             }
             /* See if the weekend times are the same */
-            if (hrs.SatO == hrs.SunO && hrs.SatC == hrs.SunC)
+            if (sat == sun)
             {
                 /* ENDING: hours+ " Weekends: Open-Close" */
-                return hours + ", Weekends: " + hrs.SatO + "-" + hrs.SunC;
+                return hours + ", Weekends: " + sat;
             }
             /* ENDING: hours + " Saturday: Open-Close, Sunday: Open-Close"*/
-            return hours + ", Saturday: " + hrs.SatO + "-" + hrs.SatC + ", Sunday: " + hrs.SunO + "-" + hrs.SunC;
+            return hours + ", Saturday: " + sat + ", Sunday: " + sun;
         }
     }
 }
