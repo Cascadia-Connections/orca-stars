@@ -30,6 +30,7 @@ namespace OrcaStarsWebApplication
             services.AddTransient<IBusinessRepository, BusinessRepository>();
             services.AddTransient<IBusinessServices, BusinessServices>();
             services.AddTransient<AddressService>();
+            services.AddTransient<HoursService>();
             services.AddMvc();
             services.AddDbContext<Models.BitDataContext>(options =>
             {

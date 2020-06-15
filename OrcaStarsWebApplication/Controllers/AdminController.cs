@@ -40,11 +40,17 @@ namespace OrcaStarsWebApplication.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ConfirmDisplay(ApplicationViewModel avm)
+        {
+            return View(avm);
+        }
         // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Index(ApplicationViewModel avm)
         {
+
             if (ModelState.IsValid)
             {
                 string uniqueBusinessFileName = null;
@@ -57,7 +63,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 if (avm.BusinessLogo != null)
                 {
-                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName; //make sure uploaded file is unique
+                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length-8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
                     string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
                     avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
@@ -65,7 +71,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 if (avm.StoreLogo != null)
                 {
-                    uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName; //make sure uploaded file is unique
+                    uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName.Substring(Math.Max(0, avm.StoreLogo.FileName.Length - 8), Math.Min(avm.StoreLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break.
                     string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
                     avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
@@ -126,14 +132,15 @@ namespace OrcaStarsWebApplication.Controllers
                     Social = socialM.ID,
                     Logo = avm.BusinessLogoHolder, 
                     StoreFront = avm.StoreLogoHolder,
-                    ContactId = businessContact.Id,
+                    ContactId = businessContact.Id
                     
                 };
 
                 _db.Businesses.Add(business);
                 _db.SaveChanges();
+                return RedirectToAction("ConfirmDisplay", avm);
 
-                return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
+                //return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
             }
             return View(); //This returns view if fail
         }

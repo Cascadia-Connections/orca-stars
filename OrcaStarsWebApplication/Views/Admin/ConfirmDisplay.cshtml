@@ -1,0 +1,314 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@inject OrcaStarsWebApplication.Models.AddressService Address
+@inject OrcaStarsWebApplication.Models.HoursService HourSet
+
+@{
+    ViewData["Title"] = "Confirm Display";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
+    <link rel="stylesheet" href="~/css/confirmation.css" />
+
+    <style>
+        .phone {
+            overflow: hidden;
+            width: 350px;
+            height: 600px;
+            background-image: linear-gradient(#0E85C7, #0E85C7 10%, #BED1E0);
+            border: solid black 2px;
+            border-radius: 4px;
+        }
+
+        .phone .bus_photo {
+            position: inherit;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .big .bus_photo {
+            position: inherit;
+            width: 99%;
+            margin: 0.5%;
+            height: 600px;
+            object-fit: cover;
+        }
+
+        .phone .content {
+            width: 100%;
+        }
+
+        .phone h2 {
+            background-color: #005792;
+            color: white;
+            padding-left: 5px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+
+        .content h3 {
+            color: black;
+            padding-left: 10px;
+            font-size: 2em;
+        }
+
+        .description {
+            height: 50px;
+            padding-left: 10px;
+        }
+        .searchbar {
+            width: 96%;
+            margin: 2%;
+            border-bottom: solid;
+            font-size: 1.2em;
+        }
+
+        .searchbar i {
+            background-color: lightgray;
+            padding: 7px;
+            margin-top: -15px;
+            float: right;
+        }
+
+        .phone .logo_photo {
+            position: inherit;
+            width: 20%;
+            height: 20%;
+            float: left;
+            object-fit: cover;
+        }
+
+        .phone .searchresults {
+            margin: 2%;
+        }
+        .phone .search_bus {
+            width: 96%;
+            margin-bottom: 5%;
+            padding-bottom: 2%;
+        }
+        .phone .search_bus::after {
+            float: none;
+        }
+        .phone .search_bus h3 {
+            font-size: 1.5em;
+            padding-left: 25%;
+            padding-top: 5%;
+        }
+    </style>
+    @if (@Model.StoreLogoHolder == "images/orcastarsImages/defaultBusinessStorelogo.png")
+    {
+        <style>
+            .big .bus_photo {
+                height: 400px;
+                object-fit: scale-down;
+            }
+        </style>
+    }
+
+}
+<div class="text-center" id="text-center">
+    <h1 class="display-4">Confirming</h1>
+    <h3>Confirm Owner Information</h3>
+    <p><b>Name:</b> @Model.FirstName @Model.LastName </p >
+    <p > <b > Phone:</b > @Model.PhoneNumber </p >
+    <p > <b > Email:</b > @Model.Email </p >
+    <br / >
+    <h3 > Confirm Business Information</h3 >
+    <p > <b > Name:</b > @Model.BusinessName </p >
+    <p > <b > Description:</b > @Model.Description </p >
+    <p > <b > Category:</b > @Model.Category </p >
+    <p > <b > Hours:</b > @HourSet.hoursToString(@Model) </p >
+    <p > <b > Website:</b > <a target="_blank" href="http://
+@Model.Website" >@Model.Website </a > </p >
+    <p>
+        <b> Social Media:</b>
+        <br /> Facebook: <a target="_blank" href="https://www.facebook.com/@Model.Facebook">@@@Model.Facebook</a>
+        <br /> Twitter: <a target="_blank" href="https://www.twitter.com/@Model.Twitter">@@@Model.Twitter</a>
+        <br /> Instagram: <a target="_blank" href="https://www.instagram.com/@Model.Instagram">@@@Model.Instagram</a>
+    </p>
+    <p>
+    <b> Business Logo: </b >
+    <img src="~/@Model.BusinessLogoHolder" style="        width: 300px;
+        height: auto;
+" / >
+    </p>
+    <p>
+    <b > Store Image: </b >
+    <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" / >
+    </p >
+    <p > <b > Location:</b > @Address.fieldsToAddress(@Model) </p >
+    <div >
+    <script type='text/javascript' >
+    var map, searchManager;
+
+    function GetMap() {
+        map = new Microsoft.Maps.Map('#myMap', {
+                    credentials: 'At1ht0A7Q_vav26C7rNXQPlNWmAwmbeIruD0BFWJXiV0yMJCkz4WuX9XbcIuNNf_'
+                });
+    }
+
+            window.onload = function Search() {
+                if (!searchManager) {
+                    //Create an instance of the search manager and perform the search.
+                    Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                        searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                        Search()
+                    });
+                } else {
+                    //Remove any previous results from the map.
+                    map.entities.clear();
+
+                    //Get the query and geocode it.
+                    var query = "@Address.fieldsToAddress(@Model)";
+                    geocodeQuery(query);
+                }
+            }
+
+            function geocodeQuery(query) {
+                var searchRequest = {
+                    where: query,
+                    callback: function (r) {
+                        if (r && r.results && r.results.length > 0) {
+                            var pin, pins = [], locs = [], output = 'Results:<br/>';
+
+                            for (var i = 0; i < r.results.length; i++) {
+                                //Create a pushpin for each result.
+                                pin = new Microsoft.Maps.Pushpin(r.results[i].location, {
+                                    text: i + ''
+                                });
+                                pins.push(pin);
+                                locs.push(r.results[i].location);
+
+                                output += i + ') ' + r.results[i].name + '<br/>';
+                            }
+
+                            //Add the pins to the map
+                            map.entities.push(pins);
+
+                            //Display list of results
+                            //document.getElementById('output').innerHTML = output;
+
+                            //Determine a bounding box to best view the results.
+                            var bounds;
+
+                            if (r.results.length == 1) {
+                                bounds = r.results[0].bestView;
+                            }
+                            else {
+                                //Use the locations from the results to calculate a bounding box.
+                                bounds = Microsoft.Maps.LocationRect.fromLocations(locs);
+                            }
+
+                            map.setView({ bounds: bounds });
+                        }
+                    },
+                    errorCallback: function (e) {
+                        //If there is an error, alert the user about it.
+                        alert("Couldn't find the Address at @Address.fieldsToAddress(@Model)");
+                    }
+                };
+
+                //Make the geocode request.
+                searchManager.geocode(searchRequest);
+            }
+        </script>
+        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+        <!--<input id='searchTbx' type='text' />-->
+        <!--<input type='button' value='Search' onclick='Search()' />-->
+        <div id="myMap" style="position: relative; width: 600px; height: 400px;"></div>
+        <!--<div id='output' style="margin-left:10px;float:left;"></div>-->
+    </div>
+    <br />
+    <!-- <input type="submit" class="submit-form-btn" value="Edit">-->
+    <h1>Design Examples</h1>
+
+</div>
+
+<div class="webdisplay" id="full-screen-display">
+    <h1>Orca Stars</h1>
+    <div class="big" style="background-color:white">
+        <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
+    </div>
+
+    <section class="footer">
+        <div class="footer-content">
+            <h1>@Model.BusinessName</h1>
+            <p>
+                @Model.Description
+            </p>
+
+            <div class="icons">
+                <p>
+                    <i class="fa fa-map-marker-alt"></i>
+                    @Address.fieldsToAddress(@Model)
+                </p>
+                <p>
+                    <i class="far fa-clock"></i>
+                    @HourSet.hoursToString(@Model)
+
+                </p>
+            </div>
+            <a href="#" class="btn">Directions</a>
+        </div>
+    </section>
+</div>
+
+<div id="designs">
+    <h1>App Example</h1>
+    <a href="#text-center">Back to Top</a><br />
+    <div class="phone">
+        <h2> OrcaStars </h2>
+        <div class="content">
+            <div>
+                <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
+            </div>
+            <div>
+                <h3>@Model.BusinessName</h3>
+                <span>*</span><!-- Star image -->
+            </div>
+            <div class="description"> <p>@Model.Description</p> </div>
+            <div><i class="fa fa-map-marker-alt"></i> @Address.fieldsToAddress(@Model) </div>
+            <div><i class="far fa-clock"></i> @HourSet.hoursToString(@Model) </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="phone">
+        <h2> OrcaStars </h2>
+        <div class="content">
+            <div class="searchbar">
+                <span><b>Search: </b>@Model.Category</span>
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="searchresults">
+                <div class="search_bus">
+                    <img class="logo_photo" src="~/images/orcastarsImages/defaultBusinessStorelogo.png" alt="example_logo_photo">
+                    <h3>Fishfood X</h3>
+                </div>
+                <div class="search_bus">
+                    <img class="logo_photo" src="~/images/orcastarsImages/defaultBusinessStorelogo.png" alt="example_logo_photo">
+                    <h3>The Green Bean</h3>
+                </div>
+                <div class="search_bus">
+                    <img class="logo_photo" src="~/@Model.BusinessLogoHolder" alt="logo_photo">
+                    <h3>@Model.BusinessName</h3>
+                </div>
+                <div class="search_bus">
+                    <img class="logo_photo" src="~/images/orcastarsImages/defaultBusinessStorelogo.png" alt="example_logo_photo">
+                    <h3>Another Sushi Place</h3>
+                </div>
+                <div class="search_bus">
+                    <img class="logo_photo" src="~/images/orcastarsImages/defaultBusinessStorelogo.png" alt="example_logo_photo">
+                    <h3>Grillbits</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <a href="#text-center">Back to Top</a><br />
+</div>

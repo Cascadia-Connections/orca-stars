@@ -1,0 +1,95 @@
+﻿@import url("https://fonts.googleapis.com/css?family=Raleway");
+@import url("https://fonts.googleapis.com/css?family=Oswald");
+
+html,
+body {
+margin: 0;
+padding: 0;
+height: 100%;
+width: 100%;
+}
+
+#full-screen-display {
+    background-color: #000;
+}
+
+#full-screen-display .intro {
+    width: 100%;
+    height: 70%;
+    margin: auto;
+    background: url("img/fresh-raw-seafood-G3NYG7D.jpg") no-repeat 50% 50%;
+    display: table;
+    top: 0;
+    overflow: hidden;
+}
+
+#full-screen-display .intro .bg {
+}
+
+#full-screen-display .intro .inner {
+    display: table-cell;
+    vertical-align: bottom;
+    width: 100%;
+    max-width: none;
+}
+
+#full-screen-display .content {
+    max-width: 100%;
+    height: 10%;
+    margin: 0 auto;
+    text-align: right;
+}
+
+#full-screen-display h1 {
+    font-family: "Raleway", sans-serif;
+    color: #f9f3f4;
+    text-shadow: 0px 8px 300px #000;
+    font-size: 400%;
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 0;
+}
+
+#full-screen-display p {
+    font-family: "Raleway", sans-serif;
+    color: #f9f3f4;
+    text-shadow: 0px 8px 300px #000;
+    font-size: 150%;
+}
+
+#full-screen-display .btn {
+    border-radius: 9px;
+    font-family: "Oswald", sans-serif;
+    color: #f9f3f4;
+    font-size: 150%;
+    padding: 10px 20px;
+    border: solid #f9f3f4 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-right: 5%;
+}
+
+#full-screen-display .btn:hover {
+    color: #1a1a1a;
+    border: solid #1a1a1a 3px;
+    transition: all 0.5s ease-out;
+}
+
+#full-screen-display .footer {
+    width: 100%;
+    height: 60%;
+    margin: auto;
+}
+
+#full-screen-display .footer-content {
+    max-width: 100%;
+    height: 10%;
+    padding: 0% 10% 10% 10%;
+    text-align: center;
+}
+
+#full-screen-display .icons {
+    padding: 5% 10% 0% 10%;
+    margin-top: 1rem;
+    text-align: left;
+}
