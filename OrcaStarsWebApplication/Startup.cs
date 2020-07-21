@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Repositories;
 using OrcaStarsWebApplication.Services;
 using OrcaStarsWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace OrcaStarsWebApplication
 {
@@ -37,6 +38,8 @@ namespace OrcaStarsWebApplication
                 options.UseSqlServer(Configuration.GetConnectionString("OrcaStarsWebApplication-Win-SqlServer"));
                 //options.UseSqlite(Configuration.GetConnectionString("OrcaStarsWebApplication-Mac-Sqlite"));
             });
+
+
             services.AddControllersWithViews();
         }
 
@@ -58,6 +61,7 @@ namespace OrcaStarsWebApplication
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
