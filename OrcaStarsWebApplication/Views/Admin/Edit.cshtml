@@ -1,30 +1,30 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
 @model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
 @{
-    ViewData["Title"] = "Business Form";
+    ViewData["Title"] = "Edit " + @Model.BusinessName;
     Layout = "_Layout";
 }
 
 <body>
-    <h1>Orca Stars Business Application</h1>
-    <form enctype="multipart/form-data" asp-controller="admin" asp-action="index" method="post">
+    <h1>Edit @Model.BusinessName's Information</h1>
+    <form enctype="multipart/form-data" asp-controller="admin" asp-action="edit" asp-route-id="@Model.Id" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
         <h3>Contact Information</h3>
 
         <label>First Name:</label>
-        <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
+        <input asp-for="FirstName" type="text"/>
         <span asp-validation-for="FirstName"></span>
         <br />
         <label>Last Name:</label>
-        <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
+        <input asp-for="LastName" type="text"/>
         <span asp-validation-for="LastName"></span>
         <br />
         <label>Phone Number:</label>
-        <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
+        <input asp-for="PhoneNumber" type="text"/>
         <span asp-validation-for="PhoneNumber"></span>
         <br />
         <label>Email:</label>
-        <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
+        <input asp-for="Email" type="text"/>
         <span asp-validation-for="Email"></span>
         <br />
         <br />
@@ -34,11 +34,11 @@
         <h4>General</h4>
 
         <label>Name:</label>
-        <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
+        <input asp-for="BusinessName" type="text">
         <span asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
-        <textarea asp-for="Description" placeholder="Business Description"></textarea>
+        <textarea asp-for="Description"></textarea>
         <span asp-validation-for="Description"></span>
         <br />
         <label>Category:</label>
@@ -854,7 +854,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="BusinessLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
@@ -865,7 +865,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="StoreLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
