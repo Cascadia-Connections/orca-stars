@@ -34,8 +34,14 @@ namespace OrcaStarsWebApplication.Controllers
 
         // GET //
 
-        [HttpGet] //THIS IS THE FORM
+        [HttpGet] //THIS IS THE INDEX PAGE
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet] //THIS IS THE FORM
+        public IActionResult Form()
         {
             return View();
         }
