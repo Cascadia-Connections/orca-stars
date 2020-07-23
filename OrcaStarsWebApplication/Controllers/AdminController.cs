@@ -34,11 +34,18 @@ namespace OrcaStarsWebApplication.Controllers
 
         // GET //
 
-        [HttpGet] //THIS IS THE FORM
+        [HttpGet] //THIS IS THE INDEX PAGE
         public IActionResult Index()
         {
             return View();
         }
+
+        [HttpGet] //THIS IS THE FORM
+        public IActionResult Form()
+        {
+            return View();
+        }
+        
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
         public IActionResult Edit(Guid id)
         {
@@ -177,7 +184,7 @@ namespace OrcaStarsWebApplication.Controllers
         // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
-        public IActionResult Index(ApplicationViewModel avm)
+        public IActionResult Form (ApplicationViewModel avm)
         {
             if (ModelState.IsValid/* && avm.Category != "--Select--"*/)
             {
