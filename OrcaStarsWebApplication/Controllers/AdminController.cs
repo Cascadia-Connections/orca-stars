@@ -104,9 +104,6 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 string uniqueBusinessFileName = null;
                 string uniqueStoreFileName = null;
-                
-                avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
-                avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
 
                 string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
 
@@ -116,6 +113,7 @@ namespace OrcaStarsWebApplication.Controllers
                     string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
                     avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
+                    bus.Logo = avm.BusinessLogoHolder;
                 }
 
                 if (avm.StoreLogo != null)
@@ -124,6 +122,7 @@ namespace OrcaStarsWebApplication.Controllers
                     string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
                     avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
+                    bus.StoreFront = avm.StoreLogoHolder;
                 }
 
                 bus.Name = avm.BusinessName;
@@ -139,8 +138,6 @@ namespace OrcaStarsWebApplication.Controllers
                 bus.Category = avm.Category;
                 bus.Hours = hrs.ID;
                 bus.Social = soc.ID;
-                bus.Logo = avm.BusinessLogoHolder;
-                bus.StoreFront = avm.StoreLogoHolder;
                 bus.ContactId = con.Id;
                 _db.Businesses.Update(bus);
 
