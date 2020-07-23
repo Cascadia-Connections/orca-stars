@@ -416,20 +416,5 @@ namespace OrcaStarsWebApplication.Controllers
 
             return View("Search"); 
         }
-
-        //LOGIN//
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Login(LoginViewModel lvm)
-        {
-            //Login Logic Here
-            return RedirectToAction("search");
-        }
     }
 }
