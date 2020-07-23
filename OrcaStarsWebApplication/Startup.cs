@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using OrcaStarsWebApplication.Repositories;
 using OrcaStarsWebApplication.Services;
 using OrcaStarsWebApplication.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace OrcaStarsWebApplication
 {
@@ -31,12 +32,14 @@ namespace OrcaStarsWebApplication
             services.AddTransient<IBusinessServices, BusinessServices>();
             services.AddTransient<AddressService>();
             services.AddTransient<HoursService>();
-            services.AddMvc();
+            services.AddMvc(options => options.EnableEndpointRouting = false); //added disable endpoint routing
             services.AddDbContext<Models.BitDataContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("OrcaStarsWebApplication-Win-SqlServer"));
                 //options.UseSqlite(Configuration.GetConnectionString("OrcaStarsWebApplication-Mac-Sqlite"));
             });
+
+
             services.AddControllersWithViews();
         }
 
@@ -58,6 +61,7 @@ namespace OrcaStarsWebApplication
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -65,6 +69,7 @@ namespace OrcaStarsWebApplication
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Admin}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }
