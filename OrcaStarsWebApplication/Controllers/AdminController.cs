@@ -126,62 +126,49 @@ namespace OrcaStarsWebApplication.Controllers
                     avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
                 }
 
-                Business business = new Business
-                {
-                    Name = avm.BusinessName,
-                    Description = avm.Description,
-                    PhoneNumber = avm.BusinessPhone,
-                    Address1 = avm.AddressLine1,
-                    Address2 = avm.AddressLine2,
-                    City = avm.City,
-                    State = avm.State,
-                    Country = avm.Country,
-                    ZipCode = avm.Zip,
-                    Website = avm.Website,
-                    Category = avm.Category,
-                    Hours = hrs.ID,
-                    Social = soc.ID,
-                    Logo = avm.BusinessLogoHolder,
-                    StoreFront = avm.StoreLogoHolder,
-                    ContactId = con.Id
-                };
-
+                bus.Name = avm.BusinessName;
+                bus.Description = avm.Description;
+                bus.PhoneNumber = avm.BusinessPhone;
+                bus.Address1 = avm.AddressLine1;
+                bus.Address2 = avm.AddressLine2;
+                bus.City = avm.City;
+                bus.State = avm.State;
+                bus.Country = avm.Country;
+                bus.ZipCode = avm.Zip;
+                bus.Website = avm.Website;
+                bus.Category = avm.Category;
+                bus.Hours = hrs.ID;
+                bus.Social = soc.ID;
+                bus.Logo = avm.BusinessLogoHolder;
+                bus.StoreFront = avm.StoreLogoHolder;
+                bus.ContactId = con.Id;
                 _db.Businesses.Update(bus);
 
-                hrs = new Hours
-                {
-                    SunO = avm.SunO,
-                    SunC = avm.SunC,
-                    MonO = avm.MonO,
-                    MonC = avm.MonC,
-                    TuesO = avm.TuesO,
-                    TuesC = avm.TuesC,
-                    WedO = avm.WedO,
-                    WedC = avm.WedC,
-                    ThursO = avm.ThursO,
-                    ThursC = avm.ThursC,
-                    FriO = avm.FriO,
-                    FriC = avm.FriC,
-                    SatO = avm.SatO,
-                    SatC = avm.SatC
-                };
+                hrs.SunO = avm.SunO;
+                hrs.SunC = avm.SunC;
+                hrs.MonO = avm.MonO;
+                hrs.MonC = avm.MonC;
+                hrs.TuesO = avm.TuesO;
+                hrs.TuesC = avm.TuesC;
+                hrs.WedO = avm.WedO;
+                hrs.WedC = avm.WedC;
+                hrs.ThursO = avm.ThursO;
+                hrs.ThursC = avm.ThursC;
+                hrs.FriO = avm.FriO;
+                hrs.FriC = avm.FriC;
+                hrs.SatO = avm.SatO;
+                hrs.SatC = avm.SatC;
                 _db.Hours.Update(hrs);
 
-                soc = new SocialMedia
-                {
-                    Twitter = avm.Twitter,
-                    Facebook = avm.Facebook,
-                    Instagram = avm.Instagram
-                };
+                soc.Twitter = avm.Twitter;
+                soc.Facebook = avm.Facebook;
+                soc.Instagram = avm.Instagram;
                 _db.SocialMedias.Update(soc);
 
-                con = new BusinessContact
-                {
-                    FirstName = avm.FirstName,
-                    LastName = avm.LastName,
-                    PhoneNumber = avm.PhoneNumber,
-                    Email = avm.Email
-                };
+                con.FirstName = avm.FirstName;
+                con.LastName = avm.LastName;
+                con.PhoneNumber = avm.PhoneNumber;
+                con.Email = avm.Email;
                 _db.Contacts.Update(con);
 
                 _db.SaveChanges();
@@ -407,14 +394,15 @@ namespace OrcaStarsWebApplication.Controllers
 
         // DELETE //
 
-        [HttpDelete]
+        [HttpGet]
         public IActionResult DeleteBusiness(Guid id)
         {
-            Business business = new Business { Id = id };
+            Business business = _db.Businesses.Single(b => b.Id == id);
             _db.Businesses.Remove(business);
+
             _db.SaveChanges();
 
-            return View("Search"); 
+            return RedirectToAction("Search");
         }
     }
 }
