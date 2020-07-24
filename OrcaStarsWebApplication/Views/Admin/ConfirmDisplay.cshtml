@@ -11,6 +11,8 @@
 @section Styles {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
     <link rel="stylesheet" href="~/css/confirmation.css" />
+    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" media="all" /> ///bootstrap integration///-->
 
     <style>
         .phone {
@@ -22,12 +24,12 @@
             border-radius: 4px;
         }
 
-        .phone .bus_photo {
-            position: inherit;
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
+            .phone .bus_photo {
+                position: inherit;
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+            }
 
         .big .bus_photo {
             position: inherit;
@@ -60,6 +62,7 @@
             height: 50px;
             padding-left: 10px;
         }
+
         .searchbar {
             width: 96%;
             margin: 2%;
@@ -67,12 +70,12 @@
             font-size: 1.2em;
         }
 
-        .searchbar i {
-            background-color: lightgray;
-            padding: 7px;
-            margin-top: -15px;
-            float: right;
-        }
+            .searchbar i {
+                background-color: lightgray;
+                padding: 7px;
+                margin-top: -15px;
+                float: right;
+            }
 
         .phone .logo_photo {
             position: inherit;
@@ -85,19 +88,22 @@
         .phone .searchresults {
             margin: 2%;
         }
+
         .phone .search_bus {
             width: 96%;
             margin-bottom: 5%;
             padding-bottom: 2%;
         }
-        .phone .search_bus::after {
-            float: none;
-        }
-        .phone .search_bus h3 {
-            font-size: 1.5em;
-            padding-left: 25%;
-            padding-top: 5%;
-        }
+
+            .phone .search_bus::after {
+                float: none;
+            }
+
+            .phone .search_bus h3 {
+                font-size: 1.5em;
+                padding-left: 25%;
+                padding-top: 5%;
+            }
     </style>
     @if (@Model.StoreLogoHolder == "images/orcastarsImages/defaultBusinessStorelogo.png")
     {
