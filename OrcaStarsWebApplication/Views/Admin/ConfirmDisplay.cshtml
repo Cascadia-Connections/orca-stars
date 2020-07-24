@@ -111,38 +111,41 @@
 
 }
 <div class="text-center" id="text-center">
-    <h1 class="display-4">Confirming</h1>
+    <h1 class="display-4">Business Confirmation</h1>
     <h3>Confirm Owner Information</h3>
-    <p><b>Name:</b> @Model.FirstName @Model.LastName </p >
-    <p > <b > Phone:</b > @Model.PhoneNumber </p >
-    <p > <b > Email:</b > @Model.Email </p >
-    <br / >
-    <h3 > Confirm Business Information</h3 >
-    <p > <b > Name:</b > @Model.BusinessName </p >
-    <p > <b > Description:</b > @Model.Description </p >
-    <p > <b > Category:</b > @Model.Category </p >
-    <p > <b > Hours:</b > @HourSet.hoursToString(@Model) </p >
-    <p > <b > Website:</b > <a target="_blank" href="http://
-@Model.Website" >@Model.Website </a > </p >
+    <p><b>Name:</b> @Model.FirstName @Model.LastName </p>
+    <p> <b> Phone:</b> @Model.PhoneNumber </p>
+    <p> <b> Email:</b> @Model.Email </p>
+    <br />
+    <h3> Confirm Business Information</h3>
+    <p> <b> Name:</b> @Model.BusinessName </p>
+    <p> <b> Description:</b> @Model.Description </p>
+    <p> <b> Phone Number:</b> @Model.BusinessPhone </p>
+    <p> <b> Category:</b> @Model.Category </p>
+    <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
     <p>
-        <b> Social Media:</b>
-        <br /> Facebook: <a target="_blank" href="https://www.facebook.com/@Model.Facebook">@@@Model.Facebook</a>
-        <br /> Twitter: <a target="_blank" href="https://www.twitter.com/@Model.Twitter">@@@Model.Twitter</a>
-        <br /> Instagram: <a target="_blank" href="https://www.instagram.com/@Model.Instagram">@@@Model.Instagram</a>
-    </p>
-    <p>
-    <b> Business Logo: </b >
+        <b> Website:</b> <a target="_blank" href="http://
+@Model.Website">@Model.Website </a>
+</p>
+<p>
+    <b> Social Media:</b>
+    <br /> Facebook: <a target="_blank" href="https://www.facebook.com/@Model.Facebook">@@@Model.Facebook</a>
+    <br /> Twitter: <a target="_blank" href="https://www.twitter.com/@Model.Twitter">@@@Model.Twitter</a>
+    <br /> Instagram: <a target="_blank" href="https://www.instagram.com/@Model.Instagram">@@@Model.Instagram</a>
+</p>
+<p>
+    <b> Business Logo: </b>
     <img src="~/@Model.BusinessLogoHolder" style="        width: 300px;
         height: auto;
-" / >
-    </p>
-    <p>
-    <b > Store Image: </b >
-    <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" / >
-    </p >
-    <p > <b > Location:</b > @Address.fieldsToAddress(@Model) </p >
-    <div >
-    <script type='text/javascript' >
+" />
+</p>
+<p>
+    <b> Store Image: </b>
+    <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" />
+</p>
+<p> <b> Location:</b> @Address.fieldsToAddress(@Model) </p>
+<div>
+    <script type='text/javascript'>
     var map, searchManager;
 
     function GetMap() {
@@ -215,16 +218,16 @@
                 //Make the geocode request.
                 searchManager.geocode(searchRequest);
             }
-        </script>
-        <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
-        <!--<input id='searchTbx' type='text' />-->
-        <!--<input type='button' value='Search' onclick='Search()' />-->
-        <div id="myMap" style="position: relative; width: 600px; height: 400px;"></div>
-        <!--<div id='output' style="margin-left:10px;float:left;"></div>-->
-    </div>
-    <br />
-    <!-- <input type="submit" class="submit-form-btn" value="Edit">-->
-    <h1>Design Examples</h1>
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap' async defer></script>
+    <!--<input id='searchTbx' type='text' />-->
+    <!--<input type='button' value='Search' onclick='Search()' />-->
+    <div id="myMap" style="position: relative; width: 600px; height: 400px;"></div>
+    <!--<div id='output' style="margin-left:10px;float:left;"></div>-->
+</div>
+<br />
+<!-- <input type="submit" class="submit-form-btn" value="Edit">-->
+<h1>Design Examples</h1>
 
 </div>
 
@@ -310,8 +313,8 @@
         </div>
     </div>
     <br>
-    <a href="#text-center">Back to Top</a><br />
+    <a href="#text-center">Back to Top ^</a><br />
     <a asp-action="Edit" asp-controller="Admin"
-       asp-route-id="@Model.Id">Make Changes</a>
+       asp-route-id="@Model.Id">Edit/Make Changes</a>
 
 </div>
