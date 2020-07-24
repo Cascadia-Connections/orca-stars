@@ -45,19 +45,148 @@ namespace OrcaStarsWebApplication.Controllers
         {
             return View();
         }
-
-        [HttpGet]
-        public IActionResult ConfirmDisplay(ApplicationViewModel avm)
+        
+        [HttpGet] //THIS IS THE UPDATE/EDIT FORM
+        public IActionResult Edit(Guid id)
         {
+            var bus = _db.Businesses.Single(b => b.Id == id);
+            var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
+            var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
+            var soc = _db.SocialMedias.Single(s => s.ID == bus.Social);
+            ApplicationViewModel avm = new ApplicationViewModel
+            {
+                /* Get Business General Info */
+                Id = id,
+                BusinessName = bus.Name,
+                Description = bus.Description,
+                BusinessPhone = bus.PhoneNumber,
+                AddressLine1 = bus.Address1,
+                AddressLine2 = bus.Address2,
+                City = bus.City,
+                State = bus.State,
+                Country = bus.Country,
+                Zip = bus.ZipCode,
+                Website = bus.Website,
+                Category = bus.Category,
+                BusinessLogoHolder = bus.Logo,
+                StoreLogoHolder = bus.StoreFront,
+
+                /* Get Business Contact data */
+                FirstName = con.FirstName,
+                LastName = con.LastName,
+                Email = con.Email,
+                PhoneNumber = con.PhoneNumber,
+
+                /* Get Hour data */
+                SunO = hrs.SunO,
+                MonO = hrs.MonO,
+                TuesO = hrs.TuesO,
+                WedO = hrs.WedO,
+                ThursO = hrs.ThursO,
+                FriO = hrs.FriO,
+                SatO = hrs.SatO,
+                SunC = hrs.SunC,
+                MonC = hrs.MonC,
+                TuesC = hrs.TuesC,
+                WedC = hrs.WedC,
+                ThursC = hrs.ThursC,
+                FriC = hrs.FriC,
+                SatC = hrs.SatC,
+
+                /* Get Social Media data */
+                Facebook = soc.Facebook,
+                Instagram = soc.Instagram,
+                Twitter = soc.Twitter
+            };
             return View(avm);
         }
+        [HttpPost]
+        public IActionResult Edit(Guid id, ApplicationViewModel avm)
+        {
+            var bus = _db.Businesses.Single(b => b.Id == id);
+            var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
+            var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
+            var soc = _db.SocialMedias.Single(s => s.ID == bus.Social);
+            if (ModelState.IsValid/* && avm.Category != "--Select--"*/)
+            {
+                string uniqueBusinessFileName = null;
+                string uniqueStoreFileName = null;
+
+                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
+
+                if (avm.BusinessLogo != null)
+                {
+                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length - 8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
+                    string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
+                    avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                    avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
+                    bus.Logo = avm.BusinessLogoHolder;
+                }
+
+                if (avm.StoreLogo != null)
+                {
+                    uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName.Substring(Math.Max(0, avm.StoreLogo.FileName.Length - 8), Math.Min(avm.StoreLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break.
+                    string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
+                    avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                    avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
+                    bus.StoreFront = avm.StoreLogoHolder;
+                }
+
+                bus.Name = avm.BusinessName;
+                bus.Description = avm.Description;
+                bus.PhoneNumber = avm.BusinessPhone;
+                bus.Address1 = avm.AddressLine1;
+                bus.Address2 = avm.AddressLine2;
+                bus.City = avm.City;
+                bus.State = avm.State;
+                bus.Country = avm.Country;
+                bus.ZipCode = avm.Zip;
+                bus.Website = avm.Website;
+                bus.Category = avm.Category;
+                bus.Hours = hrs.ID;
+                bus.Social = soc.ID;
+                bus.ContactId = con.Id;
+                _db.Businesses.Update(bus);
+
+                hrs.SunO = avm.SunO;
+                hrs.SunC = avm.SunC;
+                hrs.MonO = avm.MonO;
+                hrs.MonC = avm.MonC;
+                hrs.TuesO = avm.TuesO;
+                hrs.TuesC = avm.TuesC;
+                hrs.WedO = avm.WedO;
+                hrs.WedC = avm.WedC;
+                hrs.ThursO = avm.ThursO;
+                hrs.ThursC = avm.ThursC;
+                hrs.FriO = avm.FriO;
+                hrs.FriC = avm.FriC;
+                hrs.SatO = avm.SatO;
+                hrs.SatC = avm.SatC;
+                _db.Hours.Update(hrs);
+
+                soc.Twitter = avm.Twitter;
+                soc.Facebook = avm.Facebook;
+                soc.Instagram = avm.Instagram;
+                _db.SocialMedias.Update(soc);
+
+                con.FirstName = avm.FirstName;
+                con.LastName = avm.LastName;
+                con.PhoneNumber = avm.PhoneNumber;
+                con.Email = avm.Email;
+                _db.Contacts.Update(con);
+
+                _db.SaveChanges();
+                return RedirectToAction("ConfirmDisplay", new { id = id });
+            }
+            return View();
+        }
+
         // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Form (ApplicationViewModel avm)
         {
-
-            if (ModelState.IsValid)
+            if (ModelState.IsValid/* && avm.Category != "--Select--"*/)
             {
                 string uniqueBusinessFileName = null;
                 string uniqueStoreFileName = null;
@@ -144,11 +273,67 @@ namespace OrcaStarsWebApplication.Controllers
 
                 _db.Businesses.Add(business);
                 _db.SaveChanges();
-                return RedirectToAction("ConfirmDisplay", avm);
+                
+                return RedirectToAction("ConfirmDisplay", new { id = business.Id });
 
                 //return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
             }
             return View(); //This returns view if fail
+        }
+
+        [HttpGet] //DISPLAYS BUSINESS INFO
+        public IActionResult ConfirmDisplay(Guid id)
+        {
+            var bus = _db.Businesses.Single(b => b.Id == id);
+            var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
+            var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
+            var soc = _db.SocialMedias.Single(s => s.ID == bus.Social);
+            ApplicationViewModel avm = new ApplicationViewModel
+            {
+                /* Get Business General Info */
+                Id = id,
+                BusinessName = bus.Name,
+                Description = bus.Description,
+                BusinessPhone = bus.PhoneNumber,
+                AddressLine1 = bus.Address1,
+                AddressLine2 = bus.Address2,
+                City = bus.City,
+                State = bus.State,
+                Country = bus.Country,
+                Zip = bus.ZipCode,
+                Website = bus.Website,
+                Category = bus.Category,
+                BusinessLogoHolder = bus.Logo,
+                StoreLogoHolder = bus.StoreFront,
+
+                /* Get Business Contact data */
+                FirstName = con.FirstName,
+                LastName = con.LastName,
+                Email = con.Email,
+                PhoneNumber = con.PhoneNumber,
+
+                /* Get Hour data */
+                SunO = hrs.SunO,
+                MonO = hrs.MonO,
+                TuesO = hrs.TuesO,
+                WedO = hrs.WedO,
+                ThursO = hrs.ThursO,
+                FriO = hrs.FriO,
+                SatO = hrs.SatO,
+                SunC = hrs.SunC,
+                MonC = hrs.MonC,
+                TuesC = hrs.TuesC,
+                WedC = hrs.WedC,
+                ThursC = hrs.ThursC,
+                FriC = hrs.FriC,
+                SatC = hrs.SatC,
+
+                /* Get Social Media data */
+                Facebook = soc.Facebook,
+                Instagram = soc.Instagram,
+                Twitter = soc.Twitter
+            };
+            return View(avm);
         }
 
         [HttpGet] //DISPLAYS BUSINESS INFO
@@ -213,14 +398,15 @@ namespace OrcaStarsWebApplication.Controllers
 
         // DELETE //
 
-        [HttpDelete]
+        [HttpGet]
         public IActionResult DeleteBusiness(Guid id)
         {
-            Business business = new Business { Id = id };
+            Business business = _db.Businesses.Single(b => b.Id == id);
             _db.Businesses.Remove(business);
+
             _db.SaveChanges();
 
-            return View("Search"); 
+            return RedirectToAction("Search");
         }
     }
 }
