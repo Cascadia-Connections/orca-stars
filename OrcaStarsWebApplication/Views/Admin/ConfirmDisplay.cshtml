@@ -10,9 +10,9 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" media="all" />
     <link rel="stylesheet" href="~/css/confirmation.css" />
-    <!--<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" media="all" /> ///bootstrap integration///-->
 
     <style>
         .phone {
@@ -116,40 +116,38 @@
     }
 
 }
-<div class="text-center" id="text-center">
-    <h1 class="display-4">Business Confirmation</h1>
+<div class="container-fluid">
+    <br />
+    <h1>Business Confirmation</h1>
+    <br />
     <h3>Confirm Owner Information</h3>
     <p><b>Name:</b> @Model.FirstName @Model.LastName </p>
-    <p> <b> Phone:</b> @Model.PhoneNumber </p>
-    <p> <b> Email:</b> @Model.Email </p>
+    <p><b>Phone:</b> @Model.PhoneNumber </p>
+    <p><b>Email:</b> @Model.Email </p>
     <br />
-    <h3> Confirm Business Information</h3>
-    <p> <b> Name:</b> @Model.BusinessName </p>
-    <p> <b> Description:</b> @Model.Description </p>
-    <p> <b> Phone Number:</b> @Model.BusinessPhone </p>
-    <p> <b> Category:</b> @Model.Category </p>
-    <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
-    <p>
-        <b> Website:</b> <a target="_blank" href="http://
-@Model.Website">@Model.Website </a>
-</p>
-<p>
-    <b> Social Media:</b>
-    <br /> Facebook: <a target="_blank" href="https://www.facebook.com/@Model.Facebook">@@@Model.Facebook</a>
-    <br /> Twitter: <a target="_blank" href="https://www.twitter.com/@Model.Twitter">@@@Model.Twitter</a>
-    <br /> Instagram: <a target="_blank" href="https://www.instagram.com/@Model.Instagram">@@@Model.Instagram</a>
-</p>
-<p>
-    <b> Business Logo: </b>
-    <img src="~/@Model.BusinessLogoHolder" style="        width: 300px;
-        height: auto;
-" />
-</p>
-<p>
-    <b> Store Image: </b>
+    <h3>Confirm Business Information</h3>
+    <p><b>Name:</b> @Model.BusinessName </p>
+    <p><b>Description:</b> @Model.Description </p>
+    <p><b>Phone Number:</b> @Model.BusinessPhone </p>
+    <p><b>Category:</b> @Model.Category </p>
+    <p><b>Hours:</b> @HourSet.hoursToString(@Model) </p>
+
+    <p><b>Website: </b><a target="_blank" href="http://@Model.Website">@Model.Website</a></p>
+
+    <h5> Social Media:</h5>
+    <p><b>Facebook: </b><a target="_blank" href="https://www.facebook.com/@Model.Facebook">@@@Model.Facebook</a></p>
+    <p><b>Twitter: </b><a target="_blank" href="https://www.twitter.com/@Model.Twitter">@@@Model.Twitter</a></p>
+    <p><b>Instagram: </b><a target="_blank" href="https://www.instagram.com/@Model.Instagram">@@@Model.Instagram</a></p>
+
+    <p><b> Business Logo: </b></p>
+    <img src="~/@Model.BusinessLogoHolder" style="width: 300px; height: auto;" />
+
+
+    <p><b> Store Image: </b></p>
     <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" />
-</p>
-<p> <b> Location:</b> @Address.fieldsToAddress(@Model) </p>
+    <p> <b> Location:</b> @Address.fieldsToAddress(@Model) </p>
+</div>
+
 <div>
     <script type='text/javascript'>
     var map, searchManager;
@@ -231,24 +229,19 @@
     <div id="myMap" style="position: relative; width: 600px; height: 400px;"></div>
     <!--<div id='output' style="margin-left:10px;float:left;"></div>-->
 </div>
-<br />
-<!-- <input type="submit" class="submit-form-btn" value="Edit">-->
+
 <h1>Design Examples</h1>
 
-</div>
-
-<div class="webdisplay" id="full-screen-display">
+<div id="confirm-display">
     <h1>Orca Stars</h1>
-    <div class="big" style="background-color:white">
-        <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
+    <div>
+        <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo" style="display:none;">
     </div>
 
-    <section class="footer">
-        <div class="footer-content">
+    <div class="section1">
+        <div class="section1-content">
             <h1>@Model.BusinessName</h1>
-            <p>
-                @Model.Description
-            </p>
+            <p>@Model.Description</p>
 
             <div class="icons">
                 <p>
@@ -258,17 +251,16 @@
                 <p>
                     <i class="far fa-clock"></i>
                     @HourSet.hoursToString(@Model)
-
                 </p>
             </div>
             <a href="#" class="btn">Directions</a>
         </div>
-    </section>
+    </div>
 </div>
 
 <div id="designs">
     <h1>App Example</h1>
-    <a href="#text-center">Back to Top</a><br />
+    <a href="#text-center">Back to Top ^</a><br />
     <div class="phone">
         <h2> OrcaStars </h2>
         <div class="content">
@@ -282,7 +274,6 @@
             <div class="description"> <p>@Model.Description</p> </div>
             <div><i class="fa fa-map-marker-alt"></i> @Address.fieldsToAddress(@Model) </div>
             <div><i class="far fa-clock"></i> @HourSet.hoursToString(@Model) </div>
-
         </div>
     </div>
     <br>
@@ -319,8 +310,12 @@
         </div>
     </div>
     <br>
-    <a href="#text-center">Back to Top ^</a><br />
-    <a asp-action="Edit" asp-controller="Admin"
-       asp-route-id="@Model.Id">Edit/Make Changes</a>
-
 </div>
+
+
+<a href="#text-center">Back to Top ^</a>
+<br />
+<a asp-action="Edit" asp-controller="Admin"
+   asp-route-id="@Model.Id">Edit/Make Changes</a>
+
+

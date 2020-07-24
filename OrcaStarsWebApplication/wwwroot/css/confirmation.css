@@ -1,19 +1,21 @@
 ﻿@import url("https://fonts.googleapis.com/css?family=Raleway");
 @import url("https://fonts.googleapis.com/css?family=Oswald");
 
-html,
+/* html,
 body {
 margin: 0;
 padding: 0;
 height: 100%;
 width: 100%;
 }
+*/
 
-#full-screen-display {
+#confirm-display {
     background-color: #000;
+    text-align: center;
 }
 
-#full-screen-display .intro {
+    /* #confirm-display .intro {
     width: 100%;
     height: 70%;
     margin: auto;
@@ -23,41 +25,39 @@ width: 100%;
     overflow: hidden;
 }
 
-#full-screen-display .intro .bg {
-}
 
-#full-screen-display .intro .inner {
+#confirm-display .intro .inner {
     display: table-cell;
     vertical-align: bottom;
     width: 100%;
     max-width: none;
 }
-
-#full-screen-display .content {
+*/
+#confirm-display .content {
     max-width: 100%;
     height: 10%;
     margin: 0 auto;
     text-align: right;
 }
 
-#full-screen-display h1 {
+#confirm-display h1, p {
     font-family: "Raleway", sans-serif;
     color: #f9f3f4;
     text-shadow: 0px 8px 300px #000;
+}
+
+#confirm-display h1 {
     font-size: 400%;
     text-align: center;
     padding: 30px;
     margin-bottom: 0;
 }
 
-#full-screen-display p {
-    font-family: "Raleway", sans-serif;
-    color: #f9f3f4;
-    text-shadow: 0px 8px 300px #000;
+#confirm-display p {
     font-size: 150%;
 }
 
-#full-screen-display .btn {
+#confirm-display .btn {
     border-radius: 9px;
     font-family: "Oswald", sans-serif;
     color: #f9f3f4;
@@ -69,26 +69,28 @@ width: 100%;
     margin-right: 5%;
 }
 
-#full-screen-display .btn:hover {
+#confirm-display .btn:hover {
     color: #1a1a1a;
     border: solid #1a1a1a 3px;
     transition: all 0.5s ease-out;
 }
 
-#full-screen-display .footer {
+#confirm-display .section1 {
     width: 100%;
     height: 60%;
     margin: auto;
 }
 
-#full-screen-display .footer-content {
+#confirm-display .section1-content {
+    position: relative;
     max-width: 100%;
     height: 10%;
     padding: 0% 10% 10% 10%;
     text-align: center;
 }
 
-#full-screen-display .icons {
+#confirm-display .icons {
+    position: relative;
     padding: 5% 10% 0% 10%;
     margin-top: 1rem;
     text-align: left;
