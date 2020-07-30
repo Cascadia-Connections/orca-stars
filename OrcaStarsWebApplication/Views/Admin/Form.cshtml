@@ -81,6 +81,11 @@
         <span asp-validation-for="Category"></span>
         <br />
 
+        <label>Website:</label>
+        <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
+        <span asp-validation-for="Website"></span>
+        <br />
+
         <label><b><span class="day">Hours:</span> Open Time - Close Time</b></label><br />
         <div id="quickHrs">
             <span>
@@ -949,12 +954,6 @@
         <br />
         <br />
 
-        <label>Website:</label>
-        <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
-        <span asp-validation-for="Website"></span>
-        <br />
-        <br />
-
         <h4>Location</h4>
         <label>Address 1:</label>
         <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="Address Line 1">
@@ -998,7 +997,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                        automatically creates a FileUpload control  *@
+                    automatically creates a FileUpload control  *@
                     <input asp-for="BusinessLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
@@ -1009,7 +1008,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                        automatically creates a FileUpload control  *@
+                    automatically creates a FileUpload control  *@
                     <input asp-for="StoreLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
