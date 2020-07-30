@@ -8,9 +8,10 @@
 
 <h3>Search Results</h3>
 
-<div id="dialog" style="display: none">
-    Are you sure you want to delete?
+<div class="alert alert-success" role="alert" style="display:@ViewBag.Deleted;">
+    The business @ViewBag.BusinessName was deleted from the database.
 </div>
+
 
 <table class="table">
     <tr>
@@ -52,7 +53,7 @@
                    asp-route-id="@business.Id">View |</a>
                 <a asp-action="Edit" asp-controller="Admin"
                    asp-route-id="@business.Id">Update |</a>
-                <a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@business.Id" new { onclick = "return confirm('Are you sure you want to delete the business: @business.Name?');"})>Delete</a>
+                <a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@business.Id" new { onclick="return confirm('Are you sure you want to delete the business: @business.Name?');" })>Delete</a>
             </td>
         </tr>
     }

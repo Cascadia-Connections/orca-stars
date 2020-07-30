@@ -405,12 +405,21 @@ namespace OrcaStarsWebApplication.Controllers
         public IActionResult DeleteBusiness(Guid id)
         {
             Business business = _db.Businesses.Single(b => b.Id == id);
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             ViewBag.Deleted = "block";
             ViewBag.BusinessName = business.Name;
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
+            return RedirectToAction("DeleteSuccessful", id);
+        }
 
+        public IActionResult DeleteSuccessful(Guid id)
+        {
             IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
             return View("SearchResults", foundBusinesses);
         }
