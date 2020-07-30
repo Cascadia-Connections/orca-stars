@@ -380,6 +380,8 @@ namespace OrcaStarsWebApplication.Controllers
                             ;
             }
 
+            ViewBag.Deleted = "none";
+
             //Composite Search Results
             return View("SearchResults", foundBusinesses);
         }
@@ -392,6 +394,7 @@ namespace OrcaStarsWebApplication.Controllers
             Business business = new Business { Id = id };
             _db.Businesses.Update(business);
             _db.SaveChanges();
+            ViewBag.Deleted = "none";
 
             return View("Search");
         }
@@ -402,11 +405,14 @@ namespace OrcaStarsWebApplication.Controllers
         public IActionResult DeleteBusiness(Guid id)
         {
             Business business = _db.Businesses.Single(b => b.Id == id);
+            ViewBag.Deleted = "block";
+            ViewBag.BusinessName = business.Name;
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
 
-            return RedirectToAction("Search");
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+            return View("SearchResults", foundBusinesses);
         }
     }
 }
