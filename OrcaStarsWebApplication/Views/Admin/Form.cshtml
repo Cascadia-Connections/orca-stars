@@ -998,7 +998,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="BusinessLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
@@ -1009,74 +1009,74 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="StoreLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
             </div>
         </div>
-        @section Scripts {
-            <script>
-                $(document).ready(function () {
-                    $('.custom-file-input').on("change", function () {
-                        var fileName = $(this).val().split("\\").pop();
-                        $(this).next('.custom-file-label').html(fileName);
-                    });
-                });
-
-                function toggleHours() {
-                    var tog = document.getElementById("toggle");
-                    var fhr = document.getElementById("fullHrs");
-                    var qhr = document.getElementById("quickHrs");
-                    var g = document.getElementById("GenO");
-                    var mo = document.getElementById("MonO");
-                    var tu = document.getElementById("TuesO");
-                    var we = document.getElementById("WedO");
-                    var th = document.getElementById("ThursO");
-                    var fr = document.getElementById("FriO");
-                    var sa = document.getElementById("SatO");
-                    var su = document.getElementById("SunO");
-                    var Cg = document.getElementById("GenC");
-                    var Cmo = document.getElementById("MonC");
-                    var Ctu = document.getElementById("TuesC");
-                    var Cwe = document.getElementById("WedC");
-                    var Cth = document.getElementById("ThursC");
-                    var Cfr = document.getElementById("FriC");
-                    var Csa = document.getElementById("SatC");
-                    var Csu = document.getElementById("SunC");
-                    if (fhr.style.display === "block") {
-                        fhr.style.display = "none";
-                        qhr.style.display = "block";
-                        tog.value = "Modify Individual Days";
-                    } else {
-                        mo.value = g.value;
-                        tu.value = g.value;
-                        we.value = g.value;
-                        th.value = g.value;
-                        fr.value = g.value;
-                        sa.value = g.value;
-                        su.value = g.value;
-                        Cmo.value = Cg.value;
-                        Ctu.value = Cg.value;
-                        Cwe.value = Cg.value;
-                        Cth.value = Cg.value;
-                        Cfr.value = Cg.value;
-                        Csa.value = Cg.value;
-                        Csu.value = Cg.value;
-                        fhr.style.display = "block";
-                        qhr.style.display = "none";
-                        tog.value = "Modify Collective Hours";
-                    }
-                }
-
-            </script>
-        }
-
         <br />
         <br />
-        <input type="submit" class="submit-form-btn" value="Submit">
-
-
+        <input onclick="toggleHours()" type="submit" class="submit-form-btn" value="Submit">
     </form>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
+
+            function toggleHours() {
+                var tog = document.getElementById("toggle");
+                var fhr = document.getElementById("fullHrs");
+                var qhr = document.getElementById("quickHrs");
+                var g = document.getElementById("GenO");
+                var mo = document.getElementById("MonO");
+                var tu = document.getElementById("TuesO");
+                var we = document.getElementById("WedO");
+                var th = document.getElementById("ThursO");
+                var fr = document.getElementById("FriO");
+                var sa = document.getElementById("SatO");
+                var su = document.getElementById("SunO");
+                var Cg = document.getElementById("GenC");
+                var Cmo = document.getElementById("MonC");
+                var Ctu = document.getElementById("TuesC");
+                var Cwe = document.getElementById("WedC");
+                var Cth = document.getElementById("ThursC");
+                var Cfr = document.getElementById("FriC");
+                var Csa = document.getElementById("SatC");
+                var Csu = document.getElementById("SunC");
+                if (fhr.style.display === "block") {
+                    g.value = mo.value;
+                    Cg.value = Cmo.value;
+                    fhr.style.display = "none";
+                    qhr.style.display = "block";
+                    tog.value = "Modify Individual Days";
+                } else {
+                    mo.value = g.value;
+                    tu.value = g.value;
+                    we.value = g.value;
+                    th.value = g.value;
+                    fr.value = g.value;
+                    sa.value = g.value;
+                    su.value = g.value;
+                    Cmo.value = Cg.value;
+                    Ctu.value = Cg.value;
+                    Cwe.value = Cg.value;
+                    Cth.value = Cg.value;
+                    Cfr.value = Cg.value;
+                    Csa.value = Cg.value;
+                    Csu.value = Cg.value;
+                    fhr.style.display = "block";
+                    qhr.style.display = "none";
+                    tog.value = "Modify Collective Hours";
+                }
+            }
+
+        </script>
+    }
 
 </body>
