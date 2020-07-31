@@ -1,5 +1,5 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
-@model IEnumerable<OrcaStarsWebApplication.Models.Business>
+@model  OrcaStarsWebApplication.ViewModels.SearchResultsViewModel
 
 @{
     ViewData["Title"] = "Search Results";
@@ -8,8 +8,8 @@
 
 <h3>Search Results</h3>
 
-<div class="alert alert-success" role="alert" style="display:@ViewBag.Deleted;">
-    The business @ViewBag.BusinessName was deleted from the database.
+<div class="alert alert-success" role="alert" style="display: @Model.displayDeleteNotification;">
+    The business @Model.deletedBusinessName was deleted from the database.
 </div>
 
 
@@ -32,7 +32,7 @@
         </th>
     </tr>
 
-    @foreach (var business in Model)
+    @foreach (var business in Model.businesses)
     {
         <tr>
             <td>

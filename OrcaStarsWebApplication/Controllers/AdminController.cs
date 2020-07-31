@@ -380,10 +380,16 @@ namespace OrcaStarsWebApplication.Controllers
                             ;
             }
 
-            ViewBag.Deleted = "none";
+            //create searchResultsVM
+            SearchResultsViewModel srvm = new SearchResultsViewModel()
+            {
+                displayDeleteNotification = "none",
+                deletedBusinessName = "",
+                businesses = foundBusinesses
+            };
 
             //Composite Search Results
-            return View("SearchResults", foundBusinesses);
+            return View("SearchResults", srvm);
         }
 
         // UPDATE //
@@ -394,7 +400,6 @@ namespace OrcaStarsWebApplication.Controllers
             Business business = new Business { Id = id };
             _db.Businesses.Update(business);
             _db.SaveChanges();
-            ViewBag.Deleted = "none";
 
             return View("Search");
         }
@@ -410,18 +415,24 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 return View();
             }
-            ViewBag.Deleted = "block";
-            ViewBag.BusinessName = business.Name;
+            
+            //create searchResultsVM
+            SearchResultsViewModel srvm = new SearchResultsViewModel();
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            srvm.displayDeleteNotification = "block";
+            srvm.deletedBusinessName = business.Name;
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", id);
+            return RedirectToAction("DeleteSuccessful", srvm);
         }
 
-        public IActionResult DeleteSuccessful(Guid id)
+        public IActionResult DeleteSuccessful(SearchResultsViewModel vm)
         {
+            SearchResultsViewModel srvm = vm;
             IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
-            return View("SearchResults", foundBusinesses);
+            srvm.businesses = foundBusinesses;
+            return View("SearchResults", srvm);
         }
     }
 }
