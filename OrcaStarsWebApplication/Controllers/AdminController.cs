@@ -186,6 +186,14 @@ namespace OrcaStarsWebApplication.Controllers
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Form (ApplicationViewModel avm)
         {
+            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == avm.BusinessName);
+
+            if (null != foundBusinesses)
+            {
+                avm.IsValid = "Duplicate";
+                return View(avm);
+            }
+
             if (ModelState.IsValid/* && avm.Category != "--Select--"*/)
             {
                 string uniqueBusinessFileName = null;
@@ -349,7 +357,6 @@ namespace OrcaStarsWebApplication.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public IActionResult Search(ApplicationViewModel avm)
         {

@@ -23,6 +23,9 @@
         width: 100px;
         padding-bottom: 3px;
     }
+    .validateTxt {
+        color: #d55;
+    }
     </style>
 }
 <body>
@@ -33,19 +36,19 @@
 
         <label>First Name:</label>
         <input asp-for="FirstName" type="text" name="FirstName" placeholder="First Name" />
-        <span asp-validation-for="FirstName"></span>
+        <span class="validateTxt" asp-validation-for="FirstName"></span>
         <br />
         <label>Last Name:</label>
         <input asp-for="LastName" type="text" name="LastName" placeholder="Last Name" />
-        <span asp-validation-for="LastName"></span>
+        <span class="validateTxt" asp-validation-for="LastName"></span>
         <br />
         <label>Phone Number:</label>
         <input asp-for="PhoneNumber" type="text" name="PhoneNumber" placeholder="Phone Number" />
-        <span asp-validation-for="PhoneNumber"></span>
+        <span class="validateTxt" asp-validation-for="PhoneNumber"></span>
         <br />
         <label>Email:</label>
         <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
-        <span asp-validation-for="Email"></span>
+        <span class="validateTxt" asp-validation-for="Email"></span>
         <br />
         <br />
         <br />
@@ -55,11 +58,11 @@
 
         <label>Name:</label>
         <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
-        <span asp-validation-for="BusinessName"></span>
+        <span class="validateTxt" asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
         <textarea asp-for="Description" placeholder="Business Description"></textarea>
-        <span asp-validation-for="Description"></span>
+        <span class="validateTxt" asp-validation-for="Description"></span>
         <br />
         <label>Category:</label>
         <select asp-for="Category" id="Category">
@@ -78,12 +81,12 @@
             <option>Mass Media</option>
             <option>Education</option>
         </select>
-        <span asp-validation-for="Category"></span>
+        <span class="validateTxt" asp-validation-for="Category"></span>
         <br />
 
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="Business Website">
-        <span asp-validation-for="Website"></span>
+        <span class="validateTxt" asp-validation-for="Website"></span>
         <br />
 
         <label><b><span class="day">Hours:</span> Open Time - Close Time</b></label><br />
@@ -957,23 +960,23 @@
         <h4>Location</h4>
         <label>Address 1:</label>
         <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="Address Line 1">
-        <span asp-validation-for="AddressLine1"></span>
+        <span class="validateTxt" asp-validation-for="AddressLine1"></span>
         <br />
         <label>Address 2:</label>
         <input asp-for="AddressLine2" type="text" name="AddressLine2" placeholder="Address Line 2">
-        <span asp-validation-for="AddressLine2"></span>
+        <span class="validateTxt" asp-validation-for="AddressLine2"></span>
         <br />
-        <label>City <span asp-validation-for="City"></span>:</label>
+        <label>City <span class="validateTxt" asp-validation-for="City"></span>:</label>
         <input asp-for="City" type="text" name="City" placeholder="Bothell">
-        <label>State/Province <span asp-validation-for="State"></span>:</label>
+        <label>State/Province <span class="validateTxt" asp-validation-for="State"></span>:</label>
         <input asp-for="State" type="text" name="State" placeholder="WA">
         <label>Postal Code:</label>
         <input asp-for="Zip" type="text" name="Zip" placeholder="98012">
-        <span asp-validation-for="Zip"></span>
+        <span class="validateTxt" asp-validation-for="Zip"></span>
         <br />
         <label>Country:</label>
         <input asp-for="Country" type="text" name="Country" placeholder="United States">
-        <span asp-validation-for="Country"></span>
+        <span class="validateTxt" asp-validation-for="Country"></span>
         <br />
         <br />
 

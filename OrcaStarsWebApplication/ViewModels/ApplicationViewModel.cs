@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Drawing;
 using OrcaStarsWebApplication.Models;
+using OrcaStarsWebApplication.Utilities;
 
 namespace OrcaStarsWebApplication.ViewModels
 {
@@ -28,6 +29,7 @@ namespace OrcaStarsWebApplication.ViewModels
         [Required(ErrorMessage = "*Required")]
         public string Description { get; set; }
         [Required(ErrorMessage = "*Required")]
+        [ValidCategory(InvalidCategory: "--Select--", ErrorMessage = "*Required")]
         public string Category { get; set; }
         public string Website { get; set; }
         [Required(ErrorMessage = "*Required")]
@@ -62,7 +64,8 @@ namespace OrcaStarsWebApplication.ViewModels
         public IFormFile BusinessLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public string BusinessLogoHolder { get;  set; }
-        public string StoreLogoHolder { get;  set; }
+        public string StoreLogoHolder { get; set; }
+        public string IsValid { get; set; }
 
     }
 }
