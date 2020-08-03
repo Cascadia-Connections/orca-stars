@@ -14,7 +14,7 @@ using OrcaStarsWebApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace OrcaStarsWebApplication.Controllers
 {
@@ -347,7 +347,22 @@ namespace OrcaStarsWebApplication.Controllers
         [HttpGet]
         public IActionResult Search()
         {
-            return View();
+            //obtain businesses from database to pass to view
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+
+            SearchViewModel svm = new SearchViewModel();
+            svm.businessNames = new List<string>();
+            svm.businessCategories = new List<string>();
+            svm.businessCities = new List<string>();
+
+            //build a list of businesses with only the names, category and city and assign to searchviewmodel businesses
+            foreach (Business business in foundBusinesses) 
+            {
+                svm.businessNames.Add(business.Name);
+                svm.businessCategories.Add(business.Category);
+                svm.businessCities.Add(business.City);
+            }
+            return View(svm);
         }
 
         [HttpPost]
