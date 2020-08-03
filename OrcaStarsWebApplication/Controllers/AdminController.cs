@@ -380,8 +380,16 @@ namespace OrcaStarsWebApplication.Controllers
                             ;
             }
 
+            //create searchResultsVM
+            SearchResultsViewModel srvm = new SearchResultsViewModel()
+            {
+                displayDeleteNotification = "none",
+                deletedBusinessName = "",
+                businesses = foundBusinesses
+            };
+
             //Composite Search Results
-            return View("SearchResults", foundBusinesses);
+            return View("SearchResults", srvm);
         }
 
         // UPDATE //
@@ -402,11 +410,29 @@ namespace OrcaStarsWebApplication.Controllers
         public IActionResult DeleteBusiness(Guid id)
         {
             Business business = _db.Businesses.Single(b => b.Id == id);
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            
+            //create searchResultsVM
+            SearchResultsViewModel srvm = new SearchResultsViewModel();
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            srvm.displayDeleteNotification = "block";
+            srvm.deletedBusinessName = business.Name;
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
+            return RedirectToAction("DeleteSuccessful", srvm);
+        }
 
-            return RedirectToAction("Search");
+        public IActionResult DeleteSuccessful(SearchResultsViewModel vm)
+        {
+            SearchResultsViewModel srvm = vm;
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+            srvm.businesses = foundBusinesses;
+            return View("SearchResults", srvm);
         }
     }
 }
