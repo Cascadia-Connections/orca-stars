@@ -1,5 +1,6 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
-@model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
+@model OrcaStarsWebApplication.ViewModels.SearchViewModel
+
 @{
     ViewData["Title"] = "Search";
     Layout = "_Layout";
@@ -10,15 +11,76 @@
 <h3>Find Businesses</h3>
 <form asp-action="Search" asp-controller="Admin">
     <div>
-        Name: <input asp-for="BusinessName" />
+        <label for="businessName">Name:</label>
+        <input asp-for="BusinessName" id="businessName" />
     </div>
     <div>
-        Category: <input asp-for="Category" />
+        <label for="businessCategory">Category:</label>
+        <input asp-for="Category" id="businessCategory" />
     </div>
     <div>
-        City: <input asp-for="City" />
+        <label for="businessCity">City:</label>
+        <input asp-for="City" id="businessCity" />
     </div>
     <div>
         <input type="submit" value="Search" />
     </div>
 </form>
+
+<script>
+    var nametags = @Html.Raw(Json.Serialize(Model.businessNames));
+
+    $( "#businessName" ).autocomplete({
+  source: function( request, response ) {
+          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response($.grep(nametags , function( item ){
+              return matcher.test( item );
+          }) );
+      }
+    });
+
+    var categorytags = @Html.Raw(Json.Serialize(Model.businessCategories));
+
+    $( "#businessCategory" ).autocomplete({
+  source: function( request, response ) {
+          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response($.grep(categorytags , function( item ){
+              return matcher.test( item );
+          }) );
+      }
+    });
+
+    var citytags = @Html.Raw(Json.Serialize(Model.businessCities));
+
+    $( "#businessCity" ).autocomplete({
+  source: function( request, response ) {
+          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response($.grep(citytags , function( item ){
+              return matcher.test( item );
+          }) );
+      }
+});
+</script>
+
+
+<!--<script>
+    /*
+        jQuery tooltip provides the hover effect,
+        AJAX call to '/api/writer/{id}' gets the JSON data
+        for the book count for the given author id
+     */
+    $(function () {
+        $(document).tooltip({
+            items: "[data-id]",
+            content: function () {
+                if (this.attributes.length <= 2) {
+                    var id = this.attributes["data-id"].nodeValue;
+                    /* Call the API */
+                    $.getJSON('/api/contact/' + id + '/businesscount/', function (data) {
+                        $("[data-id =" + id + "]")
+                            .attr('name', 'number of businesses: ' + data.count);
+                    });
+                }
+            }
+        });
+    });</script>-->
