@@ -190,7 +190,7 @@ namespace OrcaStarsWebApplication.Controllers
 
             if (null != foundBusinesses)
             {
-                avm.IsValid = "Duplicate";
+                avm.CheckValid = "Duplicate";
                 return View(avm);
             }
 

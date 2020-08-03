@@ -57,7 +57,7 @@
         <h4>General</h4>
 
         <label>Name:</label>
-        <input asp-for="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
+        <input asp-for="BusinessName" id="BusinessName" type="text" name="BusinessName" placeholder="Business Name">
         <span class="validateTxt" asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
@@ -93,7 +93,7 @@
         <div id="quickHrs">
             <span>
                 <span class="day">Every Day</span>
-                <select id="GenO">
+                <select asp-for="MonO" id="GenO">
                     <option>Closed</option>
                     <option>12:00am</option>
                     <option>12:30am</option>
@@ -145,7 +145,7 @@
                     <option>11:30pm</option>
                 </select>
                 -
-                <select id="GenC">
+                <select asp-for="MonC" id="GenC">
                     <option>Closed</option>
                     <option>12:00am</option>
                     <option>12:30am</option>
@@ -959,23 +959,23 @@
 
         <h4>Location</h4>
         <label>Address 1:</label>
-        <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="Address Line 1">
+        <input asp-for="AddressLine1" id="AddressLine1" type="text" name="AddressLine1" placeholder="Address Line 1">
         <span class="validateTxt" asp-validation-for="AddressLine1"></span>
         <br />
         <label>Address 2:</label>
-        <input asp-for="AddressLine2" type="text" name="AddressLine2" placeholder="Address Line 2">
+        <input asp-for="AddressLine2" id="AddressLine2" type="text" name="AddressLine2" placeholder="Address Line 2">
         <span class="validateTxt" asp-validation-for="AddressLine2"></span>
         <br />
         <label>City <span class="validateTxt" asp-validation-for="City"></span>:</label>
-        <input asp-for="City" type="text" name="City" placeholder="Bothell">
+        <input asp-for="City" id="City" type="text" name="City" placeholder="Bothell">
         <label>State/Province <span class="validateTxt" asp-validation-for="State"></span>:</label>
-        <input asp-for="State" type="text" name="State" placeholder="WA">
+        <input asp-for="State" id="State" type="text" name="State" placeholder="WA">
         <label>Postal Code:</label>
-        <input asp-for="Zip" type="text" name="Zip" placeholder="98012">
+        <input asp-for="Zip" id="Zip" type="text" name="Zip" placeholder="98012">
         <span class="validateTxt" asp-validation-for="Zip"></span>
         <br />
         <label>Country:</label>
-        <input asp-for="Country" type="text" name="Country" placeholder="United States">
+        <input asp-for="Country" id="Country" type="text" name="Country" placeholder="United States">
         <span class="validateTxt" asp-validation-for="Country"></span>
         <br />
         <br />
@@ -1018,23 +1018,52 @@
             </div>
         </div>
         <br />
+        <label class="validity" asp-for="CheckValid">Valid Check</label>
+        <input asp-for="CheckValid" type="text" id="checkValid" placeholder="Seems Good">
+
         <br />
-        <input onclick="toggleHours()" type="submit" class="submit-form-btn" value="Submit">
+        <input onclick="setHours()" type="submit" class="submit-form-btn" value="Submit">
     </form>
 
     @section Scripts {
         <script>
+            function checkDuplicates() {
+                var busName = document.getElementById("BusinessName");
+                var AdL1 = document.getElementById("AddressLine1");
+                var AdL2= document.getElementById("AddressLine2");
+                var City = document.getElementById("City");
+                var State = document.getElementById("State");
+                var Zip = document.getElementById("Zip");
+                var Country = document.getElementById("Country");
+                var tog = document.getElementById("toggle");
+                if (busName.value == "Duplicate") {
+                    tog.value = "OH SNAP DUPLICATE!";
+                }
+            }
+            
             $(document).ready(function () {
                 $('.custom-file-input').on("change", function () {
                     var fileName = $(this).val().split("\\").pop();
                     $(this).next('.custom-file-label').html(fileName);
                 });
             });
-
             function toggleHours() {
                 var tog = document.getElementById("toggle");
                 var fhr = document.getElementById("fullHrs");
                 var qhr = document.getElementById("quickHrs");
+                setHours();
+                if (fhr.style.display === "block") {
+                    fhr.style.display = "none";
+                    qhr.style.display = "block";
+                    tog.value = "Modify Individual Days";
+                } else {
+                    fhr.style.display = "block";
+                    qhr.style.display = "none";
+                    tog.value = "Modify Collective Hours";
+                }
+            }
+            function setHours() {
+                var fhr = document.getElementById("fullHrs");
                 var g = document.getElementById("GenO");
                 var mo = document.getElementById("MonO");
                 var tu = document.getElementById("TuesO");
@@ -1054,9 +1083,6 @@
                 if (fhr.style.display === "block") {
                     g.value = mo.value;
                     Cg.value = Cmo.value;
-                    fhr.style.display = "none";
-                    qhr.style.display = "block";
-                    tog.value = "Modify Individual Days";
                 } else {
                     mo.value = g.value;
                     tu.value = g.value;
@@ -1072,12 +1098,8 @@
                     Cfr.value = Cg.value;
                     Csa.value = Cg.value;
                     Csu.value = Cg.value;
-                    fhr.style.display = "block";
-                    qhr.style.display = "none";
-                    tog.value = "Modify Collective Hours";
                 }
             }
-
         </script>
     }
 

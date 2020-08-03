@@ -65,7 +65,7 @@ namespace OrcaStarsWebApplication.ViewModels
         public IFormFile StoreLogo { get; set; } //changed to IFormFile as file uploaded to service can be accessed by database by this data type
         public string BusinessLogoHolder { get;  set; }
         public string StoreLogoHolder { get; set; }
-        public string IsValid { get; set; }
+        public string CheckValid { get; set; }
 
     }
 }
