@@ -16,8 +16,12 @@ namespace OrcaStarsWebApplication.Utilities
         }
         public override bool IsValid(object value)
         {
-            string val = value.ToString();
-            return val.ToUpper() != InvalidCategory.ToUpper();
+            if (null != value)
+            {
+                string val = value.ToString();
+                return val.ToUpper() != InvalidCategory.ToUpper();
+            }
+            return true;
         }
     }
 }

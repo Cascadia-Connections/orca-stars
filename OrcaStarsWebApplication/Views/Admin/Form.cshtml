@@ -26,10 +26,37 @@
     .validateTxt {
         color: #d55;
     }
+    .button, .button:hover {
+        background-color: #efefef;
+        border: solid 1px black;
+        border-radius: 2px;
+        color: black;
+        padding: 3px 7px;
+        text-decoration: none;
+    }
+    .button:hover {
+        background-color: #e5e5e5;
+    }
     </style>
 }
 <body>
     <h1>Orca Stars Business Application</h1>
+
+    <div class="alert alert-danger" role="alert" style="display: @Model.DisplayNotification;">
+        <b>
+            @Model.Notification
+        </b>
+        <div style="display: @Model.Duplicate;">
+            <br />
+            Do you want to
+            <a class="button" asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.ExistingId">Edit the existing business</a>
+            OR
+            <a class="button" asp-action="Form" asp-controller="Admin">Create a new business</a>
+            ?
+
+        </div>
+    </div>
+
     <form enctype="multipart/form-data" asp-controller="admin" asp-action="form" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
         <h3>Contact Information</h3>
@@ -1000,7 +1027,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="BusinessLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
@@ -1011,16 +1038,12 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                    automatically creates a FileUpload control  *@
+                        automatically creates a FileUpload control  *@
                     <input asp-for="StoreLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
             </div>
         </div>
-        <br />
-        <label class="validity" asp-for="CheckValid">Valid Check</label>
-        <input asp-for="CheckValid" type="text" id="checkValid" placeholder="Seems Good">
-
         <br />
         <input onclick="setHours()" type="submit" class="submit-form-btn" value="Submit">
     </form>
@@ -1030,7 +1053,7 @@
             function checkDuplicates() {
                 var busName = document.getElementById("BusinessName");
                 var AdL1 = document.getElementById("AddressLine1");
-                var AdL2= document.getElementById("AddressLine2");
+                var AdL2 = document.getElementById("AddressLine2");
                 var City = document.getElementById("City");
                 var State = document.getElementById("State");
                 var Zip = document.getElementById("Zip");
@@ -1040,7 +1063,7 @@
                     tog.value = "OH SNAP DUPLICATE!";
                 }
             }
-            
+
             $(document).ready(function () {
                 $('.custom-file-input').on("change", function () {
                     var fileName = $(this).val().split("\\").pop();
