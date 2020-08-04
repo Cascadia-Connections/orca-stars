@@ -1,5 +1,5 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
-@model IEnumerable<OrcaStarsWebApplication.Models.Business>
+@model  OrcaStarsWebApplication.ViewModels.SearchResultsViewModel
 
 @{
     ViewData["Title"] = "Search Results";
@@ -7,6 +7,11 @@
 }
 
 <h3>Search Results</h3>
+
+<div class="alert alert-success" role="alert" style="display: @Model.displayDeleteNotification;">
+    The business @Model.deletedBusinessName was deleted from the database.
+</div>
+
 
 <table class="table">
     <tr>
@@ -27,7 +32,7 @@
         </th>
     </tr>
 
-    @foreach (var business in Model)
+    @foreach (var business in Model.businesses)
     {
         <tr>
             <td>
@@ -48,13 +53,13 @@
                    asp-route-id="@business.Id">View |</a>
                 <a asp-action="Edit" asp-controller="Admin"
                    asp-route-id="@business.Id">Update |</a>
-                <a asp-action="DeleteBusiness" asp-controller="Admin"
-                   asp-route-id="@business.Id">Delete</a>
+                <a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@business.Id" new { onclick="return confirm('Are you sure you want to delete the business: @business.Name?');" })>Delete</a>
             </td>
         </tr>
     }
 
 </table>
+
 <!--<script>
     /*
         jQuery tooltip provides the hover effect,
