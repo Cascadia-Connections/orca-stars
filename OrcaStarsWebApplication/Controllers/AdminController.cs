@@ -40,7 +40,7 @@ namespace OrcaStarsWebApplication.Controllers
         {
             return View();
         }
-
+        [Authorize]
         [HttpGet] //THIS IS THE FORM
         public IActionResult Form()
         {
@@ -48,7 +48,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // CREATE //
-
+        [Authorize]
         [HttpPost] // POST FORM DATA //
         public IActionResult Form(ApplicationViewModel avm)
         {
@@ -146,7 +146,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // UPDATE //
-
+        [Authorize]
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
         public IActionResult Edit(Guid id)
         {
@@ -201,7 +201,7 @@ namespace OrcaStarsWebApplication.Controllers
             };
             return View(avm);
         }
-
+        [Authorize]
         [HttpPost] // POST UPDATED FORM DATA //
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
         {
@@ -284,7 +284,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // CONFIRM //
-
+        [Authorize]
         [HttpGet] // DISPLAYS BUSINESS INFO //
         public IActionResult ConfirmDisplay(Guid id)
         {
@@ -341,13 +341,13 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // SEARCH //
-
+        [Authorize]
         [HttpGet]
         public IActionResult Search()
         {
             return View();
         }
-
+        [Authorize]
         [HttpPost]
         public IActionResult Search(ApplicationViewModel avm)
         {
