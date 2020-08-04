@@ -14,7 +14,8 @@ using OrcaStarsWebApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrcaStarsWebApplication.Controllers
 {
@@ -33,7 +34,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // GET //
-
+        [Authorize]
         [HttpGet] //THIS IS THE INDEX PAGE
         public IActionResult Index()
         {
