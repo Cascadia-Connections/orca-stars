@@ -1,0 +1,25 @@
+﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.ConfirmDeleteViewModel
+
+@{
+    ViewData["Title"] = "Search";
+    Layout = "_Layout";
+}
+
+<h1>Confirm Deletion of <strong>@Model.Business.Name </strong></h1>
+
+<div>
+    <h3>Business Information</h3>
+    <p><b>Business Name:</b> @Model.Business.Name</p>
+    <p> <b> Phone:</b> @Model.Business.PhoneNumber</p>
+    <p>
+        <b> Website:</b> <a target="_blank" href="http://
+@Model.Business.Website">@Model.Business.Website </a>
+</p>
+<br />
+
+<a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@Model.Id">Confirm Delete</a>
+    <br/>
+<a asp-action="Search" asp-controller="Admin"
+   >Cancel</a>
+</div>

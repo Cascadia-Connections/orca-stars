@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrcaStarsWebApplication", "OrcaStarsWebApplication.csproj", "{DF255411-79AF-47D2-9081-413DB142A86B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestOrcaStars", "..\XUnitTestOrcaStars\XUnitTestOrcaStars.csproj", "{1F30CED7-39A5-41AB-8A9D-0A1B996EB18F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestOrcaStars", "..\XUnitTestOrcaStars\XUnitTestOrcaStars.csproj", "{1F30CED7-39A5-41AB-8A9D-0A1B996EB18F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
