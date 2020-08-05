@@ -517,8 +517,6 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 return View();
             }
-            else 
-            {
             Business business = _db.Businesses.Single(b => b.Id == id);
 
             //create searchResultsVM
@@ -530,7 +528,6 @@ namespace OrcaStarsWebApplication.Controllers
 
             _db.SaveChanges();
             return RedirectToAction("DeleteSuccessful", srvm); 
-            }
         }
 
         [Authorize]
