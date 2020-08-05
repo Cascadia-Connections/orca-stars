@@ -48,7 +48,12 @@ namespace OrcaStarsWebApplication.Controllers
         [Authorize]
         public IActionResult Form()
         {
-            return View();
+            ApplicationViewModel avm = new ApplicationViewModel();
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            avm.DisplayNotification = "none";
+            avm.Notification = "none";
+            avm.BusinessName = null;
+            return View(avm);
         }
 
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
@@ -189,107 +194,148 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // CREATE //
-
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         
         [Authorize]
         public IActionResult Form (ApplicationViewModel avm)
         {
-            if (ModelState.IsValid/* && avm.Category != "--Select--"*/)
+            avm.DisplayNotification = "none";
+            avm.Duplicate = "none";
+            /* Make sure the model is filled in properly */
+            if (!ModelState.IsValid)
             {
-                string uniqueBusinessFileName = null;
-                string uniqueStoreFileName = null;
-
-                avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
-                avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
-
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
-
-                if (avm.BusinessLogo != null)
-                {
-                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length - 8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
-                    string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
-                    avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
-                    avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
-                }
-
-                if (avm.StoreLogo != null)
-                {
-                    uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName.Substring(Math.Max(0, avm.StoreLogo.FileName.Length - 8), Math.Min(avm.StoreLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break.
-                    string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
-                    avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
-                    avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
-                }
-
-                Hours hours = new Hours
-                {
-                    SunO = avm.SunO,
-                    SunC = avm.SunC,
-                    MonO = avm.MonO,
-                    MonC = avm.MonC,
-                    TuesO = avm.TuesO,
-                    TuesC = avm.TuesC,
-                    WedO = avm.WedO,
-                    WedC = avm.WedC,
-                    ThursO = avm.ThursO,
-                    ThursC = avm.ThursC,
-                    FriO = avm.FriO,
-                    FriC = avm.FriC,
-                    SatO = avm.SatO,
-                    SatC = avm.SatC
-                };
-                _db.Hours.Add(hours);
-
-                SocialMedia socialM = new SocialMedia
-                {
-                    Twitter = avm.Twitter,
-                    Facebook = avm.Facebook,
-                    Instagram = avm.Instagram
-                };
-                _db.SocialMedias.Add(socialM);
-
-                BusinessContact businessContact = new BusinessContact
-                {
-                    FirstName = avm.FirstName,
-                    LastName = avm.LastName,
-                    PhoneNumber = avm.PhoneNumber,
-                    Email = avm.Email
-                };
-
-                _db.Contacts.Add(businessContact);
-
-                Business business = new Business
-                {
-
-                    Name = avm.BusinessName,
-                    Description = avm.Description,
-                    PhoneNumber = avm.BusinessPhone,
-                    Address1 = avm.AddressLine1,
-                    Address2 = avm.AddressLine2,
-                    City = avm.City,
-                    State = avm.State,
-                    Country = avm.Country,
-                    ZipCode = avm.Zip,
-                    Website = avm.Website,
-                    Category = avm.Category,
-                    Hours = hours.ID,
-                    Social = socialM.ID,
-                    Logo = avm.BusinessLogoHolder,
-                    StoreFront = avm.StoreLogoHolder,
-                    ContactId = businessContact.Id
-
-                };
-
-                _db.Businesses.Add(business);
-                _db.SaveChanges();
-
-                return RedirectToAction("ConfirmDisplay", new { id = business.Id });
-
-                //return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
+                avm.DisplayNotification = "block";
+                avm.Notification = "Some required fields are missing";
+                return View(avm);
             }
-            return View(); //This returns view if fail
+
+            /* Check that the business is unique */
+            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == avm.BusinessName);
+            if (null != foundBusinesses)
+            {
+                avm.Duplicate = "block";
+                avm.DisplayNotification = "block";
+                avm.Notification = "The business " + avm.BusinessName + " already exists."; //Eventually check against address as well. 
+                avm.ExistingId = foundBusinesses.Id;
+                return View(avm);
+            }
+
+            return RedirectToAction("AddBusiness", avm);
         }
 
+        // DELETE //
+
+        [HttpGet]
+        public IActionResult SaveNew(Guid id)
+        {
+            return RedirectToAction("ConfirmDisplay", id);
+        }
+        [HttpGet]
+        public IActionResult EditExisting(Guid id)
+        {
+            Business business = _db.Businesses.Single(b => b.Id == id);
+
+            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
+
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            _db.Businesses.Remove(business);
+            _db.SaveChanges();
+
+            return RedirectToAction("Edit", foundBusinesses.Id);
+        }
+
+
+        [HttpGet]
+        public IActionResult AddBusiness(ApplicationViewModel avm)
+        {
+            string uniqueBusinessFileName = null;
+            string uniqueStoreFileName = null;
+
+            avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
+            avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
+
+            string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "images/uploads"); //images location as string format
+
+            if (avm.BusinessLogo != null)
+            {
+                uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length - 8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
+                string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
+                avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
+            }
+
+            if (avm.StoreLogo != null)
+            {
+                uniqueStoreFileName = Guid.NewGuid().ToString() + "_" + avm.StoreLogo.FileName.Substring(Math.Max(0, avm.StoreLogo.FileName.Length - 8), Math.Min(avm.StoreLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break.
+                string filePath = Path.Combine(uploadsFolder, uniqueStoreFileName); //combining uploads folder and unique file name to create it files path
+                avm.StoreLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
+                avm.StoreLogoHolder = "images/uploads/" + uniqueStoreFileName;
+            }
+
+            Hours hours = new Hours
+            {
+                SunO = avm.SunO,
+                SunC = avm.SunC,
+                MonO = avm.MonO,
+                MonC = avm.MonC,
+                TuesO = avm.TuesO,
+                TuesC = avm.TuesC,
+                WedO = avm.WedO,
+                WedC = avm.WedC,
+                ThursO = avm.ThursO,
+                ThursC = avm.ThursC,
+                FriO = avm.FriO,
+                FriC = avm.FriC,
+                SatO = avm.SatO,
+                SatC = avm.SatC
+            };
+            _db.Hours.Add(hours);
+
+            SocialMedia socialM = new SocialMedia
+            {
+                Twitter = avm.Twitter,
+                Facebook = avm.Facebook,
+                Instagram = avm.Instagram
+            };
+            _db.SocialMedias.Add(socialM);
+
+            BusinessContact businessContact = new BusinessContact
+            {
+                FirstName = avm.FirstName,
+                LastName = avm.LastName,
+                PhoneNumber = avm.PhoneNumber,
+                Email = avm.Email
+            };
+
+            _db.Contacts.Add(businessContact);
+
+            Business business = new Business
+            {
+
+                Name = avm.BusinessName,
+                Description = avm.Description,
+                PhoneNumber = avm.BusinessPhone,
+                Address1 = avm.AddressLine1,
+                Address2 = avm.AddressLine2,
+                City = avm.City,
+                State = avm.State,
+                Country = avm.Country,
+                ZipCode = avm.Zip,
+                Website = avm.Website,
+                Category = avm.Category,
+                Hours = hours.ID,
+                Social = socialM.ID,
+                Logo = avm.BusinessLogoHolder,
+                StoreFront = avm.StoreLogoHolder,
+                ContactId = businessContact.Id
+
+            };
+
+            _db.Businesses.Add(business);
+            _db.SaveChanges();
+
+            return RedirectToAction("ConfirmDisplay", new { id = business.Id });
+        }
         [HttpGet] //DISPLAYS BUSINESS INFO
         [Authorize]
         public IActionResult ConfirmDisplay(Guid id)
@@ -376,7 +422,6 @@ namespace OrcaStarsWebApplication.Controllers
             }
             return View(svm);
         }
-
         [HttpPost]
         [Authorize]
         public IActionResult Search(ApplicationViewModel avm)
@@ -472,8 +517,6 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 return View();
             }
-            else 
-            {
             Business business = _db.Businesses.Single(b => b.Id == id);
 
             //create searchResultsVM
@@ -485,7 +528,6 @@ namespace OrcaStarsWebApplication.Controllers
 
             _db.SaveChanges();
             return RedirectToAction("DeleteSuccessful", srvm); 
-            }
         }
 
         [Authorize]
