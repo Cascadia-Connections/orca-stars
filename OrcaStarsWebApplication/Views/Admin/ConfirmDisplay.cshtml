@@ -10,7 +10,10 @@
 
 @section Styles {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" media="all" />
     <link rel="stylesheet" href="~/css/confirmation.css" />
+
 
     @if (@Model.StoreLogoHolder == "images/orcastarsImages/defaultBusinessStorelogo.png")
     {
@@ -23,8 +26,8 @@
     }
 }
 
-<div class="text-center" id="text-center">
-    <h1 class="display-4">Confirming</h1>
+<div id="text-center">
+    <h1 class="display-4">Confirmation</h1>
     <h3>Confirm Owner Information</h3>
     <p><b>Name:</b> @Model.FirstName @Model.LastName </p>
     <p> <b> Phone:</b> @Model.PhoneNumber </p>
@@ -33,6 +36,7 @@
     <h3> Confirm Business Information</h3>
     <p> <b> Name:</b> @Model.BusinessName </p>
     <p> <b> Description:</b> @Model.Description </p>
+    <p> <b> Business Phone:</b> @Model.BusinessPhone </p>
     <p> <b> Category:</b> @Model.Category </p>
     <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
     <p>
@@ -143,7 +147,7 @@
 
 </div>
 
-<div class="webdisplay" id="full-screen-display">
+<!--<div class="webdisplay" id="full-screen-display">
     <h1>Orca Stars</h1>
     <div class="big" style="background-color:white">
         <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
@@ -170,7 +174,7 @@
             <a href="#" class="btn">Directions</a>
         </div>
     </section>
-</div>
+</div>-->
 
 <div id="designs">
     <h1>App Example</h1>
