@@ -29,8 +29,8 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CONSTRUCTOR //
         private readonly IWebHostEnvironment webHostEnvironment;
-        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv) 
-        { 
+        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv)
+        {
             _db = db;
             webHostEnvironment = HostEnv;
         }
@@ -55,7 +55,7 @@ namespace OrcaStarsWebApplication.Controllers
             avm.BusinessName = null;
             return View(avm);
         }
-        
+
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
         [Authorize]
         public IActionResult Edit(Guid id)
@@ -195,6 +195,7 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CREATE //
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
+        
         [Authorize]
         public IActionResult Form (ApplicationViewModel avm)
         {
@@ -413,7 +414,7 @@ namespace OrcaStarsWebApplication.Controllers
             svm.businessCities = new List<string>();
 
             //build a list of businesses with only the names, category and city and assign to searchviewmodel businesses
-            foreach (Business business in foundBusinesses) 
+            foreach (Business business in foundBusinesses)
             {
                 svm.businessNames.Add(business.Name);
                 svm.businessCategories.Add(business.Category);
@@ -478,18 +479,48 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // DELETE //
+        [HttpGet]
+        public IActionResult ConfirmDelete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+            {
+                Business business = _db.Businesses.Single(b => b.Id == id);
+                ConfirmDeleteViewModel confirmDeleteVM = new ConfirmDeleteViewModel();
+                confirmDeleteVM.Id = id;
+                confirmDeleteVM.Business = business;
+                return View("ConfirmDelete", confirmDeleteVM);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmDelete(ConfirmDeleteViewModel cdvm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Search");
+            }
+            else
+            {
+                return View();
+            }
+        }
 
         [HttpGet]
         [Authorize]
         public IActionResult DeleteBusiness(Guid id)
         {
-            Business business = _db.Businesses.Single(b => b.Id == id);
-
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            
+            else 
+            {
+            Business business = _db.Businesses.Single(b => b.Id == id);
+
             //create searchResultsVM
             SearchResultsViewModel srvm = new SearchResultsViewModel();
             //set parameters in srvm to make delete notification appear, passing name to next view
@@ -498,7 +529,8 @@ namespace OrcaStarsWebApplication.Controllers
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", srvm);
+            return RedirectToAction("DeleteSuccessful", srvm); 
+            }
         }
 
         [Authorize]
