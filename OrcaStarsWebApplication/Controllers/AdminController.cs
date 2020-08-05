@@ -29,8 +29,8 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CONSTRUCTOR //
         private readonly IWebHostEnvironment webHostEnvironment;
-        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv) 
-        { 
+        public AdminController(BitDataContext db, IWebHostEnvironment HostEnv)
+        {
             _db = db;
             webHostEnvironment = HostEnv;
         }
@@ -50,7 +50,7 @@ namespace OrcaStarsWebApplication.Controllers
         {
             return View();
         }
-        
+
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
         [Authorize]
         public IActionResult Edit(Guid id)
@@ -191,6 +191,7 @@ namespace OrcaStarsWebApplication.Controllers
         // CREATE //
 
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
+        
         [Authorize]
         public IActionResult Form (ApplicationViewModel avm)
         {
@@ -206,7 +207,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 if (avm.BusinessLogo != null)
                 {
-                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length-8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
+                    uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length - 8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
                     string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
                     avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                     avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
@@ -259,7 +260,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 Business business = new Business
                 {
-                 
+
                     Name = avm.BusinessName,
                     Description = avm.Description,
                     PhoneNumber = avm.BusinessPhone,
@@ -273,15 +274,15 @@ namespace OrcaStarsWebApplication.Controllers
                     Category = avm.Category,
                     Hours = hours.ID,
                     Social = socialM.ID,
-                    Logo = avm.BusinessLogoHolder, 
+                    Logo = avm.BusinessLogoHolder,
                     StoreFront = avm.StoreLogoHolder,
                     ContactId = businessContact.Id
-                    
+
                 };
 
                 _db.Businesses.Add(business);
                 _db.SaveChanges();
-                
+
                 return RedirectToAction("ConfirmDisplay", new { id = business.Id });
 
                 //return RedirectToAction("Confirm", avm); //TAKES YOU TO BUSINESS INFO CONFIRMATION PAGE
@@ -367,7 +368,7 @@ namespace OrcaStarsWebApplication.Controllers
             svm.businessCities = new List<string>();
 
             //build a list of businesses with only the names, category and city and assign to searchviewmodel businesses
-            foreach (Business business in foundBusinesses) 
+            foreach (Business business in foundBusinesses)
             {
                 svm.businessNames.Add(business.Name);
                 svm.businessCategories.Add(business.Category);
@@ -433,18 +434,48 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // DELETE //
+        [HttpGet]
+        public IActionResult ConfirmDelete(Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+            {
+                Business business = _db.Businesses.Single(b => b.Id == id);
+                ConfirmDeleteViewModel confirmDeleteVM = new ConfirmDeleteViewModel();
+                confirmDeleteVM.Id = id;
+                confirmDeleteVM.Business = business;
+                return View("ConfirmDelete", confirmDeleteVM);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult ConfirmDelete(ConfirmDeleteViewModel cdvm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Search");
+            }
+            else
+            {
+                return View();
+            }
+        }
 
         [HttpGet]
         [Authorize]
         public IActionResult DeleteBusiness(Guid id)
         {
-            Business business = _db.Businesses.Single(b => b.Id == id);
-
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            
+            else 
+            {
+            Business business = _db.Businesses.Single(b => b.Id == id);
+
             //create searchResultsVM
             SearchResultsViewModel srvm = new SearchResultsViewModel();
             //set parameters in srvm to make delete notification appear, passing name to next view
@@ -453,7 +484,8 @@ namespace OrcaStarsWebApplication.Controllers
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", srvm);
+            return RedirectToAction("DeleteSuccessful", srvm); 
+            }
         }
 
         [Authorize]
