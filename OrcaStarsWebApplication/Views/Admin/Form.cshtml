@@ -41,23 +41,25 @@
 }
 <body>
     <h1>Orca Stars Business Application</h1>
+    <form enctype="multipart/form-data" asp-controller="Admin" asp-action="Form" method="post">
 
-    <div class="alert alert-danger" role="alert" style="display: @Model.DisplayNotification;">
-        <b>
-            @Model.Notification
-        </b>
-        <div style="display: @Model.Duplicate;">
-            <br />
-            Do you want to
-            <a class="button" asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.ExistingId">Edit the existing business</a>
-            OR
-            <a class="button" asp-action="Form" asp-controller="Admin">Save as new business</a>
-            ?
-
+        <div class="alert alert-danger" role="alert" style="display: @Model.DisplayNotification;">
+            <b>
+                @Model.Notification
+            </b>
+            <div style="display: @Model.Duplicate;">
+                <br />
+                Do you want to
+                <a class="button" asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.ExistingId">Edit The Existing Business</a>
+                OR
+                <a class="button" asp-action="ConfirmDisplay" asp-controller="Admin" asp-route-id="@Model.ExistingId">Save As New Business</a>
+                ?
+            </div>
         </div>
-    </div>
+        <div style="display: block;">
+            <label asp-for="ExistingId">@Model.ExistingId</label>
+        </div>
 
-    <form enctype="multipart/form-data" asp-controller="admin" asp-action="form" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
         <h3>Contact Information</h3>
 
@@ -1027,7 +1029,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                        automatically creates a FileUpload control  *@
+                    automatically creates a FileUpload control  *@
                     <input asp-for="BusinessLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>
@@ -1038,7 +1040,7 @@
             <div class="col-sm-10">
                 <div class="custom-file">
                     @*Photo property type is IFormFile, so ASP.NET Core
-                        automatically creates a FileUpload control  *@
+                    automatically creates a FileUpload control  *@
                     <input asp-for="StoreLogo" class="custom-file-input form-control">
                     <label class="custom-file-label">Click to upload or drag your image here</label>
                 </div>

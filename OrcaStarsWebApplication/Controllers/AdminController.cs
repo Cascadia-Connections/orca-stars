@@ -187,7 +187,6 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         // CREATE //
-
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
         public IActionResult Form (ApplicationViewModel avm)
         {
@@ -203,7 +202,6 @@ namespace OrcaStarsWebApplication.Controllers
 
             /* Check that the business is unique */
             Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == avm.BusinessName);
-
             if (null != foundBusinesses)
             {
                 avm.Duplicate = "block";
@@ -213,6 +211,34 @@ namespace OrcaStarsWebApplication.Controllers
                 return View(avm);
             }
 
+            return RedirectToAction("AddBusiness", avm);
+        }
+
+        // DELETE //
+
+        [HttpGet]
+        public IActionResult SaveNew(Guid id)
+        {
+            return RedirectToAction("ConfirmDisplay", id);
+        }
+        [HttpGet]
+        public IActionResult EditExisting(Guid id)
+        {
+            Business business = _db.Businesses.Single(b => b.Id == id);
+
+            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
+
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            _db.Businesses.Remove(business);
+            _db.SaveChanges();
+
+            return RedirectToAction("Edit", foundBusinesses.Id);
+        }
+
+
+        [HttpGet]
+        public IActionResult AddBusiness(ApplicationViewModel avm)
+        {
             string uniqueBusinessFileName = null;
             string uniqueStoreFileName = null;
 
@@ -223,7 +249,7 @@ namespace OrcaStarsWebApplication.Controllers
 
             if (avm.BusinessLogo != null)
             {
-                uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length-8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
+                uniqueBusinessFileName = Guid.NewGuid().ToString() + "_" + avm.BusinessLogo.FileName.Substring(Math.Max(0, avm.BusinessLogo.FileName.Length - 8), Math.Min(avm.BusinessLogo.FileName.Length, 8)); //make sure uploaded file is unique, only keeping the last few letters from the file name so it doesn't break
                 string filePath = Path.Combine(uploadsFolder, uniqueBusinessFileName); //combining uploads folder and unique file name to create it files path
                 avm.BusinessLogo.CopyTo(new FileStream(filePath, FileMode.Create)); //copy photo to server
                 avm.BusinessLogoHolder = "images/uploads/" + uniqueBusinessFileName;
@@ -276,7 +302,7 @@ namespace OrcaStarsWebApplication.Controllers
 
             Business business = new Business
             {
-                 
+
                 Name = avm.BusinessName,
                 Description = avm.Description,
                 PhoneNumber = avm.BusinessPhone,
@@ -290,18 +316,17 @@ namespace OrcaStarsWebApplication.Controllers
                 Category = avm.Category,
                 Hours = hours.ID,
                 Social = socialM.ID,
-                Logo = avm.BusinessLogoHolder, 
+                Logo = avm.BusinessLogoHolder,
                 StoreFront = avm.StoreLogoHolder,
                 ContactId = businessContact.Id
-                    
+
             };
 
             _db.Businesses.Add(business);
             _db.SaveChanges();
-                
-            return RedirectToAction("ConfirmDisplay", new { id = business.Id });            
-        }
 
+            return RedirectToAction("ConfirmDisplay", new { id = business.Id });
+        }
         [HttpGet] //DISPLAYS BUSINESS INFO
         public IActionResult ConfirmDisplay(Guid id)
         {
