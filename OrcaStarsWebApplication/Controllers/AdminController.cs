@@ -15,6 +15,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace OrcaStarsWebApplication.Controllers
 {
@@ -35,12 +38,14 @@ namespace OrcaStarsWebApplication.Controllers
         // GET //
 
         [HttpGet] //THIS IS THE INDEX PAGE
+        [Authorize]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet] //THIS IS THE FORM
+        [Authorize]
         public IActionResult Form()
         {
             ApplicationViewModel avm = new ApplicationViewModel();
@@ -52,6 +57,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
         
         [HttpGet] //THIS IS THE UPDATE/EDIT FORM
+        [Authorize]
         public IActionResult Edit(Guid id)
         {
             var bus = _db.Businesses.Single(b => b.Id == id);
@@ -106,6 +112,7 @@ namespace OrcaStarsWebApplication.Controllers
             return View(avm);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
         {
             var bus = _db.Businesses.Single(b => b.Id == id);
@@ -188,6 +195,7 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CREATE //
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
+        [Authorize]
         public IActionResult Form (ApplicationViewModel avm)
         {
             avm.DisplayNotification = "none";
@@ -328,6 +336,7 @@ namespace OrcaStarsWebApplication.Controllers
             return RedirectToAction("ConfirmDisplay", new { id = business.Id });
         }
         [HttpGet] //DISPLAYS BUSINESS INFO
+        [Authorize]
         public IActionResult ConfirmDisplay(Guid id)
         {
             var bus = _db.Businesses.Single(b => b.Id == id);
@@ -383,6 +392,7 @@ namespace OrcaStarsWebApplication.Controllers
         }
 
         [HttpGet] //DISPLAYS BUSINESS INFO
+        [Authorize]
         public IActionResult Confirm(ApplicationViewModel avm)
         {
             return View(avm);
@@ -391,6 +401,7 @@ namespace OrcaStarsWebApplication.Controllers
         // READ AND SEARCH //
 
         [HttpGet]
+        [Authorize]
         public IActionResult Search()
         {
             //obtain businesses from database to pass to view
@@ -411,6 +422,7 @@ namespace OrcaStarsWebApplication.Controllers
             return View(svm);
         }
         [HttpPost]
+        [Authorize]
         public IActionResult Search(ApplicationViewModel avm)
         {
             //Full Collection Search - start with entire collection
@@ -455,6 +467,7 @@ namespace OrcaStarsWebApplication.Controllers
         // UPDATE //
 
         [HttpGet]
+        [Authorize]
         public IActionResult UpdateBusiness(Guid id)
         {
             Business business = new Business { Id = id };
@@ -467,6 +480,7 @@ namespace OrcaStarsWebApplication.Controllers
         // DELETE //
 
         [HttpGet]
+        [Authorize]
         public IActionResult DeleteBusiness(Guid id)
         {
             Business business = _db.Businesses.Single(b => b.Id == id);
@@ -487,6 +501,7 @@ namespace OrcaStarsWebApplication.Controllers
             return RedirectToAction("DeleteSuccessful", srvm);
         }
 
+        [Authorize]
         public IActionResult DeleteSuccessful(SearchResultsViewModel vm)
         {
             SearchResultsViewModel srvm = vm;

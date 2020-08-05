@@ -39,6 +39,12 @@ namespace OrcaStarsWebApplication
                 //options.UseSqlite(Configuration.GetConnectionString("OrcaStarsWebApplication-Mac-Sqlite"));
             });
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                //password settings
+                //lockout settings
+                //user settings
+            }); 
 
             services.AddControllersWithViews();
         }
