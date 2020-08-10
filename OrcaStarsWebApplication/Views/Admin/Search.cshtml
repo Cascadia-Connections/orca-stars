@@ -15,8 +15,23 @@
         <input asp-for="BusinessName" id="businessName" />
     </div>
     <div>
-        <label for="businessCategory">Category:</label>
-        <input asp-for="Category" id="businessCategory" />
+        <label for="Category">Category:</label>
+        <select asp-for="Category">
+            <option>ALL</option>
+            <option>Restaurant</option>
+            <option>Bars & Nightlife</option>
+            <option>Health & Medicine</option>
+            <option>Shopping</option>
+            <option>Auto</option>
+            <option>Home Maintenance</option>
+            <option>Professional Services</option>
+            <option>Auto</option>
+            <option>Hotels & Travel</option>
+            <option>Pets</option>
+            <option>Financial Service</option>
+            <option>Mass Media</option>
+            <option>Education</option>
+        </select>
     </div>
     <div>
         <label for="businessCity">City:</label>
@@ -34,17 +49,6 @@
   source: function( request, response ) {
           var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
             response($.grep(nametags , function( item ){
-              return matcher.test( item );
-          }) );
-      }
-    });
-
-    var categorytags = @Html.Raw(Json.Serialize(Model.businessCategories));
-
-    $( "#businessCategory" ).autocomplete({
-  source: function( request, response ) {
-          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
-            response($.grep(categorytags , function( item ){
               return matcher.test( item );
           }) );
       }
