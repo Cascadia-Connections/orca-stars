@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace OrcaStarsWebApplication.Controllers
 {
@@ -410,14 +410,12 @@ namespace OrcaStarsWebApplication.Controllers
 
             SearchViewModel svm = new SearchViewModel();
             svm.businessNames = new List<string>();
-            svm.businessCategories = new List<string>();
             svm.businessCities = new List<string>();
 
-            //build a list of businesses with only the names, category and city and assign to searchviewmodel businesses
+            //build a list of businesses with only the names and city and assign to searchviewmodel businesses
             foreach (Business business in foundBusinesses)
             {
                 svm.businessNames.Add(business.Name);
-                svm.businessCategories.Add(business.Category);
                 svm.businessCities.Add(business.City);
             }
             return View(svm);
@@ -437,7 +435,7 @@ namespace OrcaStarsWebApplication.Controllers
                             ;
             }
 
-            if (avm.Category != null)
+            if (avm.Category != "ALL")
             {
                 foundBusinesses = foundBusinesses
                             .Where(b => b.Category.Contains(avm.Category))
