@@ -9,6 +9,5 @@ namespace OrcaStarsWebApplication.Areas.Identity.Data
     // Add profile data for application users by adding properties to the OrcaStarsWebApplicationUser class
     public class OrcaStarsWebApplicationUser : IdentityUser
     {
-
     }
 }
