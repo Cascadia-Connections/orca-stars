@@ -195,7 +195,6 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CREATE //
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
-        
         [Authorize]
         public IActionResult Form (ApplicationViewModel avm)
         {
@@ -217,6 +216,7 @@ namespace OrcaStarsWebApplication.Controllers
                 avm.DisplayNotification = "block";
                 avm.Notification = "The business " + avm.BusinessName + " already exists."; //Eventually check against address as well. 
                 avm.ExistingId = foundBusinesses.Id;
+
                 return View(avm);
             }
 
