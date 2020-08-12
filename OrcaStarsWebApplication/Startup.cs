@@ -14,6 +14,8 @@ using OrcaStarsWebApplication.Repositories;
 using OrcaStarsWebApplication.Services;
 using OrcaStarsWebApplication.Models;
 using Microsoft.AspNetCore.Identity;
+using OrcaStarsWebApplication.Data;
+using OrcaStarsWebApplication.Areas.Identity.Data;
 
 namespace OrcaStarsWebApplication
 {
@@ -50,7 +52,7 @@ namespace OrcaStarsWebApplication
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -77,6 +79,54 @@ namespace OrcaStarsWebApplication
                     pattern: "{controller=Admin}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            CreateRoles(serviceProvider).Wait();//.GetAwaiter().GetResult();
+        }
+        
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<OrcaStarsWebApplicationUser>>();
+            string[] roleNames = { "Admin", "Member" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var _admin = await UserManager.FindByEmailAsync("maddie@orca.com");
+            if (_admin == null)
+            {
+                var admin = new OrcaStarsWebApplicationUser
+                {
+                    UserName = "maddie@orca.com",
+                    Email = "maddie@orca.com"
+                };
+
+                var createAdmin = await UserManager.CreateAsync(admin, "Admin!");
+                if (createAdmin.Succeeded)
+                    await UserManager.AddToRoleAsync(admin, "Admin");
+            }
+
+            var _member = await UserManager.FindByEmailAsync("orca@orcastars.com");
+            if (_member == null)
+            {
+                var member = new OrcaStarsWebApplicationUser
+                {
+                    UserName = "orca@orcastars.com",
+                    Email = "orca@orcastar.com"
+                };
+
+                var createMember = await UserManager.CreateAsync(member, "member!");
+                if (createMember.Succeeded)
+                    await UserManager.AddToRoleAsync(member, "Member");
+            }
+
         }
     }
 }
