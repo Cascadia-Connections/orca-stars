@@ -195,9 +195,9 @@ namespace OrcaStarsWebApplication.Controllers
 
         // CREATE //
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
-        
+
         [Authorize]
-        public IActionResult Form (ApplicationViewModel avm)
+        public IActionResult Form(ApplicationViewModel avm)
         {
             avm.DisplayNotification = "none";
             avm.Duplicate = "none";
@@ -210,13 +210,42 @@ namespace OrcaStarsWebApplication.Controllers
             }
 
             /* Check that the business is unique */
-            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == avm.BusinessName);
-            if (null != foundBusinesses)
+            IQueryable<Business> foundBusinesses = _db.Businesses.Where(b => b.Name == avm.BusinessName);
+
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Address1 == avm.AddressLine1);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Address2 == avm.AddressLine2);
+            }
+
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.ZipCode == avm.Zip);
+            }
+
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.City == avm.City);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.State == avm.State);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Country == avm.Country);
+            }
+
+            if (foundBusinesses.Count() > 0)
             {
                 avm.Duplicate = "block";
                 avm.DisplayNotification = "block";
                 avm.Notification = "The business " + avm.BusinessName + " already exists."; //Eventually check against address as well. 
-                avm.ExistingId = foundBusinesses.Id;
+                Business foundbus = foundBusinesses.FirstOrDefault(b => b.Name == avm.BusinessName);
+                avm.ExistingId = foundbus.Id;
                 return View(avm);
             }
 
