@@ -73,7 +73,7 @@
         <span class="validateTxt" asp-validation-for="PhoneNumber"></span>
         <br />
         <label>Email:</label>
-        <input asp-for="Email" type="text" name="Email" placeholder="email@example.com" />
+        <input asp-for="Email" type="email" title="Example of a valid email: example@example.com" oninvalid="this.setCustomValidity('Please Input A Valid Email Address!')" oninput="this.setCustomValidity('')" name="Email" placeholder="email@example.com" />
         <span class="validateTxt" asp-validation-for="Email"></span>
         <br />
         <br />
