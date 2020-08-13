@@ -99,6 +99,12 @@ namespace OrcaStarsWebApplication
                 }
             }
 
+            var user = new OrcaStarsWebApplicationUser();
+            if (UserManager.GetRolesAsync(user) == null)
+            {
+                await UserManager.AddToRoleAsync(user, "Member");
+            }
+
             var _admin = await UserManager.FindByEmailAsync("maddie@orca.com");
             if (_admin == null)
             {
@@ -109,8 +115,15 @@ namespace OrcaStarsWebApplication
                 };
 
                 var createAdmin = await UserManager.CreateAsync(admin, "Admin!");
+                
                 if (createAdmin.Succeeded)
+                {
                     await UserManager.AddToRoleAsync(admin, "Admin");
+                }     
+            }
+            else
+            {
+                await UserManager.AddToRoleAsync(_admin, "Admin");
             }
 
             var _member = await UserManager.FindByEmailAsync("orca@orcastars.com");
@@ -123,10 +136,16 @@ namespace OrcaStarsWebApplication
                 };
 
                 var createMember = await UserManager.CreateAsync(member, "member!");
+                
                 if (createMember.Succeeded)
+                {
                     await UserManager.AddToRoleAsync(member, "Member");
+                }  
             }
-
+            else
+            {
+                await UserManager.AddToRoleAsync(_member, "Member");
+            }
         }
     }
 }
