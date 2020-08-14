@@ -551,6 +551,30 @@ namespace OrcaStarsWebApplication.Controllers
             //set parameters in srvm to make delete notification appear, passing name to next view
             srvm.displayDeleteNotification = "block";
             srvm.deletedBusinessName = business.Name;
+
+            //If business Logo != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find logo in our uploads folder via its id
+            //delete it
+
+            if (business.Logo != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bLogo = Path.Combine(webHostEnvironment.WebRootPath, business.Logo);   
+                if (System.IO.File.Exists(bLogo))
+                {
+                    System.IO.File.Delete(bLogo);
+                }
+            }
+            //If business storefront != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find storefront in our uploads folder via its id
+            //delete it
+            if (business.StoreFront != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bStoreFront= Path.Combine(webHostEnvironment.WebRootPath, business.StoreFront);
+                if (System.IO.File.Exists(bStoreFront))
+                {
+                    System.IO.File.Delete(bStoreFront);
+                }
+            }
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
