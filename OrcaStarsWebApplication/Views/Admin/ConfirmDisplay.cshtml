@@ -31,14 +31,13 @@
     <h1 class="display-4">Confirmation</h1>
     <h3>Confirm Owner Information</h3>
     <p><b>Name:</b> @Model.FirstName @Model.LastName </p>
-    <p> <b> Phone:</b> @Phone.formatNumber(@Model.PhoneNumber) </p>
+    <p> <b> Phone:</b> @Model.PhoneNumber </p>
     <p> <b> Email:</b> @Model.Email </p>
     <br />
     <h3> Confirm Business Information</h3>
     <p> <b> Name:</b> @Model.BusinessName </p>
     <p> <b> Description:</b> @Model.Description </p>
     <p> <b> Business Phone:</b> @Model.BusinessPhone </p>
-    <p> <b> Business Phone:</b> @Phone.formatNumber(@Model.BusinessPhone) </p>
 
     <p> <b> Category:</b> @Model.Category </p>
     <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
