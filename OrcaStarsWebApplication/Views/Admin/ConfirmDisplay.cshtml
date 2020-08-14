@@ -2,6 +2,7 @@
 @model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
 @inject OrcaStarsWebApplication.Models.AddressService Address
 @inject OrcaStarsWebApplication.Models.HoursService HourSet
+@inject OrcaStarsWebApplication.Models.PhoneService Phone
 
 @{
     ViewData["Title"] = "Confirm Display";
@@ -30,13 +31,15 @@
     <h1 class="display-4">Confirmation</h1>
     <h3>Confirm Owner Information</h3>
     <p><b>Name:</b> @Model.FirstName @Model.LastName </p>
-    <p> <b> Phone:</b> @Model.PhoneNumber </p>
+    <p> <b> Phone:</b> @Phone.formatNumber(@Model.PhoneNumber) </p>
     <p> <b> Email:</b> @Model.Email </p>
     <br />
     <h3> Confirm Business Information</h3>
     <p> <b> Name:</b> @Model.BusinessName </p>
     <p> <b> Description:</b> @Model.Description </p>
     <p> <b> Business Phone:</b> @Model.BusinessPhone </p>
+    <p> <b> Business Phone:</b> @Phone.formatNumber(@Model.BusinessPhone) </p>
+
     <p> <b> Category:</b> @Model.Category </p>
     <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
     <p>
@@ -143,11 +146,11 @@
 </div>
 <br />
 <!-- <input type="submit" class="submit-form-btn" value="Edit">-->
-<h1>Design Examples</h1>
+<!--
+    <h1>Design Examples</h1>
 
-</div>
-
-<!--<div class="webdisplay" id="full-screen-display">
+    </div>
+    <div class="webdisplay" id="full-screen-display">
     <h1>Orca Stars</h1>
     <div class="big" style="background-color:white">
         <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
@@ -232,5 +235,7 @@
     <a href="#text-center">Back to Top</a><br />
     <a asp-action="Edit" asp-controller="Admin"
        asp-route-id="@Model.Id">Make Changes</a>
+    <a asp-action="Index" asp-controller="Admin"
+       asp-route-id="@Model.Id">Confirm Business</a>
 
 </div>

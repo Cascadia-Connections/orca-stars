@@ -39,9 +39,20 @@ namespace OrcaStarsWebApplication.Controllers
 
         [HttpGet] //THIS IS THE INDEX PAGE
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(Guid id)
         {
-            return View();
+            Guid newid = new Guid();
+            IndexViewModel ivm = new IndexViewModel();
+            if (newid == id || null == id)
+            {
+                ivm.Display = "none";
+                ivm.BusinessName = "";
+                return View(ivm);
+            }
+            ivm.BusinessName = _db.Businesses.Single(b => b.Id == id).Name;
+            ivm.Display = "block";
+            return View(ivm);
+
         }
 
         [HttpGet] //THIS IS THE FORM
