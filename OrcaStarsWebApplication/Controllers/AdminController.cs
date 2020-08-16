@@ -562,10 +562,11 @@ namespace OrcaStarsWebApplication.Controllers
             //set parameters in srvm to make delete notification appear, passing name to next view
             srvm.displayDeleteNotification = "block";
             srvm.deletedBusinessName = business.Name;
+            
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", srvm); 
+            return RedirectToAction("DeleteSuccessful", srvm);
         }
 
         [Authorize]
@@ -574,6 +575,7 @@ namespace OrcaStarsWebApplication.Controllers
             SearchResultsViewModel srvm = vm;
             IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
             srvm.businesses = foundBusinesses;
+            
             return View("SearchResults", srvm);
         }
     }
