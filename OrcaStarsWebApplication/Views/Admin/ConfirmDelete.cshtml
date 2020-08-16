@@ -11,6 +11,7 @@
 <div>
     <h3>Business Information</h3>
     <p><b>Business Name:</b> @Model.Business.Name</p>
+    <img src="~/@Model.Business.Logo" style="width: 300px; height: auto;" />
     <p> <b> Phone:</b> @Model.Business.PhoneNumber</p>
     <p>
         <b> Website:</b> <a target="_blank" href="http://
@@ -19,7 +20,6 @@
 <br />
 
 <a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@Model.Id">Confirm Delete</a>
-    <br/>
-<a asp-action="Search" asp-controller="Admin"
-   >Cancel</a>
+<br />
+<a asp-action="Search" asp-controller="Admin">Cancel</a>
 </div>
