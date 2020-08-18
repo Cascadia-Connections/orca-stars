@@ -2,6 +2,7 @@
 @model OrcaStarsWebApplication.ViewModels.ApplicationViewModel
 @inject OrcaStarsWebApplication.Models.AddressService Address
 @inject OrcaStarsWebApplication.Models.HoursService HourSet
+@inject OrcaStarsWebApplication.Models.PhoneService Phone
 
 @{
     ViewData["Title"] = "Confirm Display";
@@ -13,7 +14,20 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" media="all" />
     <link rel="stylesheet" href="~/css/confirmation.css" />
+    <style>
+        .button, .button:hover {
+            background-color: #efefef;
+            border: solid 1px black;
+            border-radius: 2px;
+            color: black;
+            padding: 3px 7px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #e5e5e5;
+        }
 
+    </style>
 
     @if (@Model.StoreLogoHolder == "images/orcastarsImages/defaultBusinessStorelogo.png")
     {
@@ -37,6 +51,7 @@
     <p> <b> Name:</b> @Model.BusinessName </p>
     <p> <b> Description:</b> @Model.Description </p>
     <p> <b> Business Phone:</b> @Model.BusinessPhone </p>
+
     <p> <b> Category:</b> @Model.Category </p>
     <p> <b> Hours:</b> @HourSet.hoursToString(@Model) </p>
     <p>
@@ -143,11 +158,11 @@
 </div>
 <br />
 <!-- <input type="submit" class="submit-form-btn" value="Edit">-->
-<h1>Design Examples</h1>
+<!--
+    <h1>Design Examples</h1>
 
-</div>
-
-<!--<div class="webdisplay" id="full-screen-display">
+    </div>
+    <div class="webdisplay" id="full-screen-display">
     <h1>Orca Stars</h1>
     <div class="big" style="background-color:white">
         <img class="bus_photo" src="~/@Model.StoreLogoHolder" alt="logo_photo">
@@ -230,7 +245,11 @@
     </div>
     <br>
     <a href="#text-center">Back to Top</a><br />
-    <a asp-action="Edit" asp-controller="Admin"
+    <br />
+    <a class="button" asp-action="Edit" asp-controller="Admin"
        asp-route-id="@Model.Id">Make Changes</a>
-
+    <a class="button" asp-action="Index" asp-controller="Admin"
+       asp-route-id="@Model.Id">Confirm Business</a>
+    <br />
+    <br />
 </div>
