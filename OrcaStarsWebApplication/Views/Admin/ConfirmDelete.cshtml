@@ -5,12 +5,27 @@
     ViewData["Title"] = "Search";
     Layout = "_Layout";
 }
+<style>
+    .button, .button:hover {
+        background-color: #efefef;
+        border: solid 1px black;
+        border-radius: 2px;
+        color: black;
+        padding: 3px 7px;
+        text-decoration: none;
+    }
+
+    .button:hover {
+        background-color: #e5e5e5;
+    }
+</style>
 
 <h1>Confirm Deletion of <strong>@Model.Business.Name </strong></h1>
 
 <div>
     <h3>Business Information</h3>
     <p><b>Business Name:</b> @Model.Business.Name</p>
+    <img src="~/@Model.Business.Logo" style="width: 300px; height: auto;" />
     <p> <b> Phone:</b> @Model.Business.PhoneNumber</p>
     <p>
         <b> Website:</b> <a target="_blank" href="http://
@@ -18,8 +33,6 @@
 </p>
 <br />
 
-<a asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@Model.Id">Confirm Delete</a>
-    <br/>
-<a asp-action="Search" asp-controller="Admin"
-   >Cancel</a>
+<a class="button" asp-action="DeleteBusiness" asp-controller="Admin" asp-route-id="@Model.Id">Confirm Delete</a>
+<a class="button" asp-action="Search" asp-controller="Admin">Cancel</a>
 </div>

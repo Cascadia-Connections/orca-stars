@@ -10,11 +10,16 @@ namespace OrcaStarsWebApplication.Models
     {
         public string formatNumber(string num)
         {
-            var newNum = "(";
-            newNum += num.Replace("(","").Replace(")","").Replace(" ", "").Replace("-", "");
-            newNum = newNum.Insert(4, ") ");
-            newNum = newNum.Insert(9, "-");
-            return newNum;
+            if (null != num && "" != num)
+            {
+                var newNum = "(";
+                newNum += num.Replace("(", "").Replace(")", "").Replace(" ", "").Replace("-", "");
+                newNum = newNum.Insert(4, ") ");
+                newNum = newNum.Insert(9, "-");
+                return newNum;
+            }
+            else
+                return "";
         }
 
     }

@@ -126,6 +126,8 @@ namespace OrcaStarsWebApplication.Controllers
         [Authorize]
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
         {
+            PhoneService ps = new PhoneService();
+
             var bus = _db.Businesses.Single(b => b.Id == id);
             var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
             var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
@@ -157,7 +159,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 bus.Name = avm.BusinessName;
                 bus.Description = avm.Description;
-                bus.PhoneNumber = avm.BusinessPhone;
+                bus.PhoneNumber = ps.formatNumber(avm.BusinessPhone);
                 bus.Address1 = avm.AddressLine1;
                 bus.Address2 = avm.AddressLine2;
                 bus.City = avm.City;
@@ -194,7 +196,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 con.FirstName = avm.FirstName;
                 con.LastName = avm.LastName;
-                con.PhoneNumber = avm.PhoneNumber;
+                con.PhoneNumber = ps.formatNumber(avm.PhoneNumber);
                 con.Email = avm.Email;
                 _db.Contacts.Update(con);
 
@@ -260,36 +262,9 @@ namespace OrcaStarsWebApplication.Controllers
                 return View(avm);
             }
 
-            return RedirectToAction("AddBusiness", avm);
-        }
-
-        // DELETE //
-
-        [HttpGet]
-        public IActionResult SaveNew(Guid id)
-        {
-            return RedirectToAction("ConfirmDisplay", id);
-        }
-        [HttpGet]
-        public IActionResult EditExisting(Guid id)
-        {
-            Business business = _db.Businesses.Single(b => b.Id == id);
-
-            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
-
-            //set parameters in srvm to make delete notification appear, passing name to next view
-            _db.Businesses.Remove(business);
-            _db.SaveChanges();
-
-            return RedirectToAction("Edit", foundBusinesses.Id);
-        }
-
-
-        [HttpGet]
-        public IActionResult AddBusiness(ApplicationViewModel avm)
-        {
             string uniqueBusinessFileName = null;
             string uniqueStoreFileName = null;
+            PhoneService ps = new PhoneService();
 
             avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
             avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
@@ -338,12 +313,11 @@ namespace OrcaStarsWebApplication.Controllers
                 Instagram = avm.Instagram
             };
             _db.SocialMedias.Add(socialM);
-
             BusinessContact businessContact = new BusinessContact
             {
                 FirstName = avm.FirstName,
                 LastName = avm.LastName,
-                PhoneNumber = avm.PhoneNumber,
+                PhoneNumber = ps.formatNumber(avm.PhoneNumber),
                 Email = avm.Email
             };
 
@@ -354,7 +328,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 Name = avm.BusinessName,
                 Description = avm.Description,
-                PhoneNumber = avm.BusinessPhone,
+                PhoneNumber = ps.formatNumber(avm.BusinessPhone),
                 Address1 = avm.AddressLine1,
                 Address2 = avm.AddressLine2,
                 City = avm.City,
@@ -376,6 +350,29 @@ namespace OrcaStarsWebApplication.Controllers
 
             return RedirectToAction("ConfirmDisplay", new { id = business.Id });
         }
+
+        // DELETE //
+
+        [HttpGet]
+        public IActionResult SaveNew(Guid id)
+        {
+            return RedirectToAction("ConfirmDisplay", id);
+        }
+        [HttpGet]
+        public IActionResult EditExisting(Guid id)
+        {
+            Business business = _db.Businesses.Single(b => b.Id == id);
+
+            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
+
+            //set parameters in srvm to make delete notification appear, passing name to next view
+            _db.Businesses.Remove(business);
+            _db.SaveChanges();
+
+            return RedirectToAction("Edit", foundBusinesses.Id);
+        }
+
+
         [HttpGet] //DISPLAYS BUSINESS INFO
         [Authorize]
         public IActionResult ConfirmDisplay(Guid id)
@@ -565,7 +562,7 @@ namespace OrcaStarsWebApplication.Controllers
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", srvm); 
+            return RedirectToAction("DeleteSuccessful", srvm);
         }
 
         [Authorize]
