@@ -69,3 +69,13 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/* Table
+-------------------------------------------------- */
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+th {
+    border-bottom: 2px solid black;
+}
