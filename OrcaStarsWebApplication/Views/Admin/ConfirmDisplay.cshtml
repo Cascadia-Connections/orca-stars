@@ -75,15 +75,15 @@
     <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" />
 </p>
 <p> <b> Location:</b> @Address.fieldsToAddress(@Model) </p>
-<div>
-    <script type='text/javascript'>
-    var map, searchManager;
+    <div>
+        <script type='text/javascript'>
+        var map, searchManager;
 
-    function GetMap() {
-        map = new Microsoft.Maps.Map('#myMap', {
-                    credentials: 'At1ht0A7Q_vav26C7rNXQPlNWmAwmbeIruD0BFWJXiV0yMJCkz4WuX9XbcIuNNf_'
-                });
-    }
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#myMap', {
+                        credentials: 'At1ht0A7Q_vav26C7rNXQPlNWmAwmbeIruD0BFWJXiV0yMJCkz4WuX9XbcIuNNf_'
+                    });
+        }
 
             window.onload = function Search() {
                 if (!searchManager) {
@@ -155,6 +155,7 @@
     <!--<input type='button' value='Search' onclick='Search()' />-->
     <div id="myMap" style="position: relative; width: 600px; height: 400px;"></div>
     <!--<div id='output' style="margin-left:10px;float:left;"></div>-->
+    </div>
 </div>
 <br />
 <!-- <input type="submit" class="submit-form-btn" value="Edit">-->
@@ -250,6 +251,5 @@
        asp-route-id="@Model.Id">Make Changes</a>
     <a class="button" asp-action="Index" asp-controller="Admin"
        asp-route-id="@Model.Id">Confirm Business</a>
-    <br />
-    <br />
+
 </div>

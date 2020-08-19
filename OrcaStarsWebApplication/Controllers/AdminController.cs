@@ -422,10 +422,26 @@ namespace OrcaStarsWebApplication.Controllers
             svm.businessCities = new List<string>();
 
             //build a list of businesses with only the names and city and assign to searchviewmodel businesses
+            //the foreach loop will add business names and cities to each respective list
+            //it will also look out for duplicates and make sure they are not added to the list
             foreach (Business business in foundBusinesses)
             {
-                svm.businessNames.Add(business.Name);
-                svm.businessCities.Add(business.City);
+                bool addName = true;
+                bool addCity = true;
+                if (svm.businessNames.Count() > 0)
+                {
+                    if (svm.businessNames.Contains(business.Name))
+                        addName = false;
+                }
+                if (svm.businessCities.Count() > 0)
+                {
+                    if (svm.businessCities.Contains(business.City))
+                        addCity = false;
+                }
+                if(addName)
+                    svm.businessNames.Add(business.Name);
+                if (addCity)
+                    svm.businessCities.Add(business.City);
             }
             return View(svm);
         }
@@ -528,7 +544,30 @@ namespace OrcaStarsWebApplication.Controllers
             //set parameters in srvm to make delete notification appear, passing name to next view
             srvm.displayDeleteNotification = "block";
             srvm.deletedBusinessName = business.Name;
-            
+
+            //If business Logo != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find logo in our uploads folder via its id
+            //delete it
+
+            if (business.Logo != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bLogo = Path.Combine(webHostEnvironment.WebRootPath, business.Logo);   
+                if (System.IO.File.Exists(bLogo))
+                {
+                    System.IO.File.Delete(bLogo);
+                }
+            }
+            //If business storefront != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find storefront in our uploads folder via its id
+            //delete it
+            if (business.StoreFront != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bStoreFront= Path.Combine(webHostEnvironment.WebRootPath, business.StoreFront);
+                if (System.IO.File.Exists(bStoreFront))
+                {
+                    System.IO.File.Delete(bStoreFront);
+                }
+            }
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
