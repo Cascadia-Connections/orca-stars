@@ -450,10 +450,26 @@ namespace OrcaStarsWebApplication.Controllers
             svm.businessCities = new List<string>();
 
             //build a list of businesses with only the names and city and assign to searchviewmodel businesses
+            //the foreach loop will add business names and cities to each respective list
+            //it will also look out for duplicates and make sure they are not added to the list
             foreach (Business business in foundBusinesses)
             {
-                svm.businessNames.Add(business.Name);
-                svm.businessCities.Add(business.City);
+                bool addName = true;
+                bool addCity = true;
+                if (svm.businessNames.Count() > 0)
+                {
+                    if (svm.businessNames.Contains(business.Name))
+                        addName = false;
+                }
+                if (svm.businessCities.Count() > 0)
+                {
+                    if (svm.businessCities.Contains(business.City))
+                        addCity = false;
+                }
+                if(addName)
+                    svm.businessNames.Add(business.Name);
+                if (addCity)
+                    svm.businessCities.Add(business.City);
             }
             return View(svm);
         }
