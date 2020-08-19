@@ -16,6 +16,9 @@
 <table class="table">
     <tr>
         <th>
+            
+        </th>
+        <th>
             Name
         </th>
         <th>
@@ -35,6 +38,9 @@
     @foreach (var business in Model.businesses)
     {
         <tr>
+            <td>
+                <img src="~/@business.Logo" style="width: 100px;height: auto;" />
+            </td>
             <td>
                 @business.Name
             </td>
