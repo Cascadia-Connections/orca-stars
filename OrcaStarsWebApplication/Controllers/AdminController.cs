@@ -122,6 +122,7 @@ namespace OrcaStarsWebApplication.Controllers
             };
             return View(avm);
         }
+
         [HttpPost]
         [Authorize]
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
@@ -221,8 +222,10 @@ namespace OrcaStarsWebApplication.Controllers
             }
 
             /* Check that the business is unique */
+            /* First grab only business that have the same name */
             IQueryable<Business> foundBusinesses = _db.Businesses.Where(b => b.Name == avm.BusinessName);
 
+            /* Compare the business' address */
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Address1 == avm.AddressLine1);
@@ -231,12 +234,10 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Address2 == avm.AddressLine2);
             }
-
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.ZipCode == avm.Zip);
             }
-
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.City == avm.City);
@@ -249,41 +250,20 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Country == avm.Country);
             }
-
+            /* if the business matches at least one existing business still, it's a duplicate. */
             if (foundBusinesses.Count() > 0)
             {
+                /* show the error */
                 avm.Duplicate = "block";
                 avm.DisplayNotification = "block";
-                avm.Notification = "The business " + avm.BusinessName + " already exists."; //Eventually check against address as well. 
+                avm.Notification = "The business " + avm.BusinessName + " already exists.";
                 Business foundbus = foundBusinesses.FirstOrDefault(b => b.Name == avm.BusinessName);
                 avm.ExistingId = foundbus.Id;
                 return View(avm);
             }
-
+            /* otherwise, the business is uniques, so it can be added. */
             return RedirectToAction("AddBusiness", avm);
         }
-
-        // DELETE //
-
-        [HttpGet]
-        public IActionResult SaveNew(Guid id)
-        {
-            return RedirectToAction("ConfirmDisplay", id);
-        }
-        [HttpGet]
-        public IActionResult EditExisting(Guid id)
-        {
-            Business business = _db.Businesses.Single(b => b.Id == id);
-
-            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
-
-            //set parameters in srvm to make delete notification appear, passing name to next view
-            _db.Businesses.Remove(business);
-            _db.SaveChanges();
-
-            return RedirectToAction("Edit", foundBusinesses.Id);
-        }
-
 
         [HttpGet]
         public IActionResult AddBusiness(ApplicationViewModel avm)
@@ -432,13 +412,6 @@ namespace OrcaStarsWebApplication.Controllers
             return View(avm);
         }
 
-        [HttpGet] //DISPLAYS BUSINESS INFO
-        [Authorize]
-        public IActionResult Confirm(ApplicationViewModel avm)
-        {
-            return View(avm);
-        }
-
         // READ AND SEARCH //
 
         [HttpGet]
@@ -503,17 +476,14 @@ namespace OrcaStarsWebApplication.Controllers
             return View("SearchResults", srvm);
         }
 
-        // UPDATE //
-
         [HttpGet]
-        [Authorize]
-        public IActionResult UpdateBusiness(Guid id)
+        public IActionResult SearchResults(SearchResultsViewModel srvm)
         {
-            Business business = new Business { Id = id };
-            _db.Businesses.Update(business);
-            _db.SaveChanges();
-
-            return View("Search");
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+            srvm.displayDeleteNotification = "none";
+            srvm.deletedBusinessName = "";
+            srvm.businesses = foundBusinesses;
+            return View(srvm);
         }
 
         // DELETE //
