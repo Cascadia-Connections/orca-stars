@@ -1,20 +1,62 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
-@model  OrcaStarsWebApplication.ViewModels.SearchResultsViewModel
+@model OrcaStarsWebApplication.ViewModels.SearchResultsViewModel
 
 @{
     ViewData["Title"] = "Search Results";
     Layout = "_Layout";
 }
 
+<style>
+    .search {
+        display: inline-block;
+        width: 300px;
+    }
+</style>
+<h3>Search</h3>
+<form asp-action="Search" asp-controller="Admin">
+    <div class="search">
+        <label for="businessName">Name:</label>
+        <input asp-for="BusinessName" id="businessName" />
+    </div>
+    <div class="search">
+        <label for="Category">Category:</label>
+        <select asp-for="Category">
+            <option>ALL</option>
+            <option>Restaurant</option>
+            <option>Bars & Nightlife</option>
+            <option>Health & Medicine</option>
+            <option>Shopping</option>
+            <option>Auto</option>
+            <option>Home Maintenance</option>
+            <option>Professional Services</option>
+            <option>Auto</option>
+            <option>Hotels & Travel</option>
+            <option>Pets</option>
+            <option>Financial Service</option>
+            <option>Mass Media</option>
+            <option>Education</option>
+        </select>
+    </div>
+    <div style="display: inline-block;">
+        <label for="businessCity">City:</label>
+        <input asp-for="City" id="businessCity" />
+    </div>
+    <div style="display: inline-block;">
+        <input type="submit" value="Search" />
+    </div>
+</form>
+
 <h3>Search Results</h3>
 
 <div class="alert alert-success" role="alert" style="display: @Model.displayDeleteNotification;">
-    The business @Model.deletedBusinessName was deleted from the database.
+    The business <b>@Model.deletedBusinessName</b> was deleted from the database.
 </div>
-
 
 <table class="table">
     <tr>
+        <th>
+            
+        </th>
         <th>
             Name
         </th>
@@ -36,6 +78,9 @@
     {
         <tr>
             <td>
+                <img src="~/@business.Logo" style="width: 100px;height: auto;" />
+            </td>
+            <td>
                 @business.Name
             </td>
             <td>
@@ -53,13 +98,36 @@
                    asp-route-id="@business.Id">View |</a>
                 <a asp-action="Edit" asp-controller="Admin"
                    asp-route-id="@business.Id">Update |</a>
-                <a asp-action="ConfirmDelete" asp-controller="Admin" asp-route-id="@business.Id"})>Delete</a>
+                <a asp-action="ConfirmDelete" asp-controller="Admin" asp-route-id="@business.Id" })>Delete</a>
             </td>
         </tr>
     }
 
 </table>
 
+<script>
+    var nametags = @Html.Raw(Json.Serialize(Model.businessNames));
+
+    $( "#businessName" ).autocomplete({
+  source: function( request, response ) {
+          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response($.grep(nametags , function( item ){
+              return matcher.test( item );
+          }) );
+      }
+    });
+
+    var citytags = @Html.Raw(Json.Serialize(Model.businessCities));
+
+    $( "#businessCity" ).autocomplete({
+  source: function( request, response ) {
+          var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
+            response($.grep(citytags , function( item ){
+              return matcher.test( item );
+          }) );
+      }
+});
+</script>
 <!--<script>
     /*
         jQuery tooltip provides the hover effect,

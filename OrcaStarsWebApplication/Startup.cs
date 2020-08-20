@@ -34,6 +34,7 @@ namespace OrcaStarsWebApplication
             services.AddTransient<IBusinessServices, BusinessServices>();
             services.AddTransient<AddressService>();
             services.AddTransient<HoursService>();
+            services.AddTransient<PhoneService>();
             services.AddMvc(options => options.EnableEndpointRouting = false); //added disable endpoint routing
             services.AddDbContext<Models.BitDataContext>(options =>
             {

@@ -1,14 +1,18 @@
 ﻿@addTagHelper "*, Microsoft.AspNetCore.Mvc.TagHelpers"
+@model OrcaStarsWebApplication.ViewModels.IndexViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
 
-<body>
-    <h1>Orca Stars</h1>
-    <form>
-        <input type="submit" value="Add a new Business"  class="m-1" asp-action="Form" asp-controller="Admin" />
-        <br>
-        <input type="submit" value="Business Search"  class="m-1" asp-action="Search" asp-controller="Admin">
-    </form>
-</body>
+    <body>
+        <div class="alert alert-success" role="alert" style="display: @Model.Display;">
+            The business <b>@Model.BusinessName</b> was added successfully.
+        </div>
+        <h1>Orca Stars</h1>
+        <form>
+            <input type="submit" value="Add a new Business" asp-action="Form" asp-controller="Admin" />
+            <br>
+            <input type="submit" value="Business Search" asp-action="Search" asp-controller="Admin">
+        </form>
+    </body>
