@@ -52,6 +52,10 @@ namespace OrcaStarsWebApplication.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "Role")]
+            public string Role { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -77,6 +81,14 @@ namespace OrcaStarsWebApplication.Areas.Identity.Pages.Account
             {
                 var user = new OrcaStarsWebApplicationUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if (Input.Role == "Member")
+                {
+                    await _userManager.AddToRoleAsync(user, "Member");
+                }
+                else if (Input.Role == "Admin")
+                {
+                    await _userManager.AddToRoleAsync(user, "Admin");
+                }
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
