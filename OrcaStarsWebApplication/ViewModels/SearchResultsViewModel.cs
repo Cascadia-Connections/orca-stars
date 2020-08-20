@@ -19,5 +19,18 @@ namespace OrcaStarsWebApplication.ViewModels
         
         //Now, view will be able to use the get to pull list of businesses
         public IEnumerable<Business> businesses{ get; set; }
+
+        //Other New Stuff
+        //BusinessName
+        public string BusinessName { get; set; }
+        //Category
+        public string Category { get; set; }
+        //City
+        public string City { get; set; }
+
+        //enables passing business data from database to be used in search.cs view
+        public List<string> businessNames { get; set; }
+        public List<string> businessCities { get; set; }
+
     }
 }
