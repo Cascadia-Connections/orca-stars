@@ -10,5 +10,11 @@ namespace OrcaStarsWebApplication.ViewModels
     {
         public Guid Id { get; set; }
         public Business Business { get; set; }
+        
+        //Search Info
+        public string SearchName { get; set; }
+        public string SearchCategory { get; set; }  
+        public string SearchCity { get; set; }
+
     }
 }

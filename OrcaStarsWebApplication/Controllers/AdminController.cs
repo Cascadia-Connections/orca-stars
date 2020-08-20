@@ -39,9 +39,20 @@ namespace OrcaStarsWebApplication.Controllers
 
         [HttpGet] //THIS IS THE INDEX PAGE
         [Authorize]
-        public IActionResult Index()
+        public IActionResult Index(Guid id)
         {
-            return View();
+            Guid newid = new Guid();
+            IndexViewModel ivm = new IndexViewModel();
+            if (newid == id || null == id)
+            {
+                ivm.Display = "none";
+                ivm.BusinessName = "";
+                return View(ivm);
+            }
+            ivm.BusinessName = _db.Businesses.Single(b => b.Id == id).Name;
+            ivm.Display = "block";
+            return View(ivm);
+
         }
 
         [HttpGet] //THIS IS THE FORM
@@ -111,10 +122,13 @@ namespace OrcaStarsWebApplication.Controllers
             };
             return View(avm);
         }
+
         [HttpPost]
         [Authorize]
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
         {
+            PhoneService ps = new PhoneService();
+
             var bus = _db.Businesses.Single(b => b.Id == id);
             var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
             var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
@@ -146,7 +160,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 bus.Name = avm.BusinessName;
                 bus.Description = avm.Description;
-                bus.PhoneNumber = avm.BusinessPhone;
+                bus.PhoneNumber = ps.formatNumber(avm.BusinessPhone);
                 bus.Address1 = avm.AddressLine1;
                 bus.Address2 = avm.AddressLine2;
                 bus.City = avm.City;
@@ -183,7 +197,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 con.FirstName = avm.FirstName;
                 con.LastName = avm.LastName;
-                con.PhoneNumber = avm.PhoneNumber;
+                con.PhoneNumber = ps.formatNumber(avm.PhoneNumber);
                 con.Email = avm.Email;
                 _db.Contacts.Update(con);
 
@@ -210,8 +224,10 @@ namespace OrcaStarsWebApplication.Controllers
             }
 
             /* Check that the business is unique */
+            /* First grab only business that have the same name */
             IQueryable<Business> foundBusinesses = _db.Businesses.Where(b => b.Name == avm.BusinessName);
 
+            /* Compare the business' address */
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Address1 == avm.AddressLine1);
@@ -220,12 +236,10 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Address2 == avm.AddressLine2);
             }
-
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.ZipCode == avm.Zip);
             }
-
             if (foundBusinesses.Count() > 0)
             {
                 foundBusinesses = foundBusinesses.Where(b => b.City == avm.City);
@@ -238,47 +252,21 @@ namespace OrcaStarsWebApplication.Controllers
             {
                 foundBusinesses = foundBusinesses.Where(b => b.Country == avm.Country);
             }
-
+            /* if the business matches at least one existing business still, it's a duplicate. */
             if (foundBusinesses.Count() > 0)
             {
+                /* show the error */
                 avm.Duplicate = "block";
                 avm.DisplayNotification = "block";
-                avm.Notification = "The business " + avm.BusinessName + " already exists."; //Eventually check against address as well. 
+                avm.Notification = "The business " + avm.BusinessName + " already exists.";
                 Business foundbus = foundBusinesses.FirstOrDefault(b => b.Name == avm.BusinessName);
                 avm.ExistingId = foundbus.Id;
                 return View(avm);
             }
 
-            return RedirectToAction("AddBusiness", avm);
-        }
-
-        // DELETE //
-
-        [HttpGet]
-        public IActionResult SaveNew(Guid id)
-        {
-            return RedirectToAction("ConfirmDisplay", id);
-        }
-        [HttpGet]
-        public IActionResult EditExisting(Guid id)
-        {
-            Business business = _db.Businesses.Single(b => b.Id == id);
-
-            Business foundBusinesses = _db.Businesses.FirstOrDefault(b => b.Name == business.Name);
-
-            //set parameters in srvm to make delete notification appear, passing name to next view
-            _db.Businesses.Remove(business);
-            _db.SaveChanges();
-
-            return RedirectToAction("Edit", foundBusinesses.Id);
-        }
-
-
-        [HttpGet]
-        public IActionResult AddBusiness(ApplicationViewModel avm)
-        {
             string uniqueBusinessFileName = null;
             string uniqueStoreFileName = null;
+            PhoneService ps = new PhoneService();
 
             avm.BusinessLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
             avm.StoreLogoHolder = "images/orcastarsImages/defaultBusinessStorelogo.png";
@@ -327,12 +315,11 @@ namespace OrcaStarsWebApplication.Controllers
                 Instagram = avm.Instagram
             };
             _db.SocialMedias.Add(socialM);
-
             BusinessContact businessContact = new BusinessContact
             {
                 FirstName = avm.FirstName,
                 LastName = avm.LastName,
-                PhoneNumber = avm.PhoneNumber,
+                PhoneNumber = ps.formatNumber(avm.PhoneNumber),
                 Email = avm.Email
             };
 
@@ -343,7 +330,7 @@ namespace OrcaStarsWebApplication.Controllers
 
                 Name = avm.BusinessName,
                 Description = avm.Description,
-                PhoneNumber = avm.BusinessPhone,
+                PhoneNumber = ps.formatNumber(avm.BusinessPhone),
                 Address1 = avm.AddressLine1,
                 Address2 = avm.AddressLine2,
                 City = avm.City,
@@ -421,13 +408,6 @@ namespace OrcaStarsWebApplication.Controllers
             return View(avm);
         }
 
-        [HttpGet] //DISPLAYS BUSINESS INFO
-        [Authorize]
-        public IActionResult Confirm(ApplicationViewModel avm)
-        {
-            return View(avm);
-        }
-
         // READ AND SEARCH //
 
         [HttpGet]
@@ -442,10 +422,26 @@ namespace OrcaStarsWebApplication.Controllers
             svm.businessCities = new List<string>();
 
             //build a list of businesses with only the names and city and assign to searchviewmodel businesses
+            //the foreach loop will add business names and cities to each respective list
+            //it will also look out for duplicates and make sure they are not added to the list
             foreach (Business business in foundBusinesses)
             {
-                svm.businessNames.Add(business.Name);
-                svm.businessCities.Add(business.City);
+                bool addName = true;
+                bool addCity = true;
+                if (svm.businessNames.Count() > 0)
+                {
+                    if (svm.businessNames.Contains(business.Name))
+                        addName = false;
+                }
+                if (svm.businessCities.Count() > 0)
+                {
+                    if (svm.businessCities.Contains(business.City))
+                        addCity = false;
+                }
+                if(addName)
+                    svm.businessNames.Add(business.Name);
+                if (addCity)
+                    svm.businessCities.Add(business.City);
             }
             return View(svm);
         }
@@ -492,17 +488,14 @@ namespace OrcaStarsWebApplication.Controllers
             return View("SearchResults", srvm);
         }
 
-        // UPDATE //
-
         [HttpGet]
-        [Authorize]
-        public IActionResult UpdateBusiness(Guid id)
+        public IActionResult SearchResults(SearchResultsViewModel srvm)
         {
-            Business business = new Business { Id = id };
-            _db.Businesses.Update(business);
-            _db.SaveChanges();
-
-            return View("Search");
+            IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
+            srvm.displayDeleteNotification = "none";
+            srvm.deletedBusinessName = "";
+            srvm.businesses = foundBusinesses;
+            return View(srvm);
         }
 
         // DELETE //
@@ -551,10 +544,34 @@ namespace OrcaStarsWebApplication.Controllers
             //set parameters in srvm to make delete notification appear, passing name to next view
             srvm.displayDeleteNotification = "block";
             srvm.deletedBusinessName = business.Name;
+
+            //If business Logo != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find logo in our uploads folder via its id
+            //delete it
+
+            if (business.Logo != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bLogo = Path.Combine(webHostEnvironment.WebRootPath, business.Logo);   
+                if (System.IO.File.Exists(bLogo))
+                {
+                    System.IO.File.Delete(bLogo);
+                }
+            }
+            //If business storefront != "images/orcastarsImages/defaultBusinessStorelogo.png"; - Default
+            //find storefront in our uploads folder via its id
+            //delete it
+            if (business.StoreFront != "images/orcastarsImages/defaultBusinessStorelogo.png")
+            {
+                string bStoreFront= Path.Combine(webHostEnvironment.WebRootPath, business.StoreFront);
+                if (System.IO.File.Exists(bStoreFront))
+                {
+                    System.IO.File.Delete(bStoreFront);
+                }
+            }
             _db.Businesses.Remove(business);
 
             _db.SaveChanges();
-            return RedirectToAction("DeleteSuccessful", srvm); 
+            return RedirectToAction("DeleteSuccessful", srvm);
         }
 
         [Authorize]
@@ -563,6 +580,7 @@ namespace OrcaStarsWebApplication.Controllers
             SearchResultsViewModel srvm = vm;
             IQueryable<Business> foundBusinesses = _db.Businesses.OrderBy(b => b.Id);
             srvm.businesses = foundBusinesses;
+            
             return View("SearchResults", srvm);
         }
     }
