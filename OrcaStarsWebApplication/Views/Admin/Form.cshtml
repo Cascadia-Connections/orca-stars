@@ -1068,39 +1068,12 @@
 
     @section Scripts {
         <script>
-            /**<!--<a class="button" onclick="toggleHours()">Yes, overwrite any changes</a>
-            <a class="button" onclick="hideWarning()">No, keep these changes</a>-->*/
             function showCollectiveHours(showcollhours) {
                 var hwarn = document.getElementById("hourWarning");
                 var fhr = document.getElementById("fullHrs");
                 var qhr = document.getElementById("quickHrs");
-                /* Debugging code */
-                var g = document.getElementById("GenO");
-                var mo = document.getElementById("MonO");
-                var tu = document.getElementById("TuesO");
-                var we = document.getElementById("WedO");
-                var th = document.getElementById("ThursO");
-                var fr = document.getElementById("FriO");
-                var sa = document.getElementById("SatO");
-                var su = document.getElementById("SunO");
-                var Cg = document.getElementById("GenC");
-                var Cmo = document.getElementById("MonC");
-                var Ctu = document.getElementById("TuesC");
-                var Cwe = document.getElementById("WedC");
-                var Cth = document.getElementById("ThursC");
-                var Cfr = document.getElementById("FriC");
-                var Csa = document.getElementById("SatC");
-                var Csu = document.getElementById("SunC");
-
                 hwarn.style.display = "none";
-                console.log("scH start:");
-                console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
-
                 setHours();
-                console.log("after setHours:");
-                console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
                 if (showcollhours == true) {
                     fhr.style.display = "block";
                     qhr.style.display = "none";
@@ -1109,16 +1082,11 @@
                     fhr.style.display = "none";
                     qhr.style.display = "block";
                 }
-                console.log("scH end:");
-                console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
             }
 
             function toggleWarning() {
-                console.log("Toggling Warning");
                 var hwarn = document.getElementById("hourWarning");
                 hwarn.style.display = "block";
-                console.log("Unhidden.");
             }
 
             $(document).ready(function () {
@@ -1142,20 +1110,10 @@
                 var Cfr = document.getElementById("FriC");
                 var Csa = document.getElementById("SatC");
                 var Csu = document.getElementById("SunC");
-                console.log("GeneralOpening: " + g.value + " | GeneralClosing: " + Cg.value);
-                console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
-                console.log(mo.value != g.value || tu.value != g.value || we.value != g.value || th.value != g.value || fr.value != g.value || sa.value != g.value || su.value != g.value || Cmo.value != Cg.value || Ctu.value != Cg.value || Cwe.value != Cg.value || Cth.value != Cg.value || Cfr.value != Cg.value || Csa.value != Cg.value || Csu.value != Cg.value);
 
                 if (mo.value != g.value || tu.value != g.value || we.value != g.value || th.value != g.value || fr.value != g.value || sa.value != g.value || su.value != g.value || Cmo.value != Cg.value || Ctu.value != Cg.value || Cwe.value != Cg.value || Cth.value != Cg.value || Cfr.value != Cg.value || Csa.value != Cg.value || Csu.value != Cg.value) {
                     //One or more of the hours have been modified
-                    console.log("GeneralOpening: " + g.value + "GeneralClosing: " + Cg.value);
-                    console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                    console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
                     showCollectiveHours(true);
-                    console.log("after:");
-                    console.log(mo.value + " " + tu.value + " " + we.value + " " + th.value + " " + fr.value + " " + sa.value + " " + su.value);
-                    console.log(Cmo.value + " " + Ctu.value + " " + Cwe.value + " " + Cth.value + " " + Cfr.value + " " + Csa.value + " " + Csu.value);
                 }
             });
 
