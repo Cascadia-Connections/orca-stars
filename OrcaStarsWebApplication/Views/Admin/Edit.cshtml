@@ -15,6 +15,10 @@
             display: none;
         }
 
+        .validateTxt {
+            color: #d55;
+        }
+
         #toggle {
             width: 200px;
         }
@@ -28,6 +32,20 @@
             width: 100px;
             padding-bottom: 3px;
         }
+        
+        .button, .button:hover {
+            background-color: #efefef;
+            border: solid 1px black;
+            border-radius: 2px;
+            color: black;
+            padding: 3px 7px;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #e5e5e5;
+        }
+
     </style>
 }
 
@@ -35,6 +53,20 @@
     <h1>Edit @Model.BusinessName's Information</h1>
     <form enctype="multipart/form-data" asp-controller="admin" asp-action="edit" asp-route-id="@Model.Id" method="post">
         <!-- enctype="multipart/form-data" allows us to use IFormFile-->
+        <div class="alert alert-danger" role="alert" style="display: @Model.DisplayNotification;">
+            <b>
+                @Model.Notification
+            </b>
+            <div style="display: @Model.Duplicate;">
+                <br />
+                Do you want to
+                <a class="button" asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.ExistingId">Edit The Existing Business</a>
+                OR
+                <a class="button" asp-action="Edit" asp-controller="Admin" asp-route-id="@Model.Id">Cancel</a>
+                ?
+            </div>
+        </div>
+
         <h3>Contact Information</h3>
 
         <label>First Name:</label>
@@ -61,15 +93,15 @@
 
         <label>Name:</label>
         <input asp-for="BusinessName" type="text">
-        <span  class="validateTxt" asp-validation-for="BusinessName"></span>
+        <span class="validateTxt" asp-validation-for="BusinessName"></span>
         <br />
         <label>Description:</label>
         <textarea asp-for="Description"></textarea>
-        <span  class="validateTxt" asp-validation-for="Description"></span>
+        <span class="validateTxt" asp-validation-for="Description"></span>
         <br />
         <label>Business Phone:</label>
         <input asp-for="BusinessPhone" pattern="[0-9()\s-]{10,15}" type="tel" minlength="10" title="Example: 555-654-3210" oninvalid="this.setCustomValidity('Please Input A Valid Phone Number e.g. 555-654-3210')" oninput="this.setCustomValidity('')" name="BusinessPhone" placeholder="555-654-3210" />
-        <span  class="validateTxt" asp-validation-for="BusinessPhone"></span>
+        <span class="validateTxt" asp-validation-for="BusinessPhone"></span>
         <br />
         <label>Category:</label>
         <select asp-for="Category" id="Category">
@@ -87,12 +119,12 @@
             <option>Mass Media</option>
             <option>Education</option>
         </select>
-        <span  class="validateTxt" asp-validation-for="Category"></span>
+        <span class="validateTxt" asp-validation-for="Category"></span>
         <br />
 
         <label>Website:</label>
         <input asp-for="Website" type="text" name="Website" placeholder="www.example.com">
-        <span  class="validateTxt" asp-validation-for="Website"></span>
+        <span class="validateTxt" asp-validation-for="Website"></span>
         <br />
 
         <label><b><span class="day">Hours:</span> Open Time - Close Time</b></label><br />
@@ -203,6 +235,7 @@
                     <option>11:30pm</option>
                 </select>
             </span>
+            <input type="button" onclick="showCollectiveHours(true)" value="Modify Individual Days">
         </div>
         <div id="fullHrs">
             <span>
@@ -958,31 +991,40 @@
                     <option>11:30pm</option>
                 </select>
             </span>
+            <br />
+            <div id="hourWarning" class="alert alert-warning" role="alert" style="display: none;">
+                <b>
+                    Modifying Collective Hours will overwrite any changes you've made to the individual days
+                </b>
+                <br />
+                <input type="button" id="ovewrite" onclick="showCollectiveHours(false)" value="Overwrite any changes">
+                <input type="button" id="keep" onclick="showCollectiveHours(true)" value="Cancel">
+            </div>
+            <input type="button" onclick="toggleWarning()" value="Modify Collective Hours">
         </div>
-        <input type="button" id="toggle" onclick="toggleHours()" value="Modify Collective Hours">
         <br />
         <br />
 
         <h4>Location</h4>
         <label>Address 1:</label>
         <input asp-for="AddressLine1" type="text" name="AddressLine1" placeholder="Address Line 1">
-        <span  class="validateTxt" asp-validation-for="AddressLine1"></span>
+        <span class="validateTxt" asp-validation-for="AddressLine1"></span>
         <br />
         <label>Address 2:</label>
         <input asp-for="AddressLine2" type="text" name="AddressLine2" placeholder="Address Line 2">
-        <span  class="validateTxt" asp-validation-for="AddressLine2"></span>
+        <span class="validateTxt" asp-validation-for="AddressLine2"></span>
         <br />
-        <label>City <span  class="validateTxt" asp-validation-for="City"></span>:</label>
+        <label>City <span class="validateTxt" asp-validation-for="City"></span>:</label>
         <input asp-for="City" type="text" name="City" placeholder="Bothell">
-        <label>State/Province <span  class="validateTxt" asp-validation-for="State"></span>:</label>
+        <label>State/Province <span class="validateTxt" asp-validation-for="State"></span>:</label>
         <input asp-for="State" type="text" name="State" placeholder="WA">
         <label>Postal Code:</label>
         <input asp-for="Zip" type="text" name="Zip" placeholder="98012">
-        <span  class="validateTxt" asp-validation-for="Zip"></span>
+        <span class="validateTxt" asp-validation-for="Zip"></span>
         <br />
         <label>Country:</label>
         <input asp-for="Country" type="text" name="Country" placeholder="United States">
-        <span  class="validateTxt" asp-validation-for="Country"></span>
+        <span class="validateTxt" asp-validation-for="Country"></span>
         <br />
         <br />
 
@@ -1025,22 +1067,37 @@
         </div>
         <br />
         <br />
-        <input onclick="toggleHours()" type="submit" class="submit-form-btn" value="Submit">
+        <input onclick="setHours()" type="submit" class="submit-form-btn" value="Submit">
     </form>
 
     @section Scripts {
         <script>
+            function showCollectiveHours(showcollhours) {
+                var hwarn = document.getElementById("hourWarning");
+                var fhr = document.getElementById("fullHrs");
+                var qhr = document.getElementById("quickHrs");
+                hwarn.style.display = "none";
+                setHours();
+                if (showcollhours == true) {
+                    fhr.style.display = "block";
+                    qhr.style.display = "none";
+                }
+                else {
+                    fhr.style.display = "none";
+                    qhr.style.display = "block";
+                }
+            }
+
+            function toggleWarning() {
+                var hwarn = document.getElementById("hourWarning");
+                hwarn.style.display = "block";
+            }
+
             $(document).ready(function () {
                 $('.custom-file-input').on("change", function () {
                     var fileName = $(this).val().split("\\").pop();
                     $(this).next('.custom-file-label').html(fileName);
                 });
-            });
-
-            function toggleHours() {
-                var tog = document.getElementById("toggle");
-                var fhr = document.getElementById("fullHrs");
-                var qhr = document.getElementById("quickHrs");
                 var g = document.getElementById("GenO");
                 var mo = document.getElementById("MonO");
                 var tu = document.getElementById("TuesO");
@@ -1057,7 +1114,35 @@
                 var Cfr = document.getElementById("FriC");
                 var Csa = document.getElementById("SatC");
                 var Csu = document.getElementById("SunC");
-                if (fhr.style.display === "none") {
+
+                if (mo.value != g.value || tu.value != g.value || we.value != g.value || th.value != g.value || fr.value != g.value || sa.value != g.value || su.value != g.value || Cmo.value != Cg.value || Ctu.value != Cg.value || Cwe.value != Cg.value || Cth.value != Cg.value || Cfr.value != Cg.value || Csa.value != Cg.value || Csu.value != Cg.value) {
+                    //One or more of the hours have been modified
+                    showCollectiveHours(true);
+                }
+            });
+
+            function setHours() {
+                var fhr = document.getElementById("fullHrs");
+                var g = document.getElementById("GenO");
+                var mo = document.getElementById("MonO");
+                var tu = document.getElementById("TuesO");
+                var we = document.getElementById("WedO");
+                var th = document.getElementById("ThursO");
+                var fr = document.getElementById("FriO");
+                var sa = document.getElementById("SatO");
+                var su = document.getElementById("SunO");
+                var Cg = document.getElementById("GenC");
+                var Cmo = document.getElementById("MonC");
+                var Ctu = document.getElementById("TuesC");
+                var Cwe = document.getElementById("WedC");
+                var Cth = document.getElementById("ThursC");
+                var Cfr = document.getElementById("FriC");
+                var Csa = document.getElementById("SatC");
+                var Csu = document.getElementById("SunC");
+                if (fhr.style.display !== "none") {
+                    g.value = mo.value;
+                    Cg.value = Cmo.value;
+                } else {
                     mo.value = g.value;
                     tu.value = g.value;
                     we.value = g.value;
@@ -1072,18 +1157,8 @@
                     Cfr.value = Cg.value;
                     Csa.value = Cg.value;
                     Csu.value = Cg.value;
-                    fhr.style.display = "block";
-                    qhr.style.display = "none";
-                    tog.value = "Modify Collective Hours";
-                } else {
-                    g.value = mo.value;
-                    Cg.value = Cmo.value;
-                    fhr.style.display = "none";
-                    qhr.style.display = "block";
-                    tog.value = "Modify Individual Days";
                 }
             }
-
         </script>
     }
 
