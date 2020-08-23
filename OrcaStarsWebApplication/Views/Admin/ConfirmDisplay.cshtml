@@ -66,13 +66,11 @@
 </p>
 <p>
     <b> Business Logo: </b>
-    <img src="~/@Model.BusinessLogoHolder" style="        width: 300px;
-        height: auto;
-" />
+    <img src="~/@Model.BusinessLogoHolder" style="width: auto; height: auto; max-height: 300px; max-width: 300px;" />
 </p>
 <p>
     <b> Store Image: </b>
-    <img src="~/@Model.StoreLogoHolder" style="width:300px; height: auto;" />
+    <img src="~/@Model.StoreLogoHolder" style="width: auto; height: auto; max-height: 300px; max-width: 300px;" />
 </p>
 <p> <b> Location:</b> @Address.fieldsToAddress(@Model) </p>
     <div>
@@ -251,5 +249,5 @@
        asp-route-id="@Model.Id">Make Changes</a>
     <a class="button" asp-action="Index" asp-controller="Admin"
        asp-route-id="@Model.Id">Confirm Business</a>
-
+    <br /><br />
 </div>

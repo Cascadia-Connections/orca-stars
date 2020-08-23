@@ -75,9 +75,9 @@
 
     @foreach (var business in Model.businesses)
     {
-        <tr>
+        <tr style="height: 110px;">
             <td>
-                <img src="~/@business.Logo" style="width: 100px;height: auto;" />
+                <img src="~/@business.Logo" style="width: auto;height: auto;max-height: 100px;max-width: 100px;" />
             </td>
             <td>
                 @business.Name
