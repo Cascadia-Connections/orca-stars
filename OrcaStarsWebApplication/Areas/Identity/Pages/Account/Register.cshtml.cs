@@ -81,14 +81,14 @@ namespace OrcaStarsWebApplication.Areas.Identity.Pages.Account
             {
                 var user = new OrcaStarsWebApplicationUser { UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                if (Input.Role == "Member")
-                {
-                    await _userManager.AddToRoleAsync(user, "Member");
-                }
-                else if (Input.Role == "Admin")
-                {
-                    await _userManager.AddToRoleAsync(user, "Admin");
-                }
+                //if (Input.Role == "Member")
+                //{
+                //    await _userManager.AddToRoleAsync(user, "Member");
+                //}
+                //else if (Input.Role == "Admin")
+                //{
+                //    await _userManager.AddToRoleAsync(user, "Admin");
+                //}
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");

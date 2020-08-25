@@ -101,10 +101,10 @@ namespace OrcaStarsWebApplication
             }
 
             var user = new OrcaStarsWebApplicationUser();
-            if (UserManager.GetRolesAsync(user) == null)
-            {
-                await UserManager.AddToRoleAsync(user, "Member");
-            }
+            //if (await UserManager.GetRolesAsync(user) == null)
+            //{
+            //    await UserManager.AddToRoleAsync(user, "Member");
+            //}
 
             var _admin = await UserManager.FindByEmailAsync("maddie@orca.com");
             if (_admin == null)
