@@ -21,7 +21,9 @@ namespace OrcaStarsWebApplication.Areas.Identity
                         context.Configuration.GetConnectionString("OrcaStarsWebApplicationContextConnection")));
 
                 services.AddDefaultIdentity<OrcaStarsWebApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<OrcaStarsWebApplicationContext>();
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<OrcaStarsWebApplicationContext>()
+                    .AddDefaultTokenProviders();
             });
         }
     }
