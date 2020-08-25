@@ -71,12 +71,16 @@ namespace OrcaStarsWebApplication.Controllers
         [Authorize]
         public IActionResult Edit(Guid id)
         {
+
             var bus = _db.Businesses.Single(b => b.Id == id);
             var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
             var hrs = _db.Hours.Single(h => h.ID == bus.Hours);
             var soc = _db.SocialMedias.Single(s => s.ID == bus.Social);
             ApplicationViewModel avm = new ApplicationViewModel
             {
+                DisplayNotification = "none",
+                Duplicate = "none",
+
                 /* Get Business General Info */
                 Id = id,
                 BusinessName = bus.Name,
@@ -128,6 +132,51 @@ namespace OrcaStarsWebApplication.Controllers
         public IActionResult Edit(Guid id, ApplicationViewModel avm)
         {
             PhoneService ps = new PhoneService();
+            avm.DisplayNotification = "none";
+            avm.Duplicate = "none";
+
+            /* Check that the business is unique */
+            /* First grab only business that have the same name */
+            IQueryable<Business> foundBusinesses = _db.Businesses.Where(b => b.Id != avm.Id)
+                                                                 .Where(b => b.Name == avm.BusinessName);
+
+            /* Compare the business' address */
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Address1 == avm.AddressLine1);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Address2 == avm.AddressLine2);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.ZipCode == avm.Zip);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.City == avm.City);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.State == avm.State);
+            }
+            if (foundBusinesses.Count() > 0)
+            {
+                foundBusinesses = foundBusinesses.Where(b => b.Country == avm.Country);
+            }
+            /* if the business matches at least one existing business still, it's a duplicate. */
+            if (foundBusinesses.Count() > 0)
+            {
+                /* show the error */
+                avm.Duplicate = "block";
+                avm.DisplayNotification = "block";
+                avm.Notification = "The business " + avm.BusinessName + " already exists.";
+                Business foundbus = foundBusinesses.FirstOrDefault(b => b.Name == avm.BusinessName);
+                avm.ExistingId = foundbus.Id;
+                return View(avm);
+            }
+
 
             var bus = _db.Businesses.Single(b => b.Id == id);
             var con = _db.Contacts.Single(c => c.Id == bus.ContactId);
@@ -204,12 +253,13 @@ namespace OrcaStarsWebApplication.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("ConfirmDisplay", new { id = id });
             }
-            return View();
+            avm.DisplayNotification = "block";
+            avm.Notification = "Some required fields are missing";
+            return View(avm);
         }
 
         // CREATE //
         [HttpPost] //THIS PUSHES FORM DATA TO DATA BASE
-
         [Authorize]
         public IActionResult Form(ApplicationViewModel avm)
         {

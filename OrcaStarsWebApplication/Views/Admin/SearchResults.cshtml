@@ -12,7 +12,7 @@
         width: 300px;
     }
 </style>
-<h3>Search</h3>
+<h1>Search</h1>
 <form asp-action="Search" asp-controller="Admin">
     <div class="search">
         <label for="businessName">Name:</label>
@@ -24,9 +24,8 @@
             <option>ALL</option>
             <option>Restaurant</option>
             <option>Bars & Nightlife</option>
-            <option>Health & Medicine</option>
             <option>Shopping</option>
-            <option>Auto</option>
+            <option>Health & Medicine</option>
             <option>Home Maintenance</option>
             <option>Professional Services</option>
             <option>Auto</option>
@@ -46,7 +45,7 @@
     </div>
 </form>
 
-<h3>Search Results</h3>
+<h2>Search Results</h2>
 
 <div class="alert alert-success" role="alert" style="display: @Model.displayDeleteNotification;">
     The business <b>@Model.deletedBusinessName</b> was deleted from the database.
@@ -76,9 +75,9 @@
 
     @foreach (var business in Model.businesses)
     {
-        <tr>
+        <tr style="height: 110px;">
             <td>
-                <img src="~/@business.Logo" style="width: 100px;height: auto;" />
+                <img src="~/@business.Logo" style="width: auto;height: auto;max-height: 100px;max-width: 100px;" />
             </td>
             <td>
                 @business.Name
