@@ -81,7 +81,7 @@ namespace OrcaStarsWebApplication
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider).Wait();//.GetAwaiter().GetResult();
+            CreateRoles(serviceProvider).GetAwaiter().GetResult();
         }
         
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -100,7 +100,7 @@ namespace OrcaStarsWebApplication
                 }
             }
 
-            var user = new OrcaStarsWebApplicationUser();
+            //var user = new OrcaStarsWebApplicationUser();
             //if (await UserManager.GetRolesAsync(user) == null)
             //{
             //    await UserManager.AddToRoleAsync(user, "Member");
