@@ -12,7 +12,7 @@
         width: 300px;
     }
 </style>
-<h3>Search</h3>
+<h1>Search</h1>
 <form asp-action="Search" asp-controller="Admin">
     <div class="search">
         <label for="businessName">Name:</label>
@@ -45,7 +45,7 @@
     </div>
 </form>
 
-<h3>Search Results</h3>
+<h2>Search Results</h2>
 
 <div class="alert alert-success" role="alert" style="display: @Model.displayDeleteNotification;">
     The business <b>@Model.deletedBusinessName</b> was deleted from the database.
