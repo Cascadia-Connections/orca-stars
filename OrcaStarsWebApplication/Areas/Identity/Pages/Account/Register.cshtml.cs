@@ -57,6 +57,7 @@ namespace OrcaStarsWebApplication.Areas.Identity.Pages.Account
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [RegularExpression("^((?=.*[a-z])(?=.*[A-Z])(?=.*\\d)).+$", ErrorMessage = "Password requires at least one numeric, alphanumeric, uppercase, and lowercase character.")]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -85,7 +86,7 @@ namespace OrcaStarsWebApplication.Areas.Identity.Pages.Account
                 {
                     await _userManager.AddToRoleAsync(user, "Member");
                 }
-                else if (Input.Role == "Admin")
+                if (Input.Role == "Admin")
                 {
                     await _userManager.AddToRoleAsync(user, "Admin");
                 }
