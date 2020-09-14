@@ -81,7 +81,7 @@ namespace OrcaStarsWebApplication
                 endpoints.MapRazorPages();
             });
 
-            CreateRoles(serviceProvider).Wait();//.GetAwaiter().GetResult();
+            CreateRoles(serviceProvider).GetAwaiter().GetResult();
         }
         
         private async Task CreateRoles(IServiceProvider serviceProvider)
@@ -100,11 +100,11 @@ namespace OrcaStarsWebApplication
                 }
             }
 
-            var user = new OrcaStarsWebApplicationUser();
-            if (UserManager.GetRolesAsync(user) == null)
-            {
-                await UserManager.AddToRoleAsync(user, "Member");
-            }
+            //var user = new OrcaStarsWebApplicationUser();
+            //if (await UserManager.GetRolesAsync(user) == null)
+            //{
+            //    await UserManager.AddToRoleAsync(user, "Member");
+            //}
 
             var _admin = await UserManager.FindByEmailAsync("maddie@orca.com");
             if (_admin == null)
